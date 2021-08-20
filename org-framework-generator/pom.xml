@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>org.framework.commons</artifactId>
+    <artifactId>org.framework.generator</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
