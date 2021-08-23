@@ -1,6 +1,7 @@
 package com.github.zxhtom.demo;
 
 import com.github.zxhtom.web.WebApplication;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/8/23 10:20
  */
 @SpringBootApplication
+@MapperScan("com.github.zxhtom.demo.mapper")
 public class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class);

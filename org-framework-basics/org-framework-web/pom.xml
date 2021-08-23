@@ -28,15 +28,7 @@
         </dependency>
         <!--springboot开箱即用配置end-->
 
-        <!--配置数据库start-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!--配置数据库end-->
+
+
     </dependencies>
 </project>
