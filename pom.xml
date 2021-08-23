@@ -8,18 +8,7 @@
     <artifactId>org.framework.root</artifactId>
     <version>1.1-SNAPSHOT</version>
     <modules>
-        <module>org-framework-dependencies</module>
-        <module>org-framework-commons</module>
-        <module>org-framework-core</module>
-        <module>org-framework-exception</module>
-        <module>org-framework-result</module>
-        <module>org-framework-log</module>
-        <module>org-framework-utils</module>
-        <module>org-framework-components</module>
-        <module>org-framework-all</module>
-        <module>org-framework-generator</module>
-        <module>org-framework-web</module>
-        <module>org-framework-demo</module>
+        <module>org-framework-basics</module>
     </modules>
     <packaging>pom</packaging>
     <name>org-framework-root-${project.version}</name>
@@ -40,54 +29,7 @@
     <dependencies>
 
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <!--springboot 2.2.2-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--springcloud Hoxton.SR1 与springBoot 2.2.2对应-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.1.0.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--数据库配置-->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
 
     <build>
         <plugins>

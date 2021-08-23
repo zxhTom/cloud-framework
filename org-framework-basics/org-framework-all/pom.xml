@@ -3,22 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>org.framework.root</artifactId>
+        <artifactId>org.framework.basics</artifactId>
         <groupId>com.github.zxhtom</groupId>
         <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>org.framework.components</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>org-components-kafka</module>
-        <module>org-components-redis</module>
-        <module>org-components-rabbitmq</module>
-        <module>org-components-es</module>
-        <module>org-components-datasource</module>
-        <module>org-components-mongodb</module>
-    </modules>
+    <artifactId>org.framework.all</artifactId>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
