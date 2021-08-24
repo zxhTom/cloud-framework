@@ -28,7 +28,13 @@
         </dependency>
         <!--springboot开箱即用配置end-->
 
-
+        <!--springboot 配置metadata提示 start-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>false</optional>
+        </dependency>
+        <!--springboot 配置metadata提示 end-->
 
     </dependencies>
 </project>

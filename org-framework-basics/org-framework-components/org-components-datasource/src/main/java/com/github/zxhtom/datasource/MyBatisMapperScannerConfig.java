@@ -1,6 +1,9 @@
 package com.github.zxhtom.datasource;
 
+import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
+import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +19,13 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter(MybatisConfig.class)//见文思意，在MyBatisConfig配置之后加载
 public class MyBatisMapperScannerConfig {
 
+    @Autowired
+    MybatisLocaltionProperties mybatisLocaltionProperties;
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("primarySqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("com.github.zxhtom.**.mapper");
+        mapperScannerConfigurer.setBasePackage(MapperUtils.getInstance().getMapperPackage(mybatisLocaltionProperties));
         return mapperScannerConfigurer;
     }
 }

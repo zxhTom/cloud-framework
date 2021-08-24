@@ -17,13 +17,6 @@
     </properties>
 
     <dependencies>
-        <!--druid start-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
-        </dependency>
-        <!--druid end-->
         <dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.web</artifactId>
@@ -54,5 +47,12 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!--事务aop end-->
+        <!--druid start-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+        <!--druid end-->
     </dependencies>
 </project>

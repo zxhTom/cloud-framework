@@ -2,11 +2,17 @@ package com.github.zxhtom.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.github.zxhtom.datasource.constant.MybatisConstant;
+import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
+import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -31,6 +37,8 @@ import javax.sql.DataSource;
 @ServletComponentScan
 public class MybatisConfig {
 
+    @Autowired
+    MybatisLocaltionProperties mybatisLocaltionProperties;
     /**
      * @author zxhtom
      * @Description 注入数据源
@@ -55,27 +63,17 @@ public class MybatisConfig {
     }
 
     @Bean
-    @Primary
     public SqlSessionFactory primarySqlSessionFactory() {
         SqlSessionFactory factory = null;
         try {
             SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
             sqlSessionFactoryBean.setDataSource(primaryDataSource());
             sqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:mybatis-maltcloud.xml"));
-            sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:com/github/zxhtom/**/*.xml"));
+            sqlSessionFactoryBean.setMapperLocations(MapperUtils.getInstance().getMapperLocaltions(mybatisLocaltionProperties));
             factory = sqlSessionFactoryBean.getObject();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return factory;
-    }
-
-    //@Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionFactory(primarySqlSessionFactory());
-        //每张表对应的*.java,interface类型的Java文件
-        mapperScannerConfigurer.setBasePackage("com.github.zxhtom.**.mapper");
-        return mapperScannerConfigurer;
     }
 }
