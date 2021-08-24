@@ -35,6 +35,10 @@
             <optional>false</optional>
         </dependency>
         <!--springboot 配置metadata提示 end-->
-
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 </project>

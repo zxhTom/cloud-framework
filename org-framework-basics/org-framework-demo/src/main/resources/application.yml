@@ -20,7 +20,7 @@ spring:
     timeBetweenEvictionRunsMillis: 60000
     # 配置一个连接在池中最小生存的时间，单位是毫秒
     minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT'x'
+    validationQuery: SELECT 1 FROM DUAL
     testWhileIdle: true
     testOnBorrow: false
     testOnReturn: false
@@ -30,8 +30,28 @@ spring:
     filters: stat,wall
     #该属性是用来在druid控制sql监控数据显示的问题
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    druid:
+      # 此处用于alibaba-druid配置，maltcloud使用apache-druid，提供了druid配置。在Java配置类中配置监控信息
+      stat-view-servlet---:
+        # 是否启用StatViewServlet（监控页面）false为不启动
+        enabled: true
+        url-pattern: '/druid/*'
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1,192.168.0.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.0.0
+        # 禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # 登录名
+        login-username: admin
+        # 登录密码
+        login-password: admin
+        aop-patterns: com.github.zxhtom.**.*
+  druid:
+    enable: true
 
 
-mybatis2:
+
+mybatis:
   mapper-locations: classpath*:/mapper/*.xml
 
