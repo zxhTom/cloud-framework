@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.zxhtom.datasource.MybatisConfig,\
+  com.github.zxhtom.datasource.MyBatisMapperScannerConfig
