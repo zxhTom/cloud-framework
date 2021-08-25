@@ -1,5 +1,6 @@
 package com.github.zxhtom.datasource;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
@@ -7,12 +8,17 @@ import com.github.zxhtom.datasource.constant.DruidConstant;
 import com.github.zxhtom.datasource.properties.DruidProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Primary;
+
+import javax.sql.DataSource;
 
 /**
  * @author 张新华
@@ -26,6 +32,13 @@ import org.springframework.context.annotation.ImportResource;
 public class DruidConfig {
     @Autowired
     private DruidProperties druidProperties;
+
+    @Bean
+    @ConfigurationProperties(prefix="spring.datasource")
+    @Primary
+    public DataSource primaryDataSource() {
+        return new DruidDataSource();
+    }
 
     // 注册druid sql分析servlet
     @Bean

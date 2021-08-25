@@ -1,11 +1,15 @@
 package com.github.zxhtom.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
 import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
@@ -25,40 +29,32 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ImportResource("classpath:transaction-maltcloud.xml")
-@ServletComponentScan
-public class MybatisConfig {
+@AutoConfigureAfter(MybatisPlusAutoConfiguration.class)
+public class MybatisConfig{
 
     @Autowired
     MybatisLocaltionProperties mybatisLocaltionProperties;
-    /**
-     * @author zxhtom
-     * @Description 注入数据源
-     * @Date 14:22 2020年06月03日, 0003
-     * @Param
-     * @return javax.sql.DataSource
-     */
-    @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
-    public DataSource primaryDataSource() {
-        return new DruidDataSource();
-    }
+    @Autowired
+    DataSource dataSource;
+
     /**
      * 注入事务管理器
      *
      * @return
      */
     @Bean("primaryTransactionManager")
-    @Primary
+    @ConditionalOnMissingBean
     public DataSourceTransactionManager primaryTransactionManager() {
-        return new DataSourceTransactionManager(primaryDataSource());
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public SqlSessionFactory primarySqlSessionFactory() {
         SqlSessionFactory factory = null;
         try {
             SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-            sqlSessionFactoryBean.setDataSource(primaryDataSource());
+            sqlSessionFactoryBean.setDataSource(dataSource);
             sqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:mybatis-maltcloud.xml"));
             sqlSessionFactoryBean.setMapperLocations(MapperUtils.getInstance().getMapperLocaltions(mybatisLocaltionProperties));
             factory = sqlSessionFactoryBean.getObject();

@@ -52,6 +52,9 @@ spring:
 
 
 
-mybatis:
-  mapper-locations: classpath*:/mapper/*.xml
+#mybatis:
+#  mapper-locations: classpath*:/mapper/*.xml
+
+mybatis-plus:
+  mapper-locations: classpath*:com/github/zxhtom/**/*.xml
 
