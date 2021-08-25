@@ -8,6 +8,7 @@ import com.github.zxhtom.datasource.properties.DruidProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.ImportResource;
  */
 @Configuration
 @ImportResource(locations = { "classpath:druid-maltcloud.xml" })
+@ServletComponentScan("com.github.zxhtom")
 public class DruidConfig {
     @Autowired
     private DruidProperties druidProperties;
