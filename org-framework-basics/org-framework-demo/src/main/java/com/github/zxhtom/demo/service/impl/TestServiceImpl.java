@@ -1,5 +1,6 @@
 package com.github.zxhtom.demo.service.impl;
 
+import com.github.zxhtom.demo.enums.SexEnum;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.repository.TestRepository;
 import com.github.zxhtom.demo.service.TestService;
@@ -21,5 +22,29 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<Test> selectTest() {
         return testRepository.selectTest();
+    }
+
+    @Override
+    public Integer insertTest(Test test) {
+        test.setSex(SexEnum.FEMALE);
+        Integer result = testRepository.insertTest(test);
+        return result;
+    }
+
+    @Override
+    public Integer updateTest(Test test) {
+        return testRepository.updateTest(test);
+    }
+
+    @Override
+    public Integer deleteTest(Integer testId) {
+        return testRepository.deleteTest(testId);
+    }
+
+    @Override
+    public Integer noTransactionInsertTestNoTransaction(Test test) {
+        Integer result = testRepository.insertTest(test);
+        int i = 1 / 0;
+        return result;
     }
 }

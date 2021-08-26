@@ -22,10 +22,22 @@ public class TestRepositoryImpl implements TestRepository {
 
     @Override
     public List<Test> selectTest() {
-        Test test = new Test();
-        test.setName("zxhtom");
-        QueryWrapper<Test> queryWrapper = new QueryWrapper<>();
-        queryWrapper.setEntity(test);
-        return testMapper.selectList(queryWrapper);
+        return testMapper.selectList(new QueryWrapper<>());
+    }
+
+    @Override
+    public Integer insertTest(Test test) {
+        return testMapper.insert(test);
+    }
+
+    @Override
+    public Integer updateTest(Test test) {
+        Test dataSourceTest = testMapper.selectById(test.getId());
+        return testMapper.updateById(dataSourceTest);
+    }
+
+    @Override
+    public Integer deleteTest(Integer testId) {
+        return testMapper.deleteById(testId);
     }
 }

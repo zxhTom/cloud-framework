@@ -12,4 +12,10 @@ import java.util.List;
  */
 public interface TestRepository {
     public List<Test> selectTest();
+
+    Integer insertTest(Test test);
+
+    Integer updateTest(Test test);
+
+    Integer deleteTest(Integer testId);
 }

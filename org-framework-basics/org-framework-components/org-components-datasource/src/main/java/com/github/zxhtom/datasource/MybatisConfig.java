@@ -3,6 +3,9 @@ package com.github.zxhtom.datasource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
 import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -74,5 +77,12 @@ public class MybatisConfig{
             e.printStackTrace();
         }
         return factory;
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        return interceptor;
     }
 }

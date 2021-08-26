@@ -13,4 +13,12 @@ import java.util.List;
 public interface TestService {
 
     public List<Test> selectTest();
+
+    Integer insertTest(Test test);
+
+    Integer updateTest(Test test);
+
+    Integer deleteTest(Integer testId);
+
+    Integer noTransactionInsertTestNoTransaction(Test test);
 }
