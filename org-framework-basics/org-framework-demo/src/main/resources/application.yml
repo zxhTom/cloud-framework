@@ -56,3 +56,6 @@ mybatis2:
   mapper-locations: classpath*:com/github/zxhtom/**/*.xml
 
 
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

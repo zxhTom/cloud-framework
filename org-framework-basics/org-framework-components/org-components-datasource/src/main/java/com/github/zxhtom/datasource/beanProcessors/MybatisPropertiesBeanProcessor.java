@@ -1,8 +1,10 @@
 package com.github.zxhtom.datasource.beanProcessors;
 
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.github.zxhtom.datasource.constant.MybatisConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -44,6 +46,18 @@ public class MybatisPropertiesBeanProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (MybatisPlusProperties.class == bean.getClass()) {
+            log.info("判断是否通过其它途径设置了configuration配置，如设置，configurationLocaltion则失效");
+            MybatisPlusProperties properties = (MybatisPlusProperties) bean;
+            String configLocation = properties.getConfigLocation();
+            MybatisConfiguration configuration = properties.getConfiguration();
+            if (null != configuration) {
+                return bean;
+            }
+            if (StringUtils.isEmpty(configLocation)) {
+                properties.setConfigLocation("classpath:mybatis-maltcloud.xml");
+            }
+        }
         return bean;
     }
 }

@@ -33,14 +33,6 @@ public class MybatisInitialPostProcessor implements InstantiationAwareBeanPostPr
 
     @Override
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
-        if (MybatisPlusProperties.class == bean.getClass()) {
-            log.info("bean初始化后执行：Object为"+bean+"|beanName为"+beanName);
-            MybatisPlusProperties properties = (MybatisPlusProperties) bean;
-            String configLocation = properties.getConfigLocation();
-            if (StringUtils.isEmpty(configLocation)) {
-                properties.setConfigLocation("classpath:mybatis-maltcloud.xml");
-            }
-        }
         return true;
     }
 }

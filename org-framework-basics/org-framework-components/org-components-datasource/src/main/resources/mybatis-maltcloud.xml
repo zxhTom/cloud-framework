@@ -17,6 +17,6 @@
 		<!-- 自动生成主键 -->
 		<setting name="useGeneratedKeys" value="false" />
 		<!-- SQL日志 -->
-		<setting name="logImpl" value="LOG4J2" />
+		<setting name="logImpl" value="LOG4J2"/>
 	</settings>
 </configuration>
