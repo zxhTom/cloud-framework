@@ -29,7 +29,6 @@ public class MybatisPropertiesBeanProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (MybatisPlusProperties.class == bean.getClass()&&index++==0) {
-            log.info(bean+"======内置MybatisPlus配置信息，包含mybatis的setting和xml扫描路径======"+ beanName);
             MybatisPlusProperties properties = (MybatisPlusProperties) bean;
             String[] mapperLocations = properties.getMapperLocations();
             int mybatiSourceLength = mapperLocations.length;
@@ -38,6 +37,7 @@ public class MybatisPropertiesBeanProcessor implements BeanPostProcessor {
             System.arraycopy(mapperLocations, 0, newMapperLocations, 0, mybatiSourceLength);
             System.arraycopy(MybatisConstant.MAPPERLOCALTIONS, 0, newMapperLocations, mybatiSourceLength, defaultSourceLength);
             properties.setMapperLocations(newMapperLocations);
+            log.info(bean+"======内置MybatisPlus配置信息，包含mybatis的setting和xml扫描路径======"+ beanName);
         }
         return bean;
     }
