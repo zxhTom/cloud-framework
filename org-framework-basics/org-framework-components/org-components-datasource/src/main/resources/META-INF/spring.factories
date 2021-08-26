@@ -4,4 +4,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.datasource.properties.MybatisLocaltionProperties,\
   com.github.zxhtom.datasource.utils.MapperUtils,\
   com.github.zxhtom.datasource.properties.DruidProperties,\
-  com.github.zxhtom.datasource.DruidConfig
+  com.github.zxhtom.datasource.DruidConfig,\
+  com.github.zxhtom.datasource.beanProcessors.MybatisInitialPostProcessor,\
+  com.github.zxhtom.datasource.beanProcessors.MybatisPropertiesBeanProcessor
