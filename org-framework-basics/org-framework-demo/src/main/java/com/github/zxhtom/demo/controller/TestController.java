@@ -1,5 +1,6 @@
 package com.github.zxhtom.demo.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,19 @@ public class TestController {
     public List<Test> selectTest() {
         return testService.selectTest();
     }
+    @RequestMapping(value = "/selectTestPage",method = RequestMethod.GET)
+    public Page<Test> selectTest(@RequestParam Integer pageNum , @RequestParam Integer pageSize) {
+        return testService.selectTestPage(pageNum,pageSize);
+    }
 
     @RequestMapping(value = "/insertTest" , method = RequestMethod.POST)
     public Integer insertTest(@RequestBody Test test) {
         return testService.insertTest(test);
+    }
+
+    @RequestMapping(value = "/insertTestBatch" , method = RequestMethod.POST)
+    public Integer insertTestBatch(@RequestBody List<Test> tests) {
+        return testService.insertTestBatch(tests);
     }
 
     @RequestMapping(value = "/noTransactionInsertTestNoTransaction" , method = RequestMethod.POST)

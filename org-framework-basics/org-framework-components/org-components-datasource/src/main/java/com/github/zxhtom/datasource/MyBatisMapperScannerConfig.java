@@ -1,7 +1,6 @@
 package com.github.zxhtom.datasource;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
+import com.github.zxhtom.datasource.properties.MybatisProperties;
 import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -22,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class MyBatisMapperScannerConfig {
 
     @Autowired
-    MybatisLocaltionProperties mybatisLocaltionProperties;
+    MybatisProperties mybatisProperties;
     @Autowired
     SqlSessionFactory sqlSessionFactory;
     @Bean
@@ -30,7 +29,7 @@ public class MyBatisMapperScannerConfig {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         //mapperScannerConfigurer.setSqlSessionFactoryBeanName(sqlSessionFactory);
         mapperScannerConfigurer.setSqlSessionFactory(sqlSessionFactory);
-        mapperScannerConfigurer.setBasePackage(MapperUtils.getInstance().getMapperPackage(mybatisLocaltionProperties));
+        mapperScannerConfigurer.setBasePackage(MapperUtils.getInstance().getMapperPackage(mybatisProperties));
         return mapperScannerConfigurer;
     }
 }

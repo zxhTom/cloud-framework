@@ -1,5 +1,6 @@
 package com.github.zxhtom.demo.repository;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.zxhtom.demo.model.Test;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface TestRepository {
     Integer updateTest(Test test);
 
     Integer deleteTest(Integer testId);
+
+    Page<Test> selectTestPage(Page page);
+
+    Integer insertTestBatch(List<Test> tests);
 }

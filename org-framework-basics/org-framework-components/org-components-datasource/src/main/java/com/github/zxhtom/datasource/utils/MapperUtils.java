@@ -1,8 +1,7 @@
 package com.github.zxhtom.datasource.utils;
 
 import com.github.zxhtom.datasource.constant.MybatisConstant;
-import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
-import org.apache.commons.collections.CollectionUtils;
+import com.github.zxhtom.datasource.properties.MybatisProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -32,7 +31,7 @@ public class MapperUtils {
     * @Date 15:16 2021/8/24
     * @Param 路径集合
     */
-    public Resource[] getMapperLocaltions(MybatisLocaltionProperties properties) throws IOException {
+    public Resource[] getMapperLocaltions(MybatisProperties properties) throws IOException {
         List<Resource> resourceList = new ArrayList<>();
         if (null!=properties&&null!=properties.getMapperLocations()&&properties.getMapperLocations().length>0) {
             for (String location : properties.getMapperLocations()) {
@@ -45,7 +44,7 @@ public class MapperUtils {
         return (Resource[]) resourceList.toArray(new Resource[resourceList.size()]);
     }
 
-    public String getMapperPackage(MybatisLocaltionProperties properties){
+    public String getMapperPackage(MybatisProperties properties){
         if (null!=properties&&StringUtils.isNotEmpty(properties.getMapperPackage())) {
             return properties.getMapperPackage();
         }

@@ -11,6 +11,4 @@ public class MybatisConstant {
     public final static String[] MAPPERLOCALTIONS = new String[]{"classpath*:com/github/zxhtom/**/*.xml"};
     public final static String MAPPERPACKAGE = "com.github.zxhtom.**.mapper";
 
-
-
 }

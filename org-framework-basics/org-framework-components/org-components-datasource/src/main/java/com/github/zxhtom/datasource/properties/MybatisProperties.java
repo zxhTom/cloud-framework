@@ -13,9 +13,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @ConfigurationProperties(prefix = "mybatis")
-public class MybatisLocaltionProperties {
+public class MybatisProperties {
     /**xml扫描路径**/
     private String[] mapperLocations;
     /**mapper扫描路径**/
     private String mapperPackage="";
+    /**批量处理最大数量**/
+    private Integer maxBatchSize = 100;
 }

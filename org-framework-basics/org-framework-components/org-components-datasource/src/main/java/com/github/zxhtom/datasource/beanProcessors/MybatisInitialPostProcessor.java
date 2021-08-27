@@ -1,8 +1,6 @@
 package com.github.zxhtom.datasource.beanProcessors;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.stereotype.Component;

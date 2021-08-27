@@ -50,13 +50,9 @@ spring:
   druid:
     enable: true
 
-
-
-mybatis2:
-  mapper-locations: classpath*:com/github/zxhtom/**/*.xml
-
-
 mybatis:
+  mapper-locations: classpath*:com/github/zxhtom/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-enums-package: com.github.zxhtom.**.enums
+  max-batch-size: 1

@@ -1,6 +1,7 @@
 package com.github.zxhtom.demo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.zxhtom.datasource.mappers.MaltcloudMapper;
 import com.github.zxhtom.demo.model.Test;
 
 /**
@@ -9,5 +10,5 @@ import com.github.zxhtom.demo.model.Test;
  * @Package com.github.zxhtom.demo.mapper
  * @date 2021/8/25 15:32
  */
-public interface TestMapper extends BaseMapper<Test> {
+public interface TestMapper extends MaltcloudMapper<Test> {
 }

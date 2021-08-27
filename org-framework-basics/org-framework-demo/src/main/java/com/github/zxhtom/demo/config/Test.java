@@ -2,6 +2,7 @@ package com.github.zxhtom.demo.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.github.zxhtom.web.auths.OnlineSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,4 +14,24 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Test {
+    @Bean
+    public OnlineSecurity onlineSecurity() {
+        return new OnlineSecurity() {
+            @Override
+            public Object getOnlinePrincipal() {
+                return null;
+            }
+
+            @Override
+            public String getOnlineUserName() {
+                return "hello world";
+            }
+
+            @Override
+            public String getInterfaceName() {
+                return null;
+            }
+
+        };
+    }
 }

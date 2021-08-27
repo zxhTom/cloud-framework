@@ -1,6 +1,7 @@
 package com.github.zxhtom.demo.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.github.zxhtom.datasource.model.BaseModel;
 import com.github.zxhtom.demo.enums.SexEnum;
 import lombok.Data;
 
@@ -15,21 +16,10 @@ import java.util.Date;
  */
 @Data
 @TableName("test")
-public class Test {
+public class Test extends TestParent {
     @TableId(type=IdType.AUTO)
     private Integer id;
     private String name;
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
-    @TableLogic(value = "0", delval = "1")
-    @TableField(fill = FieldFill.INSERT)
-    private Integer isFlag;
-    @TableField(exist = false)
-    private String userName;
-    @Version
-    @TableField(fill = FieldFill.INSERT)
-    private Integer version;
     private SexEnum sex;
+
 }

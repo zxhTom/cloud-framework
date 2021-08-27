@@ -1,21 +1,18 @@
 package com.github.zxhtom.datasource;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
-import com.github.zxhtom.datasource.properties.MybatisLocaltionProperties;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.github.zxhtom.datasource.properties.MybatisProperties;
 import com.github.zxhtom.datasource.utils.MapperUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -37,7 +34,7 @@ import javax.sql.DataSource;
 public class MybatisConfig{
 
     @Autowired
-    MybatisLocaltionProperties mybatisLocaltionProperties;
+    MybatisProperties mybatisProperties;
     @Autowired
     DataSource dataSource;
 
@@ -71,7 +68,7 @@ public class MybatisConfig{
             SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
             sqlSessionFactoryBean.setDataSource(dataSource);
             sqlSessionFactoryBean.setConfigLocation(new DefaultResourceLoader().getResource("classpath:mybatis-maltcloud.xml"));
-            sqlSessionFactoryBean.setMapperLocations(MapperUtils.getInstance().getMapperLocaltions(mybatisLocaltionProperties));
+            sqlSessionFactoryBean.setMapperLocations(MapperUtils.getInstance().getMapperLocaltions(mybatisProperties));
             factory = sqlSessionFactoryBean.getObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,6 +80,13 @@ public class MybatisConfig{
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return interceptor;
     }
+
+    @Bean
+    public CustomizedSqlInjector customizedSqlInjector() {
+        return new CustomizedSqlInjector();
+    }
+
 }

@@ -1,9 +1,13 @@
 package com.github.zxhtom.demo.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.zxhtom.demo.enums.SexEnum;
+import com.github.zxhtom.demo.mapper.TestMapper;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.repository.TestRepository;
 import com.github.zxhtom.demo.service.TestService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,7 @@ import java.util.List;
  * @date 2021/8/25 15:48
  */
 @Service
-public class TestServiceImpl implements TestService {
+public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements TestService {
     @Autowired
     TestRepository testRepository;
     @Override
@@ -47,4 +51,17 @@ public class TestServiceImpl implements TestService {
         int i = 1 / 0;
         return result;
     }
+
+    @Override
+    public Page<Test> selectTestPage(Integer pageNum, Integer pageSize) {
+        Page page = new Page(pageNum, pageSize);
+        return testRepository.selectTestPage(page);
+    }
+
+    @Override
+    public Integer insertTestBatch(List<Test> tests) {
+
+        return testRepository.insertTestBatch(tests);
+    }
+
 }

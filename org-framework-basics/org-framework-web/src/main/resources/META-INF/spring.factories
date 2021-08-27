@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.zxhtom.web.config.PropertiesConfig
+  com.github.zxhtom.web.config.PropertiesConfig,\
+  com.github.zxhtom.web.auths.impl.OnlineSecurityImpl,\
+  com.github.zxhtom.web.context.ApplicationContextUtil

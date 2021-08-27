@@ -3,12 +3,10 @@ package com.github.zxhtom.datasource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import com.github.zxhtom.datasource.constant.DruidConstant;
 import com.github.zxhtom.datasource.properties.DruidProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -67,9 +65,6 @@ public class DruidConfig {
         // 禁用html页面行的reset all功能
         servletBean.addInitParameter("resetEnable", "false");
         return servletBean;
-        // 可以完全由下面一段替换
-        // return new ServletRegistrationBean(new StatViewServlet(),
-        // "/druid/*");
     }
     @Bean
     public WebStatFilter getWebStatFilter(){
