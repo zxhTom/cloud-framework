@@ -4,7 +4,6 @@ import com.github.zxhtom.web.auths.OnlineSecurity;
 import com.github.zxhtom.web.constant.WebConstant;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * @author 张新华

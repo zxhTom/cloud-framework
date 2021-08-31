@@ -22,7 +22,7 @@
         <module>org-framework-all</module>
         <module>org-framework-generator</module>
         <module>org-framework-web</module>
-        <module>org-framework-demo</module>
+        <module>org-framework-demos</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

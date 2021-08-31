@@ -1,0 +1,63 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:mysql://39.102.60.114:3306/maltcloud?useUnicode=true
+    username: root
+    password: '123456'
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    #该属性是用来在druid控制sql监控数据显示的问题
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    druid:
+      # 此处用于alibaba-druid配置，maltcloud使用apache-druid，提供了druid配置。在Java配置类中配置监控信息
+      stat-view-servlet---:
+        # 是否启用StatViewServlet（监控页面）false为不启动
+        enabled: true
+        url-pattern: '/druid/*'
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1,192.168.0.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.0.0
+        # 禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # 登录名
+        login-username: admin
+        # 登录密码
+        login-password: admin
+        aop-patterns: com.github.zxhtom.**.*
+  druid:
+    enable: true
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+#  resources:
+#    add-mappings: false
+
+mybatis:
+  mapper-locations: classpath*:com/github/zxhtom/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-enums-package: com.github.zxhtom.**.enums
+  max-batch-size: 1
