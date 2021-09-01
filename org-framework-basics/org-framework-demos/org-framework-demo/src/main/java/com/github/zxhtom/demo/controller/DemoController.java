@@ -1,12 +1,15 @@
 package com.github.zxhtom.demo.controller;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.zxhtom.demo.config.EnvironmentConfig;
 import com.github.zxhtom.demo.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,8 +25,9 @@ public class DemoController {
     @Autowired
     DemoService demoService;
     @RequestMapping(value = "/selectTest",method = RequestMethod.GET)
-    public Map<String,Object> selectTest() {
-        return demoService.selectTest();
+    public Map<String,Object> selectTest(@RequestParam Integer code) {
+
+        return demoService.selectTest(code);
     }
 
     @RequestMapping(value = "/start",method = RequestMethod.GET)

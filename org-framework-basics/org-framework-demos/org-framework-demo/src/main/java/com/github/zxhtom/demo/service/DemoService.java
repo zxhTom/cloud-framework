@@ -9,5 +9,5 @@ import java.util.Map;
  * @date 2021/8/23 16:22
  */
 public interface DemoService {
-    Map<String, Object> selectTest();
+    Map<String, Object> selectTest(Integer code);
 }

@@ -1,5 +1,6 @@
 package com.github.zxhtom.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.boot.SpringApplication;
 
@@ -12,6 +13,10 @@ import org.springframework.boot.SpringApplication;
  */
 @Data
 public class BusinessException extends RuntimeException{
-    private Integer code;
+    private Integer code=0;
     private String msg;
+
+    public BusinessException(String msg) {
+        this.msg = msg;
+    }
 }

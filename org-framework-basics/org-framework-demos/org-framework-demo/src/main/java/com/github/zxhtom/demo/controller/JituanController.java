@@ -24,7 +24,7 @@ public class JituanController {
     DemoService demoService;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Map<String,Object> login() {
-        return demoService.selectTest();
+        return demoService.selectTest(1);
     }
 
     @RequestMapping(value = "/riskReport",method = RequestMethod.POST)

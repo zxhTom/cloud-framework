@@ -10,6 +10,10 @@ import com.github.zxhtom.exception.constant.ExceptionConstant;
  * @date 2021/8/31 18:18
  */
 public class ActuatorException extends BusinessException {
+    public ActuatorException(String message) {
+        super(message);
+    }
+
     @Override
     public void setCode(Integer code) {
         super.setCode(ExceptionConstant.ACTUATOR_EXCEPTION_CODE);

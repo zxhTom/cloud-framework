@@ -36,8 +36,8 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordere
     IdGenerator idGenerator;
     @SneakyThrows
     @Override
-    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception exception) { log.info(exception.getCause().getMessage());
-        log.error(String.format(logFormat.getFormat(), exception.getCause().getMessage()));
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception exception) {
+        log.error(String.format(logFormat.getFormat(), exception.getMessage()));
         String id = idGenerator.generateAndGetId();
         httpServletRequest.setAttribute(ExceptionConstant.INSTANCE_ID, id);
         this.publishEvent(new BaseEvent(exception).setInstanceId(id));

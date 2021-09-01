@@ -10,6 +10,10 @@ import com.github.zxhtom.exception.constant.ExceptionConstant;
  * @date 2021/8/31 18:18
  */
 public class ValidException extends BusinessException {
+    public ValidException(String message) {
+        super(message);
+    }
+
     @Override
     public void setCode(Integer code) {
         super.setCode(ExceptionConstant.VALID_EXCEPTION_CODE);
