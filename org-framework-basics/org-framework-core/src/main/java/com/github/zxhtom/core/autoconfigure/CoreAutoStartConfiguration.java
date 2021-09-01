@@ -2,9 +2,11 @@ package com.github.zxhtom.core.autoconfigure;
 
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.core.IdGeneratorImpl;
+import com.github.zxhtom.core.config.ErrorConfig;
 import com.github.zxhtom.core.service.SystemService;
 import com.github.zxhtom.core.service.impl.DefaultSystemServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.server.ErrorPageRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,5 +28,10 @@ public class CoreAutoStartConfiguration{
     @ConditionalOnMissingBean
     public SystemService systemService() {
         return new DefaultSystemServiceImpl();
+    }
+
+    @Bean
+    public ErrorPageRegistrar errorPageRegistrar() {
+        return new ErrorConfig();
     }
 }

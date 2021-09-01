@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.zxhtom.core.autoconfigure.CoreAutoStartConfiguration
+  com.github.zxhtom.core.autoconfigure.CoreAutoStartConfiguration,\
+  com.github.zxhtom.core.controller.ErrorController

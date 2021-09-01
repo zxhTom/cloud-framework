@@ -1,8 +1,8 @@
-package com.github.zxhtom.demo.controller;
+package com.github.zxhtom.core.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -11,11 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @Package com.github.zxhtom.demo.controller
  * @date 2021/8/31 14:32
  */
-@RestController
+@Controller
+@RequestMapping(value = "/maltcloud")
 public class ErrorController {
-    @RequestMapping(value = "/error2",method = RequestMethod.GET)
+    @RequestMapping(value = "/error",method = RequestMethod.GET)
     public ModelAndView modelAndView() {
-        return new ModelAndView("error");
+        return new ModelAndView("maltcloud/error");
     }
 
 }

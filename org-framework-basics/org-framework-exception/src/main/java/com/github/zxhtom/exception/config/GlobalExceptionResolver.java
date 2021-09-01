@@ -41,6 +41,8 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordere
         String id = idGenerator.generateAndGetId();
         httpServletRequest.setAttribute(ExceptionConstant.INSTANCE_ID, id);
         this.publishEvent(new BaseEvent(exception).setInstanceId(id));
+        //return modelAndView则会跳转到页面上
+        //return new ModelAndView("maltcloud_error");
         return null;
     }
 
