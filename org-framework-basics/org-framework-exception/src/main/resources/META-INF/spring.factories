@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.exception.config.GlobalExceptionResolver,\
+  com.github.zxhtom.exception.properties.LogFormat,\
   com.github.zxhtom.exception.config.ResponseBodyHandler,\
   com.github.zxhtom.exception.config.GlobalExceptionHandler,\
   com.github.zxhtom.exception.listener.ExceptionListener,\

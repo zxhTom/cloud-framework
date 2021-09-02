@@ -3,7 +3,7 @@ package com.github.zxhtom.exception.config;
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.exception.event.BaseEvent;
-import com.github.zxhtom.log.model.properties.LogFormat;
+import com.github.zxhtom.exception.properties.LogFormat;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 /**
  * @author 张新华

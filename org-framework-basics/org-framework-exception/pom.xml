@@ -17,17 +17,7 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.components.datasource</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.framework.log</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.github.zxhtom</groupId>
