@@ -1,8 +1,7 @@
-package com.github.zxhtom.demo.service.impl;
+package com.github.zxhtom.demo.exception.service.impl;
 
 import com.github.zxhtom.core.model.SystemExceptionCode;
 import com.github.zxhtom.core.service.SystemService;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class MybatisExceptionServiceImpl implements SystemService {
     @Override
     public SystemExceptionCode selectCodeBaseOnExceptionClass(Class clazz) {
-        if (clazz == MyBatisSystemException.class) {
+        if (clazz == NullPointerException.class) {
             return new SystemExceptionCode(clazz, 20000);
         }
         return null;

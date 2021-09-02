@@ -23,16 +23,11 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.framework.log</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.exception</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>

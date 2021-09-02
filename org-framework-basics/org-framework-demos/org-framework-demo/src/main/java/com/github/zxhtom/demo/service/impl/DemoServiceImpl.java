@@ -3,7 +3,6 @@ package com.github.zxhtom.demo.service.impl;
 import com.github.zxhtom.demo.config.EnvironmentConfig;
 import com.github.zxhtom.demo.repository.DemoRepository;
 import com.github.zxhtom.demo.service.DemoService;
-import com.github.zxhtom.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public Map<String, Object> selectTest(Integer code) {
         if (code != 1) {
-            throw new BusinessException("hello");
+            throw new NullPointerException("hello");
         }
         Environment evn = EnvironmentConfig.getEvn();
         String spring = evn.getProperty("spring");
