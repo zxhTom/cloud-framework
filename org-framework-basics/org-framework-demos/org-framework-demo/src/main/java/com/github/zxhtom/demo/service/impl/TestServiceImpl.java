@@ -25,7 +25,8 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements Te
     TestRepository testRepository;
     @Override
     public List<Test> selectTest() {
-        return testRepository.selectTest();
+        List<Test> tests = testRepository.selectTest();
+        return tests;
     }
 
     @Override
@@ -55,7 +56,8 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements Te
     @Override
     public Page<Test> selectTestPage(Integer pageNum, Integer pageSize) {
         Page page = new Page(pageNum, pageSize);
-        return testRepository.selectTestPage(page);
+        Page<Test> testPage = testRepository.selectTestPage(page);
+        return testPage;
     }
 
     @Override

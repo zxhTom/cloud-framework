@@ -21,5 +21,6 @@ public class Test extends TestParent {
     private Integer id;
     private String name;
     private SexEnum sex;
+    private Date birthDate;
 
 }

@@ -17,6 +17,13 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.components.datasource</artifactId>
@@ -24,10 +31,10 @@
         </dependency>
 
 
-       <!-- <dependency>
+        <dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.exception</artifactId>
             <version>${project.version}</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
 </project>

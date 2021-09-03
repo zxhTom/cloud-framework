@@ -48,7 +48,7 @@ spring:
         aop-patterns: com.github.zxhtom.**.*
   druid:
     enable: true
-  mvc:
+  mvc2:
     view:
       prefix: /
       suffix: .html

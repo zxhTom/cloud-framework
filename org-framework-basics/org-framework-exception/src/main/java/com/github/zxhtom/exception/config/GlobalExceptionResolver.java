@@ -4,6 +4,7 @@ import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.exception.event.BaseEvent;
 import com.github.zxhtom.exception.properties.LogFormat;
+import com.github.zxhtom.utils.exception.ExceptionUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -36,10 +37,11 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordere
     @SneakyThrows
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception exception) {
-        log.error(String.format(logFormat.getFormat(), exception.getMessage()));
+        String throwableStackInfo = ExceptionUtils.getInstance().getThrowableStackInfo(exception);
+        log.error(String.format(logFormat.getFormat(), throwableStackInfo));
         String id = idGenerator.generateAndGetId();
         httpServletRequest.setAttribute(ExceptionConstant.INSTANCE_ID, id);
-        this.publishEvent(new BaseEvent(exception).setInstanceId(id));
+        this.publishEvent(new BaseEvent(throwableStackInfo).setInstanceId(id));
         //return modelAndView则会跳转到页面上
         //return new ModelAndView("maltcloud_error");
         return null;
@@ -58,4 +60,6 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordere
     void publishEvent(BaseEvent event){
         this.applicationContext.publishEvent(event);
     }
+
+
 }

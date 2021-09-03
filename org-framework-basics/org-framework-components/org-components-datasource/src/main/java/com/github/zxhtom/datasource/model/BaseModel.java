@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
  * @description maltcloud系统内置字段，方便管理数据权限；maltcloud内置系统统一使用此基类
  * 第三方系统强烈建议继承此类
  */
+@Data
 public class BaseModel {
 
     @TableField(fill = FieldFill.INSERT)
