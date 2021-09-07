@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,5 +54,14 @@ public class TestController {
     @RequestMapping(value = "/deleteTest" , method = RequestMethod.DELETE)
     public Integer deleteTest(@RequestParam @NotNull Integer testId) {
         return testService.deleteTest(testId);
+    }
+    @RequestMapping(value = "/dateTest",method = RequestMethod.GET)
+    public String dateTest(@RequestParam Date currentDate) {
+        System.out.println(currentDate);
+        return currentDate.toString();
+    }
+    @RequestMapping(value = "/dateTest2",method = RequestMethod.GET)
+    public Date dateTest2() {
+        return new Date();
     }
 }

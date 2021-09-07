@@ -9,6 +9,7 @@ import com.github.zxhtom.core.date.MultiDateFormat;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -33,8 +35,9 @@ import java.util.Locale;
  * @Package com.github.zxhtom.core.config
  * @date 2021/9/3 9:44
  */
-//@Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+@Configuration
+@EnableWebMvc
+public class WebMvcConfig implements WebMvcConfigurer {
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index");
@@ -59,7 +62,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     /**
      * Json数据转换器
      */
-    //@Bean
+    @Bean
     public MappingJackson2HttpMessageConverter getJsonHttpMessageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -79,13 +82,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         //converters.clear();
         converters.add(getFormHttpMessageConverter());
-        //converters.add(getJsonHttpMessageConverter());
+        converters.add(getJsonHttpMessageConverter());
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         //registry.addConverterFactory(new UniversalEnumConverterFactory());
-        registry.addFormatter(new DateFormatter(MaltcloudConstant.DATEKEY_FORMAT_PATTERN));
-        registry.addFormatterForFieldType(Date.class,new DateFormatter(MaltcloudConstant.COMMON_DATE_FORMAT_PATTERN));
+        registry.addFormatterForFieldType(Date.class,new DateFormatter(MaltcloudConstant.MONTHKEY_FORMAT_PATTERN));
     }
 }

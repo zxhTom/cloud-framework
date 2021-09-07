@@ -67,7 +67,7 @@ mybatis:
   type-enums-package: com.github.zxhtom.**.enums
   max-batch-size: 1
 
-dateformat2:
+dateformat:
   patterns:
     - yyyy/MM/dd HH:mm:ss
     - yyyyMM

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.qj.others.enums.SexEnum;
 import com.qj.others.model.TestParent;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ public class Test extends TestParent {
     private Integer id;
     private String name;
     private SexEnum sex;
+    @DateTimeFormat(pattern = "yyyyMMdd")
     private Date birthDate;
 
 }
