@@ -1,7 +1,6 @@
 package com.github.zxhtom.exception.config;
 
 import com.github.zxhtom.core.IdGenerator;
-import com.github.zxhtom.exception.BusinessException;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.result.annotation.ProtoResult;
 import com.github.zxhtom.result.unity.ActionResult;

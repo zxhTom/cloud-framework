@@ -1,7 +1,6 @@
 package com.github.zxhtom.demo;
 
 import com.github.zxhtom.demo.config.MyApplicationContextInitializer;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -11,6 +11,11 @@
     <packaging>pom</packaging>
     <artifactId>org.framework.demos</artifactId>
     <description>用于对maltcloud功能的整合案例</description>
+    <modules>
+        <module>org-framework-demo</module>
+        <module>org-framework-demo-exception</module>
+        <module>org-framework-others</module>
+    </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

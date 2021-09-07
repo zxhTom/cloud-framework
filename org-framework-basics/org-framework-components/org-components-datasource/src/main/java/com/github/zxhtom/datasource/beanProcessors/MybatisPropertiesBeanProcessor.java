@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.github.zxhtom.datasource.constant.MybatisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;

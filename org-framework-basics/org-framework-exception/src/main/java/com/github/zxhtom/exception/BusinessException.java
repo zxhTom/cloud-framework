@@ -1,8 +1,6 @@
 package com.github.zxhtom.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.boot.SpringApplication;
 
 /**
  * @author 张新华

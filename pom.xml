@@ -9,6 +9,7 @@
     <version>1.1-SNAPSHOT</version>
     <modules>
         <module>org-framework-basics</module>
+        <module>org-framework-dependencies</module>
     </modules>
     <packaging>pom</packaging>
     <name>org-framework-root-${project.version}</name>

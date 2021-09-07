@@ -52,6 +52,11 @@ spring:
     view:
       prefix: /
       suffix: .html
+  jackson:
+#    serialization:
+#      write-dates-as-timestamps: true
+#    date-format: yyyyMMdd
+#    time-zone: GMT+8
 #  resources:
 #    add-mappings: false
 
@@ -61,3 +66,8 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-enums-package: com.github.zxhtom.**.enums
   max-batch-size: 1
+
+dateformat2:
+  patterns:
+    - yyyy/MM/dd HH:mm:ss
+    - yyyyMM

@@ -1,7 +1,5 @@
 package com.github.zxhtom.core;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @author 张新华
  * @version V1.0

@@ -1,6 +1,5 @@
 package com.github.zxhtom.exception.listener;
 
-import com.github.zxhtom.exception.autoconfigure.ExceptionAutoConfiguration;
 import com.github.zxhtom.exception.event.BaseEvent;
 import com.github.zxhtom.exception.log.ExceptionLogInDatasource;
 import lombok.extern.slf4j.Slf4j;

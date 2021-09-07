@@ -1,8 +1,5 @@
 package com.github.zxhtom.demo;
 
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 /**
  * @author 张新华
  * @version V1.0

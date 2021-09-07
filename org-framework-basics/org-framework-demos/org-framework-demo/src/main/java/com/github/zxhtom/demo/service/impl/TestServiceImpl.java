@@ -7,7 +7,6 @@ import com.github.zxhtom.demo.mapper.TestMapper;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.repository.TestRepository;
 import com.github.zxhtom.demo.service.TestService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

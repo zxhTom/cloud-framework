@@ -49,6 +49,8 @@ public class MybatisConfig{
     public MybatisPlusProperties mybatisPlusProperties() {
         return new MybatisPlusProperties();
     }
+
+
     /**
      * 注入事务管理器
      *
