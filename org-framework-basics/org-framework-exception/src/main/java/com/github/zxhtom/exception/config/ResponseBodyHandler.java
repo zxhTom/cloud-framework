@@ -1,5 +1,6 @@
 package com.github.zxhtom.exception.config;
 
+import com.alibaba.fastjson.JSON;
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.result.annotation.ProtoResult;
@@ -8,15 +9,21 @@ import com.github.zxhtom.result.unity.ActionResultCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 /**
  * @author 张新华
@@ -36,6 +43,7 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         HttpServletRequest request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();
+        HttpServletResponse response = ((ServletServerHttpResponse) serverHttpResponse).getServletResponse();
         String instanceId = StringUtils.EMPTY;
         Object instanceIdAttribute = request.getAttribute(ExceptionConstant.INSTANCE_ID);
         if (null != instanceIdAttribute) {
@@ -60,6 +68,10 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
             System.out.println(body.getClass());
         }
         ActionResult result = new ActionResult(ActionResultCode.SUCCESS.getValue(),instanceId, null, body);
+        if (body instanceof String) {
+            //StringHttpMessageConverter会对返回数据进行长度判断。里面写死String 。 如果此处不进行转换则会包result类型cast错误
+            return JSON.toJSONString(result);
+        }
         return result;
     }
 }

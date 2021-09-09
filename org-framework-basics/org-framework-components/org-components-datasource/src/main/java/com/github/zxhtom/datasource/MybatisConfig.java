@@ -43,13 +43,12 @@ public class MybatisConfig{
     * @Description 覆盖myabtisPlus原有属性映射前缀mybatis-plus
     * @Date 9:37 2021/8/26
     */
-    @Bean
+    @Bean()
     @ConfigurationProperties(prefix="mybatis")
     @Primary
     public MybatisPlusProperties mybatisPlusProperties() {
         return new MybatisPlusProperties();
     }
-
 
     /**
      * 注入事务管理器

@@ -71,3 +71,5 @@ dateformat:
   patterns:
     - yyyy/MM/dd HH:mm:ss
     - yyyyMM
+enum:
+  source: true

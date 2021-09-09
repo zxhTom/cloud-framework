@@ -11,6 +11,8 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author 张新华
@@ -41,6 +43,15 @@ public class MybatisPropertiesBeanProcessor implements BeanPostProcessor {
             System.arraycopy(MybatisConstant.MAPPERLOCALTIONS, 0, newMapperLocations, mybatiSourceLength, defaultSourceLength);
             properties.setMapperLocations(newMapperLocations);
             log.info(bean+"======内置MybatisPlus配置信息，包含mybatis的setting和xml扫描路径======"+ beanName);
+            String property = properties.getTypeHandlersPackage();
+            Set<String> typeHandlersPackageSet = new HashSet<>();
+            if (StringUtils.isNotEmpty(property)) {
+                typeHandlersPackageSet.add(property);
+            }
+            typeHandlersPackageSet.add(MybatisConstant.TYPEHANDLERSPACKAGE);
+            Object[] mpArray = typeHandlersPackageSet.toArray();
+            String typeHandlersPackage = StringUtils.join(mpArray,",");
+            properties.setTypeHandlersPackage(typeHandlersPackage);
         }
         return bean;
     }

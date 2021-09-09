@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.framework.web</artifactId>
+            <artifactId>org.framework.core</artifactId>
             <version>${project.version}</version>
         </dependency>
 

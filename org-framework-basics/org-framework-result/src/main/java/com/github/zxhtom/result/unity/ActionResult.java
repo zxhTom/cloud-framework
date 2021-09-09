@@ -6,6 +6,7 @@ package com.github.zxhtom.result.unity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
+import lombok.ToString;
 
 
 /**
@@ -18,6 +19,7 @@ import lombok.Data;
  */
 @JsonInclude(Include.ALWAYS)
 @Data
+@ToString
 public class ActionResult {
 	/**
 	 * code: 状态码, 0成功, 1一般业务异常, -1其他异常, -2非法访问

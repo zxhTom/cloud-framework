@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 public class StringToEnumConverter implements Converter<String, SexEnum> {
     @Override
     public SexEnum convert(String source) {
+        if ("1".equals(source) || "男".equals(source)) {
+            return SexEnum.MALE;
+        }
         return SexEnum.FEMALE;
     }
 }

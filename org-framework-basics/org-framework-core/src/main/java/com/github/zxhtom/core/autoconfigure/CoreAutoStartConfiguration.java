@@ -3,9 +3,11 @@ package com.github.zxhtom.core.autoconfigure;
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.core.IdGeneratorImpl;
 import com.github.zxhtom.core.config.ErrorConfig;
+import com.github.zxhtom.core.properties.EnumProperties;
 import com.github.zxhtom.core.service.SystemService;
 import com.github.zxhtom.core.service.impl.DefaultSystemServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.server.ErrorPageRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/8/31 16:40
  */
 @Configuration
-public class CoreAutoStartConfiguration{
+public class CoreAutoStartConfiguration {
     @Bean
     @ConditionalOnMissingBean(IdGenerator.class)
     public IdGenerator idGenerator() {
@@ -33,5 +35,12 @@ public class CoreAutoStartConfiguration{
     @Bean
     public ErrorPageRegistrar errorPageRegistrar() {
         return new ErrorConfig();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "enum")
+    @ConditionalOnMissingBean
+    public EnumProperties enumProperties() {
+        return new EnumProperties();
     }
 }
