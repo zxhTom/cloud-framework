@@ -300,3 +300,10 @@
   - 在使用tkMapper或者mybatisPlus等框架使用，在实体中的属性不要使用java中的8大基本类型。因为基本类型都是有默认值的
   - 而通用框架或者我们自己在xml中根据字段判断的时候都是判断是否为null或者判断是否为空的。如果使用了基本类型那么就会因为默认值导致一些奇怪的bug
 
+# 实际开发总结规范
+
+  - 数据库枚举类型建议VARCHAR类型，方便随意切换code和原生输出；结合enum.source配置开发使用
+
+  - 数据库sql尽量不使用数据库特用函数，方便切换数据库造成修改麻烦
+
+  - 下游子包建议根路径为com.github.zxhtom ,目前maltcloud系统bean都是基于com.github.zxhtom包下进行开发，虽然已经对非com.github.zxhtom根路径包做了适配，但是仍有可能出问题
