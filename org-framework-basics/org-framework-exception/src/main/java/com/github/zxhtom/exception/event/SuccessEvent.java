@@ -12,8 +12,8 @@ import org.springframework.context.ApplicationEvent;
  */
 @Data
 @Accessors(chain = true)
-public class BaseEvent extends ApplicationEvent {
-    public BaseEvent(String instanceId,String requestData,String responseData) {
+public class SuccessEvent extends ApplicationEvent {
+    public SuccessEvent(String instanceId, String requestData, String responseData) {
         super(responseData);
         this.instanceId = instanceId;
         this.requestData = requestData;

@@ -4,11 +4,22 @@ import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.core.model.SystemExceptionCode;
 import com.github.zxhtom.core.service.SystemService;
 import com.github.zxhtom.exception.BusinessException;
+import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.result.unity.ActionResult;
 import com.github.zxhtom.result.unity.ActionResultCode;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author 张新华
@@ -50,4 +61,25 @@ public class GlobalExceptionHandler {
         }
         return new ActionResult(systemExceptionCode.getCode(), exception.getMessage(), null);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ActionResult exception(MethodArgumentNotValidException exception) {
+        String result = StringUtils.EMPTY;
+        Set<String> reset = new HashSet<>();
+        List<ObjectError> allErrors = exception.getBindingResult().getAllErrors();
+        if (CollectionUtils.isNotEmpty(allErrors)) {
+            for (ObjectError allError : allErrors) {
+                Object[] arguments = allError.getArguments();
+                String fieldName = StringUtils.EMPTY;
+                for (Object argument : arguments) {
+                    fieldName += StringUtils.join(((DefaultMessageSourceResolvable) argument).getCodes(),"、")+"、";
+                }
+                reset.add(fieldName+allError.getDefaultMessage());
+            }
+        }
+        Object[] mpArray = reset.toArray();
+        result = StringUtils.join(mpArray,",");
+        return new ActionResult(ExceptionConstant.VALID_EXCEPTION_CODE, result, null);
+    }
+
 }

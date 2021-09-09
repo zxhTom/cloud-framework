@@ -8,6 +8,7 @@ import com.github.zxhtom.demo.enums.StatusEnum;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/insertTest" , method = RequestMethod.POST)
-    public Integer insertTest(@RequestBody Test test) {
+    public Integer insertTest(@RequestBody @Validated Test test) {
         return testService.insertTest(test);
     }
     @RequestMapping(value = "/insertTestXml" , method = RequestMethod.POST,consumes = { "application/xml;charset=UTF-8" })

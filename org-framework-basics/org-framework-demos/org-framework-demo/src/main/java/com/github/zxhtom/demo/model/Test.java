@@ -7,6 +7,7 @@ import com.github.zxhtom.demo.enums.StatusEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 /**
@@ -20,6 +21,7 @@ import java.util.Date;
 public class Test extends TestParent {
     @TableId(type=IdType.AUTO)
     private Integer id;
+    @NotEmpty(message = "姓名不能为空")
     private String name;
     private SexEnum sex;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

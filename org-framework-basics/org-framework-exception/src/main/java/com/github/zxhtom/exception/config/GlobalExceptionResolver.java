@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordered, ApplicationContextAware {
-    private ApplicationContext applicationContext;
 
+    private ApplicationContext applicationContext;
     @Autowired
     LogFormat logFormat;
     @Autowired
@@ -38,10 +38,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver, Ordere
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception exception) {
         String throwableStackInfo = ExceptionUtils.getInstance().getThrowableStackInfo(exception);
-        log.error(String.format(logFormat.getFormat(), throwableStackInfo));
         String id = idGenerator.generateAndGetId();
+        log.error("消息实例："+id+"\n"+String.format(logFormat.getFormat(), throwableStackInfo));
         httpServletRequest.setAttribute(ExceptionConstant.INSTANCE_ID, id);
-        this.publishEvent(new BaseEvent(throwableStackInfo).setInstanceId(id));
+        this.publishEvent(new BaseEvent(id,null,throwableStackInfo));
         //return modelAndView则会跳转到页面上
         //return new ModelAndView("maltcloud_error");
         return null;

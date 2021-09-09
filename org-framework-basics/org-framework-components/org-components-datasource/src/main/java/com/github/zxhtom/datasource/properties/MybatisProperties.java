@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/8/24 10:53
  */
 @Data
+@ConfigurationProperties(prefix = "mybatis")
 public class MybatisProperties implements InitializingBean {
     /**xml扫描路径**/
     private String[] mapperLocations;

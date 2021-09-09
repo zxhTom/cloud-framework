@@ -44,7 +44,6 @@ public class BaseEnumTypeHandler<T extends BaseEnum> extends BaseTypeHandler<T> 
 
     @Override
     public T getNullableResult(ResultSet resultSet, String s) throws SQLException {
-
         return (T) EnumUtils.valueOf(resultSet.getString(s), type);
     }
 

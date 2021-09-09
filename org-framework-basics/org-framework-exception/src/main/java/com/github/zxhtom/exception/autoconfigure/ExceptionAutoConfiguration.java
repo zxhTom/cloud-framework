@@ -1,5 +1,6 @@
 package com.github.zxhtom.exception.autoconfigure;
 
+import com.github.zxhtom.exception.listener.ExceptionListener;
 import com.github.zxhtom.exception.log.ExceptionLogInDatasource;
 import com.github.zxhtom.exception.log.impl.DefaultExceptionLogInImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,4 +20,5 @@ public class ExceptionAutoConfiguration {
     public ExceptionLogInDatasource exceptionLogInDatasource() {
         return new DefaultExceptionLogInImpl();
     }
+
 }
