@@ -20,10 +20,10 @@ public class ExceptionListener implements ApplicationListener<BaseEvent> {
     @Autowired
     ExceptionLogInDatasource exceptionLogInDatasource;
     @Autowired
-    MaltCloudProperties.Listener listener;
+    MaltCloudProperties maltCloudProperties;
     @Override
     public void onApplicationEvent(BaseEvent event) {
-        if (!listener.isOpen()) {
+        if (!maltCloudProperties.getListener().isOpen()) {
             return;
         }
         Object msg = event.getSource();

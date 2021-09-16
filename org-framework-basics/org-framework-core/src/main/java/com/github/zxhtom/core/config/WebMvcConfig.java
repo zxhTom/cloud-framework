@@ -11,7 +11,10 @@ import com.github.zxhtom.core.constant.MaltcloudConstant;
 import com.github.zxhtom.core.converter.BaseEnumConverterFactory;
 import com.github.zxhtom.core.date.MultiDateFormat;
 import com.github.zxhtom.core.enums.BaseEnum;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +27,9 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,12 +48,42 @@ import java.util.Locale;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Autowired
+    WebMvcProperties webMvcProperties;
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index");
         //实现一个请求到视图的映射，而无需书写controller
-        registry.addViewController("/404").setViewName("forward:/maltcloud/error.html");
+        //registry.addViewController("/404").setViewName("forward:/maltcloud/error.html");
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "TRACE", "OPTIONS", "CONNECT")
+                .allowedHeaders("Content-Type", "Cookie", "x-requested-with", "X-Token", "Access-Control-Allow-Origin")
+                .allowCredentials(true).maxAge(86400);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/")
+                .addResourceLocations("classpath:/statics/")
+                .addResourceLocations("classpath:/templates/");
+    }
+
+
+    /**视图解析器*/
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        String prefix = webMvcProperties.getView().getPrefix();
+        String suffix = webMvcProperties.getView().getSuffix();
+        resolver.setPrefix(StringUtils.isEmpty(prefix)?"/": prefix);
+        resolver.setSuffix(StringUtils.isEmpty(suffix)?".html": suffix);
+        resolver.setExposeContextBeansAsAttributes(true);
+        resolver.setOrder(1);
+        registry.viewResolver(resolver);
+    }
     /**
      * 表单数据转换器
      */

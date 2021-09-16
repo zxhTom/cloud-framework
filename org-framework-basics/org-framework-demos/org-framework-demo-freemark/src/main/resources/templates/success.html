@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login success</title>
+</head>
+<body>
+登录成功 html
+当前时间：${.now?string("yyyy-MM-dd HH:mm:ss.sss")}
+<div>
+    <span th:text="${user.name}">${user.name},hello ，测试视图</span>
+</div>
+</body>
+</html>

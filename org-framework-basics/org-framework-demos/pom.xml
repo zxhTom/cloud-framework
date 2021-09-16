@@ -15,6 +15,9 @@
         <module>org-framework-demo</module>
         <module>org-framework-demo-exception</module>
         <module>org-framework-others</module>
+        <module>org-framework-demo-swaggers</module>
+        <module>org-framework-demo-login</module>
+        <module>org-framework-demo-freemark</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -18,6 +18,7 @@
         <module>org-components-es</module>
         <module>org-components-datasource</module>
         <module>org-components-mongodb</module>
+        <module>org-components-knife4j</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
