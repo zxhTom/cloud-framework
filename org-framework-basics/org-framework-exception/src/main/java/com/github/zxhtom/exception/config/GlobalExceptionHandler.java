@@ -3,7 +3,7 @@ package com.github.zxhtom.exception.config;
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.core.model.SystemExceptionCode;
 import com.github.zxhtom.core.service.SystemService;
-import com.github.zxhtom.exception.BusinessException;
+import com.github.zxhtom.core.exception.BusinessException;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 import com.github.zxhtom.result.unity.ActionResult;
 import com.github.zxhtom.result.unity.ActionResultCode;
@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -54,6 +53,9 @@ public class GlobalExceptionHandler {
     public ActionResult exception(Exception exception) {
         SystemExceptionCode systemExceptionCode = systemService.selectCodeBaseOnExceptionClass(exception.getClass());
         if (null == systemExceptionCode) {
+            if (exception instanceof BusinessException) {
+                return new ActionResult(((BusinessException)exception).getCode(), exception.getMessage(), null);
+            }
             return new ActionResult(ActionResultCode.OTHER_ERROR.getValue(), exception.getMessage(), null);
         }
         if (!systemExceptionCode.getCode().toString().startsWith("1")) {

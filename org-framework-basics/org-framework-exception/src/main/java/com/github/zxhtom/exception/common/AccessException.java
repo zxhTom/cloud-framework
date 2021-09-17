@@ -1,6 +1,6 @@
 package com.github.zxhtom.exception.common;
 
-import com.github.zxhtom.exception.BusinessException;
+import com.github.zxhtom.core.exception.BusinessException;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
 
 /**

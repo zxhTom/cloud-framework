@@ -1,4 +1,4 @@
-package com.github.zxhtom.exception;
+package com.github.zxhtom.core.exception;
 
 import lombok.Data;
 
