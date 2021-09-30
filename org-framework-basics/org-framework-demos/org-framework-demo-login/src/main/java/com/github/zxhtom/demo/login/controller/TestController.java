@@ -1,6 +1,7 @@
 package com.github.zxhtom.demo.login.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.zxhtom.demo.login.abCanMulti.AbStractSoutBean;
 import com.github.zxhtom.demo.login.mapper.LoginMpUserMapper;
 import com.github.zxhtom.demo.login.mapper.LoginUserMapper;
 import com.github.zxhtom.demo.login.model.UserMp;
@@ -38,6 +39,12 @@ public class TestController {
     @Autowired
     LoginMpUserMapper loginMpUserMapper;
 
+    @Autowired
+    List<AbStractSoutBean> bean;
+    @RequestMapping(value = "/mulbean",method = RequestMethod.GET)
+    public void mulbean() {
+        System.out.println(bean.size());
+    }
 
     @RequestMapping(value = "/twoModel",method = RequestMethod.GET)
     public List<com.github.zxhtom.demo.login.model.User> twoModel() {

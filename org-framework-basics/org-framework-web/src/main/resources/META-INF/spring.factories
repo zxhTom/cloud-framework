@@ -1,4 +1,9 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.web.config.PropertiesConfig,\
   com.github.zxhtom.web.auths.impl.OnlineSecurityImpl,\
-  com.github.zxhtom.web.context.ApplicationContextUtil
+  com.github.zxhtom.web.auths.impl.RequestScopeStoreServiceImpl,\
+  com.github.zxhtom.web.context.ApplicationContextUtil,\
+  com.github.zxhtom.web.beandefinition.AbstractBeanDefinitionRegistryPostProcessor,\
+  com.github.zxhtom.web.beandefinition.child.OnlineSecurityBeanSpan,\
+  com.github.zxhtom.web.filter.EntryFilter,\
+  com.github.zxhtom.web.filter.WebFilterAutoConfiguration

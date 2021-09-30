@@ -1,7 +1,9 @@
 package com.github.zxhtom.web.auths.impl;
 
 import com.github.zxhtom.web.auths.OnlineSecurity;
+import com.github.zxhtom.web.auths.ScopeStoreService;
 import com.github.zxhtom.web.constant.WebConstant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Component;
 @ConditionalOnMissingBean(OnlineSecurity.class)
 public class OnlineSecurityImpl implements  OnlineSecurity{
 
+    @Autowired
+    ScopeStoreService scopeStoreService;
     @Override
     public Object getOnlinePrincipal() {
         return new Object();
@@ -27,6 +31,6 @@ public class OnlineSecurityImpl implements  OnlineSecurity{
 
     @Override
     public String getInterfaceName() {
-        return null;
+        return scopeStoreService.getEntryPath();
     }
 }

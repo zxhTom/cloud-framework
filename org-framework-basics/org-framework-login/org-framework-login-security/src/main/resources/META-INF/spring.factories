@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.login.security.config.SecurityConfig,\
   com.github.zxhtom.login.security.controller.LoginController,\
   com.github.zxhtom.login.security.service.impl.UserServiceImpl,\
-  com.github.zxhtom.login.security.service.impl.UserDetailsServiceImpl
+  com.github.zxhtom.login.security.service.impl.UserDetailsServiceImpl,\
+  com.github.zxhtom.login.security.service.impl.SecurityOnlineSecurityImpl
