@@ -20,9 +20,9 @@ public class SessionConfig {
     @Bean
     public JedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName("39.102.60.114");
+        redisStandaloneConfiguration.setHostName("*****");
         redisStandaloneConfiguration.setDatabase(0);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of("Qq025025"));
+        redisStandaloneConfiguration.setPassword(RedisPassword.of("****"));
         redisStandaloneConfiguration.setPort(6379);
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
