@@ -21,5 +21,10 @@
             <artifactId>org.framework.core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.components.datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

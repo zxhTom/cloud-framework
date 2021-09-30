@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.core.autoconfigure.CoreAutoStartConfiguration,\
   com.github.zxhtom.core.config.WebMvcConfig,\
   com.github.zxhtom.core.controller.ErrorController,\
-  com.github.zxhtom.core.properties.MaltCloudProperties
+  com.github.zxhtom.core.properties.MaltCloudProperties,\
+  com.github.zxhtom.core.datasouce.DefaultFillDataHandler

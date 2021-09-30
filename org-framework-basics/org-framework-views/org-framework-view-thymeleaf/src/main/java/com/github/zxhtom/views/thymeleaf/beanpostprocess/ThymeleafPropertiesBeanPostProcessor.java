@@ -17,7 +17,7 @@ public class ThymeleafPropertiesBeanPostProcessor implements BeanPostProcessor {
         if (ThymeleafProperties.class == bean.getClass()) {
             ThymeleafProperties properties = (ThymeleafProperties) bean;
             String prefix = properties.getPrefix();
-            properties.setPrefix(String.format("classpath:/templates", prefix));
+            properties.setPrefix(String.format("classpath:/templates/", prefix));
         }
         return bean;
     }

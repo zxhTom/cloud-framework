@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.zxhtom.demo.login.mapper.LoginUserMapper">
+    <select id="selectUserList" resultType="com.github.zxhtom.demo.login.model.User">
+        select * from USER
+    </select>
+    <select id="selectTwoUser" resultType="com.github.zxhtom.demo.login.model.User">
+        select * from USER
+        where user_name=#{user.userName}
+        or user_name=#{userMp.userName}
+    </select>
+</mapper>

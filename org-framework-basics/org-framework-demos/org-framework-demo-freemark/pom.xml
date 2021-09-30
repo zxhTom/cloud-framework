@@ -23,11 +23,11 @@
             <artifactId>org.framework.core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.view.thymeleaf</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 </project>

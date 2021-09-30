@@ -23,4 +23,6 @@ public interface TestRepository {
     Page<Test> selectTestPage(Page page);
 
     Integer insertTestBatch(List<Test> tests);
+
+    Integer insertTestSelfSql(Test test);
 }

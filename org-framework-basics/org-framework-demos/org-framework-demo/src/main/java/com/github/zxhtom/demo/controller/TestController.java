@@ -41,6 +41,10 @@ public class TestController {
         return testService.selectTestPage(pageNum,pageSize);
     }
 
+    @RequestMapping(value = "/insertTestSelfSql" , method = RequestMethod.POST)
+    public Integer insertTestSelfSql(@RequestBody @Validated Test test) {
+        return testService.insertTestSelfSql(test);
+    }
     @RequestMapping(value = "/insertTest" , method = RequestMethod.POST)
     public Integer insertTest(@RequestBody @Validated Test test) {
         return testService.insertTest(test);

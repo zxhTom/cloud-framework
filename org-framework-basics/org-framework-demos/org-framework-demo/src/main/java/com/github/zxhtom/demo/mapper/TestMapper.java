@@ -10,4 +10,5 @@ import com.github.zxhtom.demo.model.Test;
  * @date 2021/8/25 15:32
  */
 public interface TestMapper extends MaltcloudMapper<Test> {
+    Integer insertTestSelfSql(Test test);
 }

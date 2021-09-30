@@ -1,8 +1,7 @@
 package com.github.zxhtom.login.security.config;
 
-import com.github.zxhtom.login.security.filter.JwtAuthenticationFilter;
 import com.github.zxhtom.login.security.filter.JwtLoginFilter;
-import com.github.zxhtom.login.security.provider.JwtAuthenticationProvider;
+import com.github.zxhtom.login.security.provider.MaltcloudProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,44 +29,45 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private UserDetailsService userDetailsService;
 
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用自定义登录身份认证组件
-        auth.authenticationProvider(new JwtAuthenticationProvider(userDetailsService));
+        auth.authenticationProvider(new MaltcloudProvider(userDetailsService));
+        //auth.inMemoryAuthentication().withUser("zxhtom").password(new BCryptPasswordEncoder().encode("123456")).roles("admin");
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 禁用 csrf, 由于使用的是JWT，我们这里不需要csrf
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                // 跨域预检请求
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // 登录URL
-                .antMatchers("/login").permitAll()
-                // swagger
-                .antMatchers("/swagger**/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/v2/**").permitAll()
-                // 其他所有请求需要身份认证
-                .anyRequest().authenticated();
-        // 退出登录处理器
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
-        // 开启登录认证流程过滤器
-        //http.addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-        // 访问控制时登录状态检查过滤器
-        //http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
-
+        http.authorizeRequests()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/jwtLogin/**").permitAll()
+                .antMatchers("/user/insert").permitAll()
+                .antMatchers("/**/*.css").permitAll()
+                .antMatchers("/**/*.woff2").permitAll()
+                .antMatchers("/**/*.jpg").permitAll()
+                .antMatchers("/login.html","/login2.html", "/error.html").permitAll()
+                .antMatchers("/test/hello2").hasRole("admin2")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login")
+                .loginPage("/login.html")
+                .usernameParameter("userName")
+                .failureForwardUrl("/error.html")
+                .defaultSuccessUrl("/success.html", false)
+                //.successForwardUrl("/success.html")
+                .and()
+                //.addFilterBefore(new JwtLoginFilter(super.authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .csrf().disable();
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
 }

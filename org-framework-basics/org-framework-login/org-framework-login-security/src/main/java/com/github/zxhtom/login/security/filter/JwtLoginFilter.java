@@ -3,75 +3,53 @@ package com.github.zxhtom.login.security.filter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.zxhtom.login.security.token.JwtAuthenticatioToken;
-import com.github.zxhtom.login.security.utils.HttpUtils;
 import com.github.zxhtom.login.security.utils.JwtTokenUtils;
+import com.github.zxhtom.web.context.HttpUtils;
+import com.github.zxhtom.web.context.WebContextUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 
 /**
  * @author 张新华
  * @version V1.0
  * @Package com.github.zxhtom.login.security.filter
- * @date 2021/9/15 15:09
+ * @date 2021/9/27 11:16
+ * @description 用于认证jwt登录
  */
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
+
     public JwtLoginFilter(AuthenticationManager authManager) {
         setAuthenticationManager(authManager);
-    }
-
-    @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
-        // POST 请求 /login 登录时拦截， 由此方法触发执行登录认证流程，可以在此覆写整个登录认证逻辑
-        super.doFilter(req, res, chain);
+        super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/jwtLogin", "POST"));
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        // 可以在此覆写尝试进行登录认证的逻辑，登录成功之后等操作不再此方法内
-        // 如果使用此过滤器来触发登录认证流程，注意登录请求数据格式的问题
-        // 此过滤器的用户名密码默认从request.getParameter()获取，但是这种
-        // 读取方式不能读取到如 application/json 等 post 请求数据，需要把
-        // 用户名密码的读取逻辑修改为到流中读取request.getInputStream()
 
-        String body = getBody(request);
-        JSONObject jsonObject = JSON.parseObject(body);
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
-
-        if (username == null) {
-            username = "";
+        String userName = request.getParameter("userName");
+        String password = obtainPassword(request);
+        if (StringUtils.isEmpty(userName)) {
+            userName = StringUtils.EMPTY;
         }
-
-        if (password == null) {
-            password = "";
+        if (StringUtils.isEmpty(password)) {
+            password = StringUtils.EMPTY;
         }
-
-        username = username.trim();
-
-        JwtAuthenticatioToken authRequest = new JwtAuthenticatioToken(username, password);
-
-        // Allow subclasses to set the "details" property
+        userName = userName.trim();
+        JwtAuthenticatioToken authRequest = new JwtAuthenticatioToken(userName, password);
         setDetails(request, authRequest);
-
         return this.getAuthenticationManager().authenticate(authRequest);
-
     }
 
     @Override
@@ -90,40 +68,4 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         HttpUtils.write(response, token);
     }
 
-    /**
-     * 获取请求Body
-     * @param request
-     * @return
-     */
-    public String getBody(HttpServletRequest request) {
-        StringBuilder sb = new StringBuilder();
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        try {
-            inputStream = request.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return sb.toString();
-    }
 }

@@ -52,4 +52,9 @@ public class TestRepositoryImpl implements TestRepository {
         return testMapper.insertBatchInTurn(tests,1);
     }
 
+    @Override
+    public Integer insertTestSelfSql(Test test) {
+        return testMapper.insertTestSelfSql(test);
+    }
+
 }

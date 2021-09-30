@@ -1,7 +1,6 @@
 package com.github.zxhtom.login.security.utils;
-import javax.servlet.http.HttpServletRequest;
 
-import com.github.zxhtom.login.security.token.GrantedAuthorityImpl;
+import com.github.zxhtom.login.security.service.impl.GrantedAuthorityImpl;
 import com.github.zxhtom.login.security.token.JwtAuthenticatioToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,17 +8,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.io.Serializable;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
  * @author 张新华
  * @version V1.0
  * @Package com.github.zxhtom.login.security.utils
- * @date 2021/9/15 15:15
+ * @date 2021/9/27 11:31
  */
-public class JwtTokenUtils implements Serializable {
-
+public class JwtTokenUtils {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -203,5 +201,4 @@ public class JwtTokenUtils implements Serializable {
         }
         return token;
     }
-
 }

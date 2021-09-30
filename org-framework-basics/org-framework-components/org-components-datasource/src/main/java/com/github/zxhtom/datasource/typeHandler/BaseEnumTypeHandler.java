@@ -3,7 +3,6 @@ package com.github.zxhtom.datasource.typeHandler;
 import com.github.zxhtom.core.enums.BaseEnum;
 import com.github.zxhtom.core.properties.EnumProperties;
 import com.github.zxhtom.core.utils.EnumUtils;
-import com.github.zxhtom.core.utils.GenericUtils;
 import com.github.zxhtom.web.context.ApplicationContextUtil;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

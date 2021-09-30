@@ -1,12 +1,17 @@
 package com.github.zxhtom.datasource.mybatisPlus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.github.zxhtom.core.datasouce.FillDataHandler;
+import com.github.zxhtom.core.model.FillDataClassMapModel;
+import com.github.zxhtom.datasource.model.BaseModel;
 import com.github.zxhtom.web.auths.OnlineSecurity;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 张新华
@@ -18,36 +23,24 @@ import java.util.Date;
 public class DateMetaObjectHandler implements MetaObjectHandler {
 
     @Autowired
-    OnlineSecurity onlineSecurity;
+    FillDataHandler fillDataHandler;
     @Override
     public void insertFill(MetaObject metaObject) {
-        //自动管理数据入库时间
-        this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "updateTime", Date.class, new Date());
-
-        //管理数据操作用户信息
-        this.strictInsertFill(metaObject, "owner", String.class, onlineSecurity.getOnlineUserName());
-        this.strictInsertFill(metaObject, "modifer", String.class, onlineSecurity.getOnlineUserName());
-
-        //管理接口信息
-        this.strictInsertFill(metaObject, "interfaceEntry", String.class, onlineSecurity.getInterfaceName());
-
-        //管理数据逻辑状态
-        this.strictInsertFill(metaObject, "deleteFlag", Integer.class, 0);
-
-        //管理数据版本字段
-        this.strictInsertFill(metaObject, "version", Integer.class, 1);
+        List<FillDataClassMapModel> list = fillDataHandler.insertPerial();
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (FillDataClassMapModel model : list) {
+                this.strictInsertFill(metaObject, model.getName(), model.getCt(), model.getE());
+            }
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        //自动管理数据更新库时间
-        this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-
-        //管理数据操作用户信息
-        this.strictInsertFill(metaObject, "modifer", String.class, onlineSecurity.getOnlineUserName());
-
-        //管理接口信息
-        this.strictInsertFill(metaObject, "interfaceEntry", String.class, onlineSecurity.getInterfaceName());
+        List<FillDataClassMapModel> list = fillDataHandler.updatePerial();
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (FillDataClassMapModel model : list) {
+                this.strictUpdateFill(metaObject, model.getName(), model.getCt(), model.getE());
+            }
+        }
     }
 }

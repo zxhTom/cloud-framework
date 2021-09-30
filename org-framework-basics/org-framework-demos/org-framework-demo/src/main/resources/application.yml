@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://39.102.60.114:3306/maltcloud?useUnicode=true&amp;characterEncoding=utf8
     username: root
-    password: '123456'
+    password: 'zgnjzxhtom19940216'
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中

@@ -21,7 +21,7 @@ public class BaseModel {
 
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     @TableLogic(value = "0", delval = "1")
     @TableField(fill = FieldFill.INSERT)

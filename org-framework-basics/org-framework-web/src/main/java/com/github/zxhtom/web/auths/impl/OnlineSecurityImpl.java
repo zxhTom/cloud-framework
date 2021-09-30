@@ -17,7 +17,7 @@ public class OnlineSecurityImpl implements  OnlineSecurity{
 
     @Override
     public Object getOnlinePrincipal() {
-        return null;
+        return new Object();
     }
 
     @Override

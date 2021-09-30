@@ -19,8 +19,24 @@
     <dependencies>
         <dependency>
             <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.login.security</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
     </dependencies>
 </project>

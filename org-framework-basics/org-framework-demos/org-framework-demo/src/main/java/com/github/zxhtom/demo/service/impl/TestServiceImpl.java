@@ -65,4 +65,10 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, Test> implements Te
         return testRepository.insertTestBatch(tests);
     }
 
+    @Override
+    public Integer insertTestSelfSql(Test test) {
+
+        return testRepository.insertTestSelfSql(test);
+    }
+
 }

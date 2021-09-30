@@ -27,4 +27,6 @@ public interface TestService extends IService<Test> {
     Page<Test> selectTestPage(Integer pageNum, Integer pageSize);
 
     Integer insertTestBatch(List<Test> tests);
+
+    Integer insertTestSelfSql(Test test);
 }
