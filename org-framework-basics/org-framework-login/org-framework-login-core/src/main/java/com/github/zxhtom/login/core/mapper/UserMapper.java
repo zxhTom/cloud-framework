@@ -1,4 +1,4 @@
-package com.github.zxhtom.login.security.mapper;
+package com.github.zxhtom.login.core.mapper;
 
 import com.github.zxhtom.login.core.model.User;
 import org.apache.ibatis.annotations.Param;

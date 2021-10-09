@@ -5,11 +5,12 @@ import com.github.zxhtom.demo.login.abCanMulti.AbStractSoutBean;
 import com.github.zxhtom.demo.login.mapper.LoginMpUserMapper;
 import com.github.zxhtom.demo.login.mapper.LoginUserMapper;
 import com.github.zxhtom.demo.login.model.UserMp;
-import com.github.zxhtom.login.security.mapper.UserMapper;
+import com.github.zxhtom.login.core.mapper.UserMapper;
 import com.github.zxhtom.login.core.model.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +56,7 @@ public class TestController {
         return loginUserMapper.selectTwoUser(user,userMp);
     }
     @RequestMapping(value = "/hello")
+    @PreAuthorize("hasRole('admin')")
     public String hello() {
         //List<User> users = userMapper.selectUserList();
         //System.out.println(users);

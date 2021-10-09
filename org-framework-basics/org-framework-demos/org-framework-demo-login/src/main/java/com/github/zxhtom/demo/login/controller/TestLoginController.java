@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2021/9/15 9:52
  */
 @RestController
-public class LoginController {
+public class TestLoginController {
 
 
     /*@RequestMapping(value = "/login",method = RequestMethod.POST)

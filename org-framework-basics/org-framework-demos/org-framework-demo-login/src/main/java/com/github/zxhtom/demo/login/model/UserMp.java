@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2021/9/18 9:27
  */
 @Data
-@TableName("USER")
+@TableName("USERS")
 public class UserMp {
     private String userName;
     private String userNick;

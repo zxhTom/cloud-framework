@@ -1,12 +1,10 @@
-package com.github.zxhtom.login.security.service.impl;
+package com.github.zxhtom.login.core.service.impl;
 
-import com.github.zxhtom.core.datasouce.FillDataHandler;
+import com.github.zxhtom.login.core.mapper.RoleMapper;
+import com.github.zxhtom.login.core.mapper.UserMapper;
 import com.github.zxhtom.login.core.model.User;
-import com.github.zxhtom.login.security.mapper.RoleMapper;
-import com.github.zxhtom.login.security.mapper.UserMapper;
-import com.github.zxhtom.login.security.service.UserService;
+import com.github.zxhtom.login.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,9 +25,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Autowired
-    FillDataHandler fillDataHandler;
-
     @Override
     public List<User> selectUserList() {
         return userMapper.selectUserList();
@@ -41,8 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer insertUser(User user) throws InvocationTargetException, IllegalAccessException {
-        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+    public Integer insertUser(User user){
         return userMapper.insertUser(user);
     }
 

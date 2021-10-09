@@ -1,4 +1,4 @@
-package com.github.zxhtom.login.security.service;
+package com.github.zxhtom.login.core.service;
 
 import com.github.zxhtom.login.core.model.User;
 import org.apache.ibatis.annotations.Param;
@@ -18,7 +18,7 @@ public interface UserService {
 
     public User selectUserBaseOnUserName(@Param("userName") String userName);
 
-    public Integer insertUser(User user) throws InvocationTargetException, IllegalAccessException;
+    public Integer insertUser(User user);
 
     Set<String> selectPermissionsBaseOnUserName(String userName);
 }

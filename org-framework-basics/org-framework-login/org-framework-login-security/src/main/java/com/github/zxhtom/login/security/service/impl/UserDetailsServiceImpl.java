@@ -8,7 +8,7 @@ package com.github.zxhtom.login.security.service.impl;
  */
 
 import com.github.zxhtom.login.core.model.User;
-import com.github.zxhtom.login.security.service.UserService;
+import com.github.zxhtom.login.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

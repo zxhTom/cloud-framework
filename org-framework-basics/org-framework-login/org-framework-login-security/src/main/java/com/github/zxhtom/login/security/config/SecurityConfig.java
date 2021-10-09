@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
@@ -32,6 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -44,6 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //auth.inMemoryAuthentication().withUser("zxhtom").password(new BCryptPasswordEncoder().encode("123456")).roles("admin");
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -66,8 +75,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/success.html", false)
                 //.successForwardUrl("/success.html")
                 .and()
-                //.addFilterBefore(new JwtLoginFilter(super.authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
+                .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler())
+                .and()
                 .csrf().disable();
+    }
+
+    @Bean
+    public AccessDeniedHandler myAccessDeniedHandler() {
+        return new MyAccessDeniedHandler();
     }
 
 }

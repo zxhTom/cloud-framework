@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.github.zxhtom.login.security.mapper.RoleMapper">
+<mapper namespace="com.github.zxhtom.login.core.mapper.RoleMapper">
     <select id="selectPermissionsBaseOnUserName" resultType="java.lang.String">
         select r.name from ROLE r
         left join USER_ROLE ur
         on r.id=ur.role_id
-        left join USER u
+        left join USERS u
         on u.id=ur.user_id
         where u.delete_flag!=1
         and ur.delete_flag!=1
         and r.delete_flag!=1
         and u.user_name=#{userName}
+    </select>
+    <select id="selectRoleBaseButton" resultType="com.github.zxhtom.login.core.model.Role">
+        select * from ROLE r
+        right join BUTTON_PERMISSION bp
+        on r.id=bp.obj_id
+        and bp.type=2
+        and r.delete_flag!=1
+        and bp.delete_flag!=1
+        and bp.button_id=#{buttonId}
     </select>
 </mapper>

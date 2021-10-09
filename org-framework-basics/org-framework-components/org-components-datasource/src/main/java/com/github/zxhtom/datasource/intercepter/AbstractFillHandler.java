@@ -23,6 +23,9 @@ public abstract class AbstractFillHandler {
     public Object parameter;
 
     public boolean support(Object parameter){
+        if (null == parameter) {
+            return false;
+        }
         this.parameter = parameter;
         return doSupport(this.parameter);
     }

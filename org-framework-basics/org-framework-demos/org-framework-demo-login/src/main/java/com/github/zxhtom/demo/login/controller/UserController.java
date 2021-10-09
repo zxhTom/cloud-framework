@@ -1,7 +1,6 @@
 package com.github.zxhtom.demo.login.controller;
 
-import com.github.zxhtom.demo.login.model.User;
-import com.github.zxhtom.login.security.service.UserService;
+import com.github.zxhtom.login.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +23,7 @@ public class UserController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Integer insertUser(@RequestBody com.github.zxhtom.login.core.model.User user) {
         try {
+            user.setId(System.currentTimeMillis());
             userService.insertUser(user);
         } catch (Exception e) {
             e.printStackTrace();

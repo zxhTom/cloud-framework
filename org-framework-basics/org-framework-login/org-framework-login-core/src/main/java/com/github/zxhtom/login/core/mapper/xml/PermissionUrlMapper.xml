@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.zxhtom.login.core.mapper.PermissionUrlMapper">
+    <select id="selectAllPermissionUrls" resultType="com.github.zxhtom.login.core.model.PermissionUrl">
+
+        select * from PERMISSION_URL where delete_flag!=1
+
+    </select>
+    <select id="selectRoleBaseOnPermissionUrl"
+            resultType="com.github.zxhtom.login.core.model.PermissionUrlRoleDto">
+        select * from PERMISSIONURL_ROLE pr
+        left join ROLE r
+        on r.id=pr.role_id
+        where
+        pr.delete_flag!=1
+        and r.delete_flag!=1
+        and pr.permission_id=#{permissionId}
+    </select>
+</mapper>

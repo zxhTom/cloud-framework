@@ -2,10 +2,9 @@ package com.github.zxhtom.login.security.service.impl;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * 权限封装
- * @author Louis
- * @date Nov 28, 2018
- */
+* @author zxhtom
+* @Date 10:04 2021/10/9
+*/
 public class GrantedAuthorityImpl implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.zxhtom.login.core.mapper.MenuMapper">
+    <select id="selectWithRoleBaseOnMenuUrl" resultType="com.github.zxhtom.login.core.model.Role">
+        select r.* from MENU_PERMISSION mp
+        left join ROLE r
+        on r.id=mp.obj_id
+        left join MENU m
+        on m.id=mp.menu_id
+        where mp.delete_flag!=1
+        and r.delete_flag!=1
+        and m.delete_flag!=1
+        and m.url=#{url}
+        and mp.type=2
+    </select>
+</mapper>

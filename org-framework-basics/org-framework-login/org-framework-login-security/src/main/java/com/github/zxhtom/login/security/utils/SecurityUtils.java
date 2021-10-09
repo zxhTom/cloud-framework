@@ -1,13 +1,24 @@
 package com.github.zxhtom.login.security.utils;
 
+import com.github.zxhtom.login.core.mapper.RoleMapper;
 import com.github.zxhtom.login.security.token.JwtAuthenticatioToken;
+import com.github.zxhtom.web.context.ApplicationContextUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Security相关操作
@@ -89,5 +100,24 @@ public class SecurityUtils {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authentication;
 	}
-	
+
+	public static void reloadUserAuthority(String userName) {
+		RoleMapper roleMapper = ApplicationContextUtil.getApplicationContext().getBean(RoleMapper.class);
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		Authentication authentication = securityContext.getAuthentication();
+		User principal = (User) authentication.getPrincipal();
+		if (StringUtils.isEmpty(userName)) {
+			userName = principal.getUsername();
+		}
+		Set<String> roleSet = roleMapper.selectPermissionsBaseOnUserName(userName);
+		// 新的权限
+		List<GrantedAuthority> authorityList = AuthorityUtils.createAuthorityList(roleSet.toArray(new String[]{}));
+		principal = new User(userName, StringUtils.EMPTY, authorityList);
+		// 重新new一个token，因为Authentication中的权限是不可变的.
+		UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
+				principal, authentication.getCredentials(),
+				authorityList);
+		result.setDetails(authentication.getDetails());
+		securityContext.setAuthentication(result);
+	}
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.zxhtom.login.core.mapper.UserMapper">
+    <insert id="insertUser">
+        insert into USERS
+            (id,user_name,user_nick,user_code,password,phone,email,birth_date,sex,head_img,special_sign,create_time,update_time,delete_flag,owner,modifer,interface_entry,version)
+        values
+            (#{id},#{userName},#{userNick},#{userCode},#{password},#{phone},#{email},#{birthDate},#{sex},#{headImg},#{specialSign},#{createTime},#{updateTime},#{deleteFlag},#{owner},#{modifer},#{interfaceEntry},#{version})
+    </insert>
+    <select id="selectUserList" resultType="com.github.zxhtom.login.core.model.User">
+        select * from USERS
+    </select>
+    <select id="selectUserBaseOnUserName" resultType="com.github.zxhtom.login.core.model.User">
+        select * from USERS where user_name=#{userName}
+    </select>
+</mapper>

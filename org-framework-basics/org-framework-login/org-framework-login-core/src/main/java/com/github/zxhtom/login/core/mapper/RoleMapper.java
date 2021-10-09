@@ -1,7 +1,9 @@
-package com.github.zxhtom.login.security.mapper;
+package com.github.zxhtom.login.core.mapper;
 
+import com.github.zxhtom.login.core.model.Role;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,4 +15,7 @@ import java.util.Set;
 public interface RoleMapper {
 
     Set<String> selectPermissionsBaseOnUserName(@Param("userName") String userName);
+
+
+    List<Role> selectRoleBaseButton(@Param("buttonId") Long buttonId);
 }
