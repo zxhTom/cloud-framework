@@ -7,6 +7,7 @@ import com.github.zxhtom.login.security.handler.AbstractRoleUrlHandler;
 import com.github.zxhtom.login.security.handler.HandlerFactory;
 import com.github.zxhtom.login.security.model.RequestBaseInfo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +31,7 @@ public class ButtonRoleHandler extends AbstractRoleUrlHandler<RequestBaseInfo, L
             if (CollectionUtils.isEmpty(roleList)) {
                 continue;
             }
-            return roleList.stream().map(Role::getName).distinct().collect(Collectors.toList());
+            return roleList.stream().filter(item-> null!=item&&StringUtils.isNotEmpty(item.getName())).map(Role::getName).distinct().collect(Collectors.toList());
         }
         return null;
     }

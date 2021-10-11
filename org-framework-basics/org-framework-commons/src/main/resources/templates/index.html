@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+    <link rel="stylesheet" href="/assets/plugins/ztree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <script src="/assets/libs/jquery.min.js"></script>
+    <script src="/assets/plugins/layer/layer.js"></script>
+    <script src="/assets/libs/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.1/vue.min.js"></script>
+    <!-- import stylesheet -->
+    <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+    <!-- import iView -->
+    <!--<script src="//unpkg.com/iview/dist/iview.min.js"></script>-->
+    <script src="/assets/libs/iview.min.js"></script>
+    <script src="/assets/plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="/assets/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="/assets/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/user.js"></script>
+    <title>模块</title>
+</head>
+<style>
+    .index_bg {
+        width: 100%;
+        background: url(img/background_homepage.png) no-repeat center;
+        background-size: 100% 100%;
+        overflow-y: scroll;
+    }
+</style>
+<body style="background-color:#636363;">
+<div id="modules" ref = "bodyHeight">
+    <Card :bordered="false" v-if="cardchange" v-for="(item,index) in moduleList" style="vertical-align:middle;margin-left:2%;background-color:grey;width:320px">
+        <div @click="jumpToModule(item.moduleUrl)" style="background-color:grey;text-align:center">
+            <img :src="item.icon" style="width:50%">
+            <h3><p style="color: white">{{item.moduleName}}</p></h3>
+        </div>
+    </Card>
+</div>
+</body>
+<link rel="import" href="/component.html" id="component"/>
+
+<script src="/assets/js/index.js"></script>
+</html>

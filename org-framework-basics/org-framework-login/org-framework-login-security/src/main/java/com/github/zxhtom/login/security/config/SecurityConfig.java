@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -72,13 +71,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.html")
                 .usernameParameter("userName")
                 .failureForwardUrl("/error.html")
-                .defaultSuccessUrl("/success.html", false)
+                .defaultSuccessUrl("/system.html", false)
                 //.successForwardUrl("/success.html")
                 .and()
                 .addFilterAfter(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
+                //.addFilterAt(loginFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler())
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .headers().frameOptions().disable();
     }
 
     @Bean

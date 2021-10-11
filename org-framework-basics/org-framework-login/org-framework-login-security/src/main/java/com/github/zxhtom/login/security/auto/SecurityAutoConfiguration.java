@@ -2,9 +2,7 @@ package com.github.zxhtom.login.security.auto;
 
 import com.github.zxhtom.login.core.autoconfige.LoginCoreAutoConfiguration;
 import com.github.zxhtom.login.core.service.LoginService;
-import com.github.zxhtom.login.security.config.MyAccessDecisionManager;
-import com.github.zxhtom.login.security.config.MyFilterSecurityInterceptor;
-import com.github.zxhtom.login.security.config.MyInvocationSecurityMetadataSourceService;
+import com.github.zxhtom.login.security.config.*;
 import com.github.zxhtom.login.security.handler.RoleUrlHandler;
 import com.github.zxhtom.login.security.handler.chain.ButtonRoleHandler;
 import com.github.zxhtom.login.security.handler.chain.MenuRoleHandler;
@@ -18,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * @author 张新华
@@ -54,6 +53,13 @@ public class SecurityAutoConfiguration {
         return new MyFilterSecurityInterceptor();
     }
 
+    //@Bean
+    //@ConditionalOnMissingBean(LoginFilterSecurityInterceptor.class)
+    public LoginFilterSecurityInterceptor loginFilterSecurityInterceptor() {
+        LoginFilterSecurityInterceptor interceptor = new LoginFilterSecurityInterceptor();
+        interceptor.setSecurityMetadataSource(new LoginFilterInvocationSecurityMetadataSource());
+        return interceptor;
+    }
     @Bean
     @ConditionalOnMissingBean(ButtonRoleHandler.class)
     public RoleUrlHandler buttonRoleHandler() {

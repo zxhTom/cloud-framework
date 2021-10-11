@@ -1,5 +1,6 @@
 package com.github.zxhtom.login.security.config;
 
+import com.github.zxhtom.core.constant.MaltcloudConstant;
 import com.github.zxhtom.web.context.HttpUtils;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -34,6 +35,9 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
                 if(needRole.trim().equals(ga.getAuthority())) {
                     return;
                 }
+            }
+            if (MaltcloudConstant.LOGIN_ROLE.equals(needRole)) {
+                throw new AccessDeniedException("该接口需要登录，请先登录Please!!!但是请原谅我无法为您原生登录提示");
             }
         }
         throw new AccessDeniedException("无权限访问");
