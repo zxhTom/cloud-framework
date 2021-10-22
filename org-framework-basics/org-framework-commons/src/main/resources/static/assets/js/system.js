@@ -4,21 +4,21 @@ var menuItem = Vue.extend({
     props:{item:{}},
     template:[
         '<li>',
-        '	<a v-if="item.menuType === 0" href="javascript:;">',
+        '	<a v-if="item.menuType === 1" href="javascript:;">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span>{{item.menuName}}</span>',
+        '		<span>{{item.name}}</span>',
         '		<i class="fa fa-angle-left pull-right"></i>',
         '	</a>',
-        '	<ul v-if="item.menuType === 0" class="treeview-menu">',
-        '		<menu-item :item="item" v-for="item in item.childList"></menu-item>',
+        '	<ul v-if="item.menuType === 1" class="treeview-menu">',
+        '		<menu-item :item="item" v-for="item in item.menuList"></menu-item>',
         '	</ul>',
 
-        '	<a v-if="item.menuType === 1 && item.parentMenuId === 0" :href="\'#\'+item.menuUrl">',
+        '	<a v-if="item.menuType === 0 && item.parentId === -1" :href="\'#\'+item.url">',
         '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span>{{item.menuName}}</span>',
+        '		<span>{{item.name}}</span>',
         '	</a>',
 
-        '	<a v-if="item.menuType === 1 && item.parentMenuId != 0" :href="\'#\'+item.menuUrl"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.menuName}}</a>',
+        '	<a v-if="item.menuType === 0 && item.parentId != -1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
         '</li>'
     ].join('')
 });
@@ -47,13 +47,13 @@ var vm = new Vue({
 	},
 	methods: {
 		getMenuList: function (event) {
-			$.getJSON("/framework_core/menu_init/nav?_"+$.now(), function(r){
-				vm.menuList = r.data;
+			$.getJSON("/framework_common/menu_init/nav?moduleId=1&_"+$.now(), function(r){
+				vm.menuList = r;
 			});
 		},
 		getUser: function(){
-			$.getJSON("/framework_core/user/info?_"+$.now(), function(r){
-				vm.user = r.data.userInfo;
+			$.getJSON("/framework_common/user/info?_"+$.now(), function(r){
+				vm.user = r;
 			});
 		},
 		updatePassword: function(){
@@ -114,15 +114,15 @@ var vm = new Vue({
 function routerList(router, menuList){
 	for(var key in menuList){
 		var menu = menuList[key];
-		if(menu.menuType == 0){
-			routerList(router, menu.childList);
-		}else if(menu.menuType == 1){
-			router.add('#'+menu.menuUrl, function() {
+		if(menu.menuType == '1'){
+			routerList(router, menu.menuList);
+		}else if(menu.menuType == '0'){
+			router.add('#'+menu.url, function() {
 				var url = window.location.hash;
 				
 				//替换iframe的url
 			    vm.main = url.replace('#', '');
-			    
+
 			    //导航菜单展开
 			    $(".treeview-menu li").removeClass("active");
 			    $("a[href='"+url+"']").parents("li").addClass("active");

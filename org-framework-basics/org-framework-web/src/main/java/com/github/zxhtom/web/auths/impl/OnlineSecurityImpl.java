@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author 张新华
  * @version V1.0
@@ -32,5 +35,15 @@ public class OnlineSecurityImpl implements  OnlineSecurity{
     @Override
     public String getInterfaceName() {
         return scopeStoreService.getEntryPath();
+    }
+
+    @Override
+    public boolean hasAnyRole(String... role) {
+        return false;
+    }
+
+    @Override
+    public Set<String> getRoleNames() {
+        return new HashSet<>();
     }
 }

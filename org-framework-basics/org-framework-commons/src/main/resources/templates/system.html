@@ -37,13 +37,13 @@
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-	  <div style="float:left;color:#fff;padding:15px 10px;" v-if="user.userInfo">欢迎 {{usner.userInfo.userName}}</div>
+	  <div style="float:left;color:#fff;padding:15px 10px;" v-if="user">欢迎 {{user.username}}</div>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav dropdown">
           <li><a href="javascript:;" @click="donate"><i class="fa fa-jpy"></i> &nbsp;捐赠作者</a></li>
           <li><a href="http://zxhtom.oschina.io" target="_blank"><i class="fa fa-home"></i> &nbsp;个人网站</a></li>
 		  <li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-          <li><a href="/framework_core/login/logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
+          <li><a href="/logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
           <li>
               <div class="dropdown">
                   <img id="dropdownMenu1" data-toggle="dropdown" class="dropdown-toggle actor"
@@ -126,7 +126,7 @@
             <div class="form-group">
                 <div class="form-group">
                     <div class="col-sm-2 control-label">账号</div>
-                    <span class="label label-success" style="vertical-align: bottom;" v-if="user.userInfo">{{user.userInfo.userName}}</span>
+                    <span class="label label-success" style="vertical-align: bottom;" v-if="user">{{user.username}}</span>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-2 control-label">原密码</div>

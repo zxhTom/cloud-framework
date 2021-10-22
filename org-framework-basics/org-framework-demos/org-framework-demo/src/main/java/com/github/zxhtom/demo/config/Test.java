@@ -1,8 +1,11 @@
 package com.github.zxhtom.demo.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.zxhtom.web.auths.OnlineSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Set;
 
 /**
  * @author 张新华
@@ -16,7 +19,7 @@ public class Test {
     public OnlineSecurity onlineSecurity() {
         return new OnlineSecurity() {
             @Override
-            public Object getOnlinePrincipal() {
+            public JSONObject getOnlinePrincipal() {
                 return null;
             }
 
@@ -27,6 +30,16 @@ public class Test {
 
             @Override
             public String getInterfaceName() {
+                return null;
+            }
+
+            @Override
+            public boolean hasAnyRole(String... role) {
+                return false;
+            }
+
+            @Override
+            public Set<String> getRoleNames() {
                 return null;
             }
 

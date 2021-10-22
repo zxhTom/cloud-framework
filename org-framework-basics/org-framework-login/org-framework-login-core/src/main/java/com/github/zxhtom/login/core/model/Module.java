@@ -15,4 +15,5 @@ public class Module {
     private String name;
     private String url;
     private String icon;
+    private Integer orderIndex;
 }

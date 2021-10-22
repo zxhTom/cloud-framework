@@ -1,5 +1,7 @@
 package com.github.zxhtom.web.auths;
 
+import java.util.Set;
+
 /**
  * @author 张新华
  * @version V1.0
@@ -14,4 +16,8 @@ public interface OnlineSecurity {
     String getOnlineUserName();
 
     String getInterfaceName();
+
+    boolean hasAnyRole(String... role);
+
+    public Set<String> getRoleNames();
 }

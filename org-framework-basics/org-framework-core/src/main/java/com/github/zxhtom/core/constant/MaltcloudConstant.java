@@ -25,4 +25,5 @@ public class MaltcloudConstant {
     public final static SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat(YEAR_FORMAT_PATTERN);
 
     public static final String LOGIN_ROLE = "ROLE_login";
+    public static final String SUPERADMIN = "superAdmin";
 }

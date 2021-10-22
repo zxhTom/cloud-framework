@@ -13,4 +13,18 @@
         and m.url=#{url}
         and mp.type=2
     </select>
+    <select id="selectRootMenuWithInDeviceId" resultType="com.github.zxhtom.login.core.model.Menu">
+        select m.* from MENU m
+        left join MENU_DEVICE md
+        on m.id=md.menu_id
+        left join MODULE_MENU mm
+        on m.id=mm.menu_id
+        where m.delete_flag!=1
+        and md.delete_flag!=1
+        and md.device_id=#{deviceId}
+        and mm.module_id=#{moduleId}
+        <if test="parentId!=null and parentId!=''">
+            and m.parent_id=#{parentId}
+        </if>
+    </select>
 </mapper>

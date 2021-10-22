@@ -18,6 +18,7 @@
         <module>org-framework-demo-swaggers</module>
         <module>org-framework-demo-login</module>
         <module>org-framework-demo-freemark</module>
+        <module>org-framework-demo-common</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

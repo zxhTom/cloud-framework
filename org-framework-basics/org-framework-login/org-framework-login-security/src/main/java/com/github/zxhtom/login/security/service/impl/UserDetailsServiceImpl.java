@@ -9,6 +9,7 @@ package com.github.zxhtom.login.security.service.impl;
 
 import com.github.zxhtom.login.core.model.User;
 import com.github.zxhtom.login.core.service.UserService;
+import com.github.zxhtom.login.security.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，决定是否可以调用接口
         Set<String> permissions = userService.selectPermissionsBaseOnUserName(userName);
         List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(userName, user.getPassword(), grantedAuthorities);
+        return new CustomUserDetails(userName, user.getPassword(), 1L,grantedAuthorities);
     }
 }

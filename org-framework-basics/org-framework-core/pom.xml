@@ -22,5 +22,10 @@
             <artifactId>org.framework.web</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

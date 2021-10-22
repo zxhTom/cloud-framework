@@ -1,6 +1,8 @@
 package com.github.zxhtom.login.core.autoconfige;
 
 import com.github.zxhtom.login.core.controller.LoginController;
+import com.github.zxhtom.login.core.repository.*;
+import com.github.zxhtom.login.core.repository.impl.*;
 import com.github.zxhtom.login.core.service.*;
 import com.github.zxhtom.login.core.service.impl.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -57,4 +59,36 @@ public class LoginCoreAutoConfiguration {
         return new ModuleServiceImpl();
     }
 
+
+    /********************************repository********************************/
+    @Bean
+    @ConditionalOnMissingBean(ButtonRepository.class)
+    public ButtonRepository defaultButtonRepository() {
+        return new ButtonRepositoryImpl();
+    }
+    @Bean
+    @ConditionalOnMissingBean(MenuRepository.class)
+    public MenuRepository defaultMenuRepository() {
+        return new MenuRepositoryImpl();
+    }
+    @Bean
+    @ConditionalOnMissingBean(ModuleRepository.class)
+    public ModuleRepository defaultModuleRepository() {
+        return new ModuleRepositoryImpl();
+    }
+    @Bean
+    @ConditionalOnMissingBean(PermissionUrlRepository.class)
+    public PermissionUrlRepository defaultPermissionUrlRepository() {
+        return new PermissionUrlRepositoryImpl();
+    }
+    @Bean
+    @ConditionalOnMissingBean(UserRepository.class)
+    public UserRepository defaultUserRepository() {
+        return new UserRepositoryImpl();
+    }
+    @Bean
+    @ConditionalOnMissingBean(RoleRepository.class)
+    public RoleRepository defaultRoleRepository() {
+        return new RoleRepositoryImpl();
+    }
 }

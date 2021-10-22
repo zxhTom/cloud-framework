@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.zxhtom.common.mapper.CommonUserMapper">
+    <update id="updateUser">
+        update USERS set id=id
+        <if test="userName!=null and userName!=''">
+            ,USER_NAME=#{userName}
+        </if>
+        <if test="userNick!=null and userNick!=''">
+            ,USER_NICK=#{userNick}
+        </if>
+        <if test="userCode!=null and userCode!=''">
+            ,USER_CODE=#{userCode}
+        </if>
+        <if test="password!=null and password!=''">
+            ,PASSWORD=#{password}
+        </if>
+        <if test="phone!=null and phone!=''">
+            ,PHONE=#{phone}
+        </if>
+        <if test="email!=null and email!=''">
+            ,EMAIL=#{email}
+        </if>
+        <if test="birthDate!=null and birthDate!=''">
+            ,BIRTH_DATE=#{birthDate}
+        </if>
+        <if test="sex!=null">
+            ,SEX=#{sex}
+        </if>
+        <if test="headImg!=null and headImg!=''">
+            ,HEAD_IMG=#{headImg}
+        </if>
+        <if test="specialSign!=null and specialSign!=''">
+            ,SPECIAL_SIGN=#{specialSign}
+        </if>
+        <if test="createTime!=null">
+            ,CREATE_TIME=#{createTime}
+        </if>
+        <if test="updateTime!=null">
+            ,UPDATE_TIME=#{updateTime}
+        </if>
+        <if test="deleteFlag!=null and deleteFlag!=''">
+            ,DELETE_FLAG=#{delete_flag}
+        </if>
+        <if test="owner!=null and owner!=''">
+            ,OWNER=#{owner}
+        </if>
+        <if test="modifer!=null and modifer!=''">
+            ,MODIFER=#{modifer}
+        </if>
+        <if test="interfaceEntry!=null and interfaceEntry!=''">
+            ,INTERFACE_ENTRY=#{interfaceEntry}
+        </if>
+        <if test="version!=null and version!=''">
+            ,VERSION=#{version}
+        </if>
+        where id=#{id}
+    </update>
+    <delete id="deleteBatch">
+        delete from USERS
+        where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectUserAllWithAccess" resultType="com.github.zxhtom.login.core.model.User">
+        select * from USERS where delete_flag!=1
+        <if test="userId!=null and userId!=''">
+            and id=#{userId}
+        </if>
+        limit #{pageStart},${pageSize}
+    </select>
+    <select id="selectUserCountAllWithAccess" resultType="java.lang.Long">
+        select count(1) as count  from USERS where delete_flag!=1
+        <if test="userId!=null and userId!=''">
+            and id=#{userId}
+        </if>
+    </select>
+</mapper>

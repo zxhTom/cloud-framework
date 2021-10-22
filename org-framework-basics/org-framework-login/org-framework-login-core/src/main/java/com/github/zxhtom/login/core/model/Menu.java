@@ -1,6 +1,7 @@
 package com.github.zxhtom.login.core.model;
 
 import com.github.zxhtom.datasource.model.BaseModel;
+import com.github.zxhtom.login.core.enums.MenuTypeEnum;
 import lombok.Data;
 
 /**
@@ -17,5 +18,7 @@ public class Menu extends BaseModel {
     private String url;
     private Long parentId;
     private String icon;
+    private Integer orderIndex;
+    private Integer menuType;
 
 }

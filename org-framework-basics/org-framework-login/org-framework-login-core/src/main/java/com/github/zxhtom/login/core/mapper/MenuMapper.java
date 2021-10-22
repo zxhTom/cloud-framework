@@ -1,6 +1,7 @@
 package com.github.zxhtom.login.core.mapper;
 
 
+import com.github.zxhtom.login.core.model.Menu;
 import com.github.zxhtom.login.core.model.Role;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface MenuMapper {
     List<Role> selectWithRoleBaseOnMenuUrl(@Param("url") String url);
+
+    List<Menu> selectRootMenuWithInDeviceId(@Param("moduleId") Long moduleId,@Param("deviceId") String deviceId,@Param("parentId") Long parentId);
 }

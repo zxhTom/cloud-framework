@@ -1,5 +1,6 @@
 package com.github.zxhtom.login.core.service;
 
+import com.github.zxhtom.login.core.model.Menu;
 import com.github.zxhtom.login.core.model.Role;
 
 import java.util.List;
@@ -13,4 +14,8 @@ import java.util.List;
 public interface MenuService {
 
     List<Role> selectWithRoleBaseOnMenuUrl(String menuUrl);
+
+    List<Menu> selectRootMenuBaseDeviceId(Long moduleId);
+
+    List<Menu> selectChildMenus(Long moduleId, Long parentId);
 }
