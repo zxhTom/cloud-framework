@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "spring.maltcloud")
 public class MaltCloudProperties {
-    private Listener listener;
+    private Listener listener=new Listener();
 
     @Data
     public class Listener{

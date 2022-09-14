@@ -1,9 +1,12 @@
 package com.github.zxhtom.poi;
 
 import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.data.*;
 import com.deepoove.poi.data.style.Style;
 import com.deepoove.poi.util.BytePictureUtils;
+import com.github.zxhtom.poi.model.TableDoc;
+import com.github.zxhtom.poi.policy.DemoPolicy;
 import com.github.zxhtom.poi.utils.ImageUtil;
 import org.junit.Test;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHighlightColor;
@@ -14,9 +17,12 @@ import java.util.*;
 public class SimpleTest {
 
     public void init(String name, Map<String,Object> data) {
+        init(name,data,null);
+    }
+    public void init(String name, Map<String,Object> data,Configure configure) {
         String fileName = name+".docx";
         InputStream in = this.getClass().getResourceAsStream("/"+fileName);
-        XWPFTemplate template = XWPFTemplate.compile(in).render(data);
+        XWPFTemplate template = XWPFTemplate.compile(in,configure).render(data);
         String s = this.getClass().getResource("/").getPath();
         File file = new File(s+File.separator+name+"2.docx");
         try {
@@ -165,5 +171,67 @@ public class SimpleTest {
         Map<String, Object> map = new HashMap<>();
         map.put("img", new PictureRenderData(0, 0, ".png", this.getClass().getResourceAsStream("/input.png")));
         init(name,map);
+    }
+
+    @Test
+    public void splitPageTest() {
+        //分页符测试
+        String name = "splitpage";
+        Map<String, Object> map = new HashMap<>();
+        TableDoc doc = new TableDoc();
+        doc.setTableId("USER");
+        doc.setTableName("用户表");
+        doc.setTableComment("记录用户信息");
+        //数据体
+        RowRenderData row0 = RowRenderData.build("中文名称", doc.getTableName());
+        RowRenderData row1 = RowRenderData.build("英文名称", doc.getTableId());
+        RowRenderData row2 = RowRenderData.build("描述", doc.getTableComment());
+        RowRenderData row3 = RowRenderData.build("结构信息");
+        RowRenderData row4 = RowRenderData.build("字段名", "类型","默认值","说明");
+        RowRenderData row5 = RowRenderData.build("ID_", "BIGINT(19)","","主键ID");
+        map.put("d1", new MiniTableRenderData(Arrays.asList(row0,row1,row1,row1,row0)));
+        map.put("d2", new MiniTableRenderData(Arrays.asList(row0,row1,row1,row1,row0)));
+        List<MiniTableRenderData> list = new ArrayList<>();
+        list.add(new MiniTableRenderData(Arrays.asList(row0,row1,row2,row3,row4,row5)));
+        list.add(new MiniTableRenderData(Arrays.asList(row0,row1,row2,row3,row4,row5)));
+        doc.setTableData(list);
+        map.put("tlist", doc);
+        Configure config = Configure.newBuilder()
+                .bind("tlist", new DemoPolicy())
+                .build();
+        init(name,map,config);
+    }
+
+    @Test
+    public void nest2Test() {
+        //分页符测试
+        String name = "nestsplit";
+        Map<String, Object> map = new HashMap<>();
+        TableDoc doc = new TableDoc();
+        doc.setTableId("USER");
+        doc.setTableName("用户表");
+        doc.setTableComment("记录用户信息");
+        //数据体
+        RowRenderData row0 = RowRenderData.build("中文名称", doc.getTableName());
+        RowRenderData row1 = RowRenderData.build("英文名称", doc.getTableId());
+        RowRenderData row2 = RowRenderData.build("描述", doc.getTableComment());
+        RowRenderData row3 = RowRenderData.build("结构信息");
+        RowRenderData row4 = RowRenderData.build("字段名", "类型","默认值","说明");
+        RowRenderData row5 = RowRenderData.build("ID_", "BIGINT(19)","","主键ID");
+        map.put("d1", new MiniTableRenderData(Arrays.asList(row0,row1,row1,row1,row0)));
+        map.put("d2", new MiniTableRenderData(Arrays.asList(row0,row1,row1,row1,row0)));
+        List<MiniTableRenderData> list = new ArrayList<>();
+        list.add(new MiniTableRenderData(Arrays.asList(row0,row1,row2,row3,row4,row5)));
+        list.add(new MiniTableRenderData(Arrays.asList(row0,row1,row2,row3,row4,row5)));
+        doc.setTableData(list);
+        List<Map<String,Object>> rrl = new ArrayList<>();
+        Map<String, Object> ttd = new HashMap<>();
+        ttd.put("tlist", doc);
+        rrl.add(ttd);
+        map.put("nest", new DocxRenderData(this.getClass().getResourceAsStream("/splitpage.docx"),rrl));
+        Configure config = Configure.newBuilder()
+                .bind("tlist", new DemoPolicy())
+                .build();
+        init(name,map,config);
     }
 }

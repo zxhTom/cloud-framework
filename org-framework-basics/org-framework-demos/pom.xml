@@ -20,6 +20,7 @@
         <module>org-framework-demo-freemark</module>
         <module>org-framework-demo-common</module>
         <module>org-framework-demo-poi</module>
+        <module>org.framework.demo.transational</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

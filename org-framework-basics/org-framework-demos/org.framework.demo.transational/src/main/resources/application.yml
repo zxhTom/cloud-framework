@@ -1,0 +1,23 @@
+server:
+  port: 9012
+
+spring:
+  maltcloud:
+    listener:
+      open: false
+  datasource:
+    url: jdbc:mysql://server.zxhtom.com:3306/course?useUnicode=true&amp;characterEncoding=utf8
+    username: root
+    password: '123456'
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:com/github/zxhtom/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-enums-package: com.github.zxhtom.**.enums
+  max-batch-size: 1
+  type-handlers-package: com.github.zxhtom.datasource.typeHandler.BaseEnumTypeHandler
+enum:
+  source: true
+
