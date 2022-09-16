@@ -1,6 +1,5 @@
 server:
   port: 9002
-
 spring:
   mvc:
     view:
