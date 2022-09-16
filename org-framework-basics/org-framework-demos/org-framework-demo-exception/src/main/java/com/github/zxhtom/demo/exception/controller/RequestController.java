@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/request")
 public class RequestController {
 
-    @RequestMapping(value = "/first3" , method = RequestMethod.GET)
+    @RequestMapping(value = "/first" , method = RequestMethod.GET)
     public void first(HttpServletRequest request) {
         try {
             Thread.sleep(5000);
