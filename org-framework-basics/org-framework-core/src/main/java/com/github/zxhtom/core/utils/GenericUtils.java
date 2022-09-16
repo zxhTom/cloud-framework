@@ -1,7 +1,8 @@
 package com.github.zxhtom.core.utils;
 
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
+import com.github.zxhtom.web.beandefinition.AbstractBeanDefinitionRegistryPostProcessor;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
@@ -24,7 +25,7 @@ public class GenericUtils {
             Type[] genericInterfaces1 = ((Class) genericInterface).getGenericInterfaces();
             for (Type type : genericInterfaces1) {
                 String typeName = type.getTypeName();
-                Type[] actualTypeArguments = ((ParameterizedTypeImpl) type).getActualTypeArguments();
+                Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
                 if (null==actualTypeArguments||actualTypeArguments.length==0) {
                     return null;
                 }

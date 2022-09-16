@@ -1,8 +1,8 @@
 package com.github.zxhtom.login.security.handler;
 
 import org.springframework.beans.factory.InitializingBean;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public abstract class AbstractRoleUrlHandler<T,R> implements RoleUrlHandler<T,R>
     public Class getInstanceClass() {
         Type type = this.getClass().getGenericSuperclass();
         String typeName = type.getTypeName();
-        Type[] actualTypeArguments = ((ParameterizedTypeImpl) type).getActualTypeArguments();
+        Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
         if (null==actualTypeArguments||actualTypeArguments.length==0) {
             return null;
         }

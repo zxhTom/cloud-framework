@@ -1,8 +1,8 @@
 package com.github.zxhtom.web.beandefinition;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
@@ -15,7 +15,7 @@ public abstract class BeanAutoSpanAfterInitProcessor<T>{
     public Class getInstanceClass() {
         Type type = this.getClass().getGenericSuperclass();
         String typeName = type.getTypeName();
-        Type[] actualTypeArguments = ((ParameterizedTypeImpl) type).getActualTypeArguments();
+        Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
         if (null==actualTypeArguments||actualTypeArguments.length==0) {
             return null;
         }
