@@ -21,6 +21,7 @@
         <module>org-framework-demo-common</module>
         <module>org-framework-demo-poi</module>
         <module>org.framework.demo.transational</module>
+        <module>org-framework-demo-dymicdatasource</module>
     </modules>
     <properties>
     </properties>

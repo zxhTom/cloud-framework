@@ -17,6 +17,28 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/request")
 public class RequestController {
 
+    @RequestMapping(value = "/getShelve" , method = RequestMethod.GET)
+    public void getShelve(HttpServletRequest request) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("inter shelve thread parameter name = " + request.getParameter("name")+","+request);
+            }
+        }).start();
+        System.out.println("name = " + request.getParameter("name")+","+request);
+    }
+
+    @RequestMapping(value = "/get" , method = RequestMethod.GET)
+    public void get(HttpServletRequest request) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("inter thread parameter name = " + request.getParameter("name")+","+request);
+            }
+        }).start();
+        System.out.println("name = " + request.getParameter("name")+","+request);
+    }
+
     @RequestMapping(value = "/first" , method = RequestMethod.GET)
     public void first(HttpServletRequest request) {
         try {
