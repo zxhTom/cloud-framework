@@ -51,4 +51,11 @@ public class DynicTestServiceImpl implements DynicTestService {
         }
         return false;
     }
+
+    @Override
+    public Integer insert(DynicTest dynicTest) {
+        dynicTestMapper.insert(dynicTest);
+        int i = 1 / 0;
+        return 1;
+    }
 }

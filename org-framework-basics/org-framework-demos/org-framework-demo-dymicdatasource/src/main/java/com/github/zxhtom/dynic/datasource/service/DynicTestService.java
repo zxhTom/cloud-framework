@@ -12,4 +12,6 @@ public interface DynicTestService {
     List<DynicTest> start();
 
     public boolean switchDB(String datasourceId);
+
+    Integer insert(DynicTest dynicTest);
 }
