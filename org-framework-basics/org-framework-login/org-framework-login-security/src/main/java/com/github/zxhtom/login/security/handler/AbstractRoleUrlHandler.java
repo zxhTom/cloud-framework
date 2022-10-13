@@ -94,6 +94,21 @@ public abstract class AbstractRoleUrlHandler<T,R> implements RoleUrlHandler<T,R>
         if (null==actualTypeArguments||actualTypeArguments.length==0) {
             return null;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         String fanxingName = actualTypeArguments[0].getTypeName();
         try {
             return Class.forName(fanxingName);

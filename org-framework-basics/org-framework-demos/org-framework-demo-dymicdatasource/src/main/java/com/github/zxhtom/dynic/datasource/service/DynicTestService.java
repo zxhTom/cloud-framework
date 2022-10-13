@@ -11,4 +11,5 @@ import java.util.List;
 public interface DynicTestService {
     List<DynicTest> start();
 
+    public boolean switchDB(String datasourceId);
 }

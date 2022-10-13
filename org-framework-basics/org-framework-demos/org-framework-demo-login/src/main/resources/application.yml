@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://192.168.209.128:3306/maltcloud?useUnicode=true&amp;characterEncoding=utf8
-    username: root
-    password: '123456'
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.1.119:3306/maltcloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: yapai
+    password: ypkj$%7
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
   mapper-locations: classpath*:com/github/zxhtom/**/*.xml
