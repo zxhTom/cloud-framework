@@ -5,6 +5,7 @@ import com.github.zxhtom.demo.repository.DemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public class DemoRepositoryImpl implements DemoRepository {
     @Autowired
     DemoMapper demoMapper;
     @Override
-    public Map<String, Object> selectTest() {
+    public List<Map<String, Object>> selectTest() {
         return demoMapper.selectTest();
     }
 }

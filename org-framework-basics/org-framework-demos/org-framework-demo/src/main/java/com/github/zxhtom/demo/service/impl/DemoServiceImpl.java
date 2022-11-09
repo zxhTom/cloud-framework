@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,15 +22,15 @@ public class DemoServiceImpl implements DemoService {
     DemoRepository demoRepository;
 
     @Override
-    public Map<String, Object> selectTest(Integer code) {
+    public List<Map<String, Object>> selectTest(Integer code) {
         if (code != 1) {
             throw new NullPointerException("hello");
         }
         Environment evn = EnvironmentConfig.getEvn();
         String spring = evn.getProperty("spring");
-        Map<String, Object> resultMap =
+        List<Map<String,Object>> resultList =
                 demoRepository.selectTest();
-        System.out.println(resultMap);
-        return resultMap;
+        System.out.println(resultList);
+        return resultList;
     }
 }

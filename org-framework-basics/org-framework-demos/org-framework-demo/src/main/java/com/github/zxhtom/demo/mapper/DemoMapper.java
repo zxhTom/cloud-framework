@@ -1,5 +1,8 @@
 package com.github.zxhtom.demo.mapper;
 
+import com.github.zxhtom.demo.model.Test;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,6 +13,7 @@ import java.util.Map;
  */
 public interface DemoMapper {
 
-    Map<String, Object> selectTest();
+    List<Map<String, Object>> selectTest();
 
+    Integer insertTestSelfSql(Test test);
 }

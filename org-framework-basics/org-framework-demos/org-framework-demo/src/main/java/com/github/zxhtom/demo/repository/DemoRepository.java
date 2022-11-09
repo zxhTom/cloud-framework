@@ -1,5 +1,6 @@
 package com.github.zxhtom.demo.repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Map;
  * @date 2021/8/23 16:28
  */
 public interface DemoRepository {
-    public Map<String, Object> selectTest();
+    public List<Map<String, Object>> selectTest();
 }

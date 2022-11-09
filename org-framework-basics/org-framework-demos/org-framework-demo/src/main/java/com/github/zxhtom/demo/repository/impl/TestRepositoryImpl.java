@@ -2,6 +2,7 @@ package com.github.zxhtom.demo.repository.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.zxhtom.demo.mapper.DemoMapper;
 import com.github.zxhtom.demo.mapper.TestMapper;
 import com.github.zxhtom.demo.model.Test;
 import com.github.zxhtom.demo.repository.TestRepository;
@@ -19,6 +20,8 @@ import java.util.List;
 public class TestRepositoryImpl implements TestRepository {
     @Autowired
     TestMapper testMapper;
+    @Autowired
+    DemoMapper demoMapper;
 
     @Override
     public List<Test> selectTest() {
@@ -54,7 +57,7 @@ public class TestRepositoryImpl implements TestRepository {
 
     @Override
     public Integer insertTestSelfSql(Test test) {
-        return testMapper.insertTestSelfSql(test);
+        return demoMapper.insertTestSelfSql(test);
     }
 
 }

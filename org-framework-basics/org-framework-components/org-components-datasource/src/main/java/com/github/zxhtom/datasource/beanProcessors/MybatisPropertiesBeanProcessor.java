@@ -31,30 +31,30 @@ public class MybatisPropertiesBeanProcessor implements BeanPostProcessor {
     public MybatisPropertiesBeanProcessor(){
     }
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (MybatisPlusProperties.class == bean.getClass()&&index++==0) {
-            MybatisPlusProperties properties = (MybatisPlusProperties) bean;
-            String[] mapperLocations = properties.getMapperLocations();
-            int mybatiSourceLength = mapperLocations.length;
-            int defaultSourceLength = MybatisConstant.MAPPERLOCALTIONS.length;
-            String[] newMapperLocations = new String[mybatiSourceLength + defaultSourceLength];
-            System.arraycopy(mapperLocations, 0, newMapperLocations, 0, mybatiSourceLength);
-            System.arraycopy(MybatisConstant.MAPPERLOCALTIONS, 0, newMapperLocations, mybatiSourceLength, defaultSourceLength);
-            properties.setMapperLocations(newMapperLocations);
-            log.info(bean+"======内置MybatisPlus配置信息，包含mybatis的setting和xml扫描路径======"+ beanName);
-            String property = properties.getTypeHandlersPackage();
-            Set<String> typeHandlersPackageSet = new HashSet<>();
-            if (StringUtils.isNotEmpty(property)) {
-                typeHandlersPackageSet.add(property);
+        @Override
+        public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+            if (MybatisPlusProperties.class == bean.getClass()&&index++==0) {
+                MybatisPlusProperties properties = (MybatisPlusProperties) bean;
+                String[] mapperLocations = properties.getMapperLocations();
+                int mybatiSourceLength = mapperLocations.length;
+                int defaultSourceLength = MybatisConstant.MAPPERLOCALTIONS.length;
+                String[] newMapperLocations = new String[mybatiSourceLength + defaultSourceLength];
+                System.arraycopy(mapperLocations, 0, newMapperLocations, 0, mybatiSourceLength);
+                System.arraycopy(MybatisConstant.MAPPERLOCALTIONS, 0, newMapperLocations, mybatiSourceLength, defaultSourceLength);
+                properties.setMapperLocations(newMapperLocations);
+                log.info(bean+"======内置MybatisPlus配置信息，包含mybatis的setting和xml扫描路径======"+ beanName);
+                String property = properties.getTypeHandlersPackage();
+                Set<String> typeHandlersPackageSet = new HashSet<>();
+                if (StringUtils.isNotEmpty(property)) {
+                    typeHandlersPackageSet.add(property);
+                }
+                typeHandlersPackageSet.add(MybatisConstant.TYPEHANDLERSPACKAGE);
+                Object[] mpArray = typeHandlersPackageSet.toArray();
+                String typeHandlersPackage = StringUtils.join(mpArray,",");
+                properties.setTypeHandlersPackage(typeHandlersPackage);
             }
-            typeHandlersPackageSet.add(MybatisConstant.TYPEHANDLERSPACKAGE);
-            Object[] mpArray = typeHandlersPackageSet.toArray();
-            String typeHandlersPackage = StringUtils.join(mpArray,",");
-            properties.setTypeHandlersPackage(typeHandlersPackage);
+            return bean;
         }
-        return bean;
-    }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {

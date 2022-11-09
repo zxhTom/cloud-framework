@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +23,7 @@ public class DemoController {
     @Autowired
     DemoService demoService;
     @RequestMapping(value = "/selectTest",method = RequestMethod.GET)
-    public Map<String,Object> selectTest(@RequestParam Integer code) {
+    public List<Map<String, Object>> selectTest(@RequestParam Integer code) {
 
         return demoService.selectTest(code);
     }

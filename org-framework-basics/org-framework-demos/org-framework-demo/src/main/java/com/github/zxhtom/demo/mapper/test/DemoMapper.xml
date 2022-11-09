@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.zxhtom.demo.mapper.DemoMapper">
+    <insert id="insertTestSelfSql">
+        insert into test
+        (name,sex,create_time,update_time,delete_flag,owner,modifer,interface_entry,version)
+        values
+            (#{userName},#{sex},#{createTime},#{updateTime},#{deleteFlag},#{owner},#{modifer},#{interfaceEntry},#{version})
+    </insert>
     <select id="selectTest" resultType="java.util.Map">
         select * from test
     </select>
