@@ -12,6 +12,8 @@
     <artifactId>org.framework.exception</artifactId>
 
     <properties>
+        <java.compiler.source>11</java.compiler.source>
+        <java.compiler.target>11</java.compiler.target>
     </properties>
 
     <dependencies>
@@ -35,4 +37,35 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <offline>true</offline>
+                    <skipPoms>false</skipPoms>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.deon.maven</groupId>
+                <artifactId>git-branch-version-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>resetVersion</id>
+                        <goals>
+                            <goal>set</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <installVersion>${git.branch}-SNAPSHOT</installVersion>
+                    <packageVersion>${git.branch}-SNAPSHOT</packageVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

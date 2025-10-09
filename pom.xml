@@ -7,6 +7,7 @@
     <groupId>com.github.zxhtom</groupId>
     <artifactId>org.framework.root</artifactId>
     <version>1.1-SNAPSHOT</version>
+
     <modules>
         <module>org-framework-basics</module>
         <module>org-framework-dependencies</module>

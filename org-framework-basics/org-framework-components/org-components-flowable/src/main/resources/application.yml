@@ -1,0 +1,17 @@
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://server.zxhtom.com:3306/flowables?nullCatalogMeansCurrent=true&characterEncoding-UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+flowable:
+  async-executor-activate: false
+  database-schema-update: true
+  process-definition-location-prefix: classpath*:/processes/
+  process:
+    definition-cache-limit: 10
+server:
+  port: 8989
+  context-path: flowable-ui

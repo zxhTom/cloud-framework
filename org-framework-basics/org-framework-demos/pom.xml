@@ -22,6 +22,7 @@
         <module>org-framework-demo-poi</module>
         <module>org.framework.demo.transational</module>
         <module>org-framework-demo-dymicdatasource</module>
+        <module>org-framework-mini</module>
     </modules>
     <properties>
     </properties>
@@ -31,6 +32,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 明确指定插件版本，解决版本冲突 -->
+                <version>2.7.18</version>
                 <executions>
                     <execution>
                         <goals>

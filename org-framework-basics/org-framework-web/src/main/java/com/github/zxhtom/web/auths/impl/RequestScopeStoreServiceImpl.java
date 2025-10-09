@@ -13,7 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @date 2021/9/30 15:33
  */
 @Service
-@Scope(value = WebApplicationContext.SCOPE_REQUEST,proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@Scope(value = WebApplicationContext.SCOPE_REQUEST,proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class RequestScopeStoreServiceImpl implements ScopeStoreService {
     private String entryPath;
     @Override
