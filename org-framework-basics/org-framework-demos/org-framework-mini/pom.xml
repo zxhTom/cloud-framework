@@ -9,14 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>org.framework.demo</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>org-framework-mini</artifactId>
 
     <properties>
     </properties>
-
     <dependencies>
-
         <dependency>
             <groupId>com.github.zxhtom</groupId>
             <artifactId>org.framework.core</artifactId>
@@ -25,17 +22,8 @@
 
         <dependency>
             <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.components.datasource</artifactId>
+            <artifactId>org.components.knife4j</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
-        <dependency>
-            <groupId>com.github.zxhtom</groupId>
-            <artifactId>org.framework.exception</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-
     </dependencies>
 </project>

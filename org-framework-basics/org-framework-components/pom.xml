@@ -19,6 +19,7 @@
         <module>org-components-datasource</module>
         <module>org-components-mongodb</module>
         <module>org-components-knife4j</module>
+        <module>org-components-flowable</module>
     </modules>
     <properties>
     </properties>

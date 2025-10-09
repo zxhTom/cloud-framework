@@ -1,0 +1,5 @@
+# application.yml
+wechat:
+  mini-program:
+    appid: wx12d14a7a6ab6af1a
+    secret: d3612d973882725bd4eb61f65cd7d61f

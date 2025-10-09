@@ -45,13 +45,14 @@ import java.util.Locale;
  * @date 2021/9/3 9:44
  */
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     WebMvcProperties webMvcProperties;
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index");
+        registry.addViewController("/modeler-app/rest/editor-users").setViewName("/app/rest/editor-users");
         //实现一个请求到视图的映射，而无需书写controller
         //registry.addViewController("/404").setViewName("forward:/maltcloud/error.html");
     }
