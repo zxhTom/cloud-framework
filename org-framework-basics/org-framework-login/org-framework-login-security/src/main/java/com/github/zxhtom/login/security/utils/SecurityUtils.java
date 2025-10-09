@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +35,7 @@ public class SecurityUtils {
 	 * @return
 	 */
 	public static JwtAuthenticatioToken login(HttpServletRequest request, String username, String password, AuthenticationManager authenticationManager) {
+		JwtTokenUtils jwtTokenUtils = ApplicationContextUtil.getApplicationContext().getBean(JwtTokenUtils.class);
 		JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password);
 		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		// 执行登录认证过程
@@ -43,7 +43,7 @@ public class SecurityUtils {
 	    // 认证成功存储认证信息到上下文
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		// 生成令牌并返回给客户端
-	    token.setToken(JwtTokenUtils.generateToken(authentication));
+	    token.setToken(jwtTokenUtils.generateToken(authentication));
 		return token;
 	}
 
@@ -52,8 +52,9 @@ public class SecurityUtils {
 	 * @param request
 	 */
 	public static void checkAuthentication(HttpServletRequest request) {
+		JwtTokenUtils jwtTokenUtils = ApplicationContextUtil.getApplicationContext().getBean(JwtTokenUtils.class);
 		// 获取令牌并根据令牌获取登录认证信息
-		Authentication authentication = JwtTokenUtils.getAuthenticationeFromToken(request);
+		Authentication authentication = jwtTokenUtils.getAuthenticationeFromToken(request);
 		// 设置登录认证信息到上下文
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}

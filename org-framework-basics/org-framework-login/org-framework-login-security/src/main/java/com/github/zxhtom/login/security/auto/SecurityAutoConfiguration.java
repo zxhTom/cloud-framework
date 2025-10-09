@@ -3,6 +3,7 @@ package com.github.zxhtom.login.security.auto;
 import com.github.zxhtom.login.core.autoconfige.LoginCoreAutoConfiguration;
 import com.github.zxhtom.login.core.service.LoginService;
 import com.github.zxhtom.login.security.config.*;
+import com.github.zxhtom.login.security.filter.JwtCloudAuthenticationFilter;
 import com.github.zxhtom.login.security.handler.RoleUrlHandler;
 import com.github.zxhtom.login.security.handler.chain.ButtonRoleHandler;
 import com.github.zxhtom.login.security.handler.chain.MenuRoleHandler;
@@ -12,11 +13,10 @@ import com.github.zxhtom.login.security.handler.impl.ValidRoleAttributeHandler;
 import com.github.zxhtom.login.security.service.impl.LoginSecurityService;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * @author 张新华
@@ -76,5 +76,17 @@ public class SecurityAutoConfiguration {
     @ConditionalOnMissingBean(ModuleRoleHandler.class)
     public RoleUrlHandler moduleRoleHandler() {
         return new ModuleRoleHandler();
+    }
+    @Bean
+    @ConditionalOnMissingBean
+    public JwtCloudAuthenticationFilter jwtCloudAuthenticationFilter() {
+        return new JwtCloudAuthenticationFilter();
+    }
+    @Bean
+    public FilterRegistrationBean<JwtCloudAuthenticationFilter> disableJwtFilterRegistration(JwtCloudAuthenticationFilter filter) {
+        FilterRegistrationBean<JwtCloudAuthenticationFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(filter);
+        registration.setEnabled(false);
+        return registration;
     }
 }

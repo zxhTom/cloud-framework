@@ -18,4 +18,6 @@ public interface RoleMapper {
 
 
     List<Role> selectRoleBaseButton(@Param("buttonId") Long buttonId);
+
+    List<Role> selectRoleBaseUser(@Param("userId") Long userId);
 }

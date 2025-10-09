@@ -21,4 +21,12 @@
         and bp.delete_flag!=1
         and bp.button_id=#{buttonId}
     </select>
+    <select id="selectRoleBaseUser" resultType="com.github.zxhtom.login.core.model.Role">
+        select * from ROLE r
+          right join USER_ROLE ur
+             on r.id=ur.role_id
+                 and ur.delete_flag!=1
+        and r.delete_flag!=1
+        and ur.user_id=#{userId}
+    </select>
 </mapper>

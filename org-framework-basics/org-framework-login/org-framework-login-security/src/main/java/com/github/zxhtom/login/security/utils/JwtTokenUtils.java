@@ -5,8 +5,10 @@ import com.github.zxhtom.login.security.token.JwtAuthenticatioToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -17,6 +19,7 @@ import java.util.*;
  * @Package com.github.zxhtom.login.security.utils
  * @date 2021/9/27 11:31
  */
+@Component
 public class JwtTokenUtils {
     private static final long serialVersionUID = 1L;
 
@@ -35,18 +38,29 @@ public class JwtTokenUtils {
     /**
      * 密钥
      */
-    private static final String SECRET = "abcdefgh";
+    @Value("${jwt.secret:mySecretKey}")
+    private String SECRET = "abcdefgh";
     /**
      * 有效期12小时
      */
-    private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
+    @Value("${jwt.expiration:86400000}")
+    private  long EXPIRE_TIME = 12 * 60 * 60 * 1000;
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * 生成令牌
      *
      * @return 令牌
      */
-    public static String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         Map<String, Object> claims = new HashMap<>(3);
         claims.put(USERNAME, SecurityUtils.getUsername(authentication));
         claims.put(CREATED, new Date());
@@ -60,7 +74,7 @@ public class JwtTokenUtils {
      * @param claims 数据声明
      * @return 令牌
      */
-    private static String generateToken(Map<String, Object> claims) {
+    private String generateToken(Map<String, Object> claims) {
         Date expirationDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
@@ -71,7 +85,7 @@ public class JwtTokenUtils {
      * @param token 令牌
      * @return 用户名
      */
-    public static String getUsernameFromToken(String token) {
+    public  String getUsernameFromToken(String token) {
         String username;
         try {
             Claims claims = getClaimsFromToken(token);
@@ -86,10 +100,10 @@ public class JwtTokenUtils {
      * 根据请求令牌获取登录认证信息
      * @return 用户名
      */
-    public static Authentication getAuthenticationeFromToken(HttpServletRequest request) {
+    public Authentication getAuthenticationeFromToken(HttpServletRequest request) {
         Authentication authentication = null;
         // 获取请求携带的令牌
-        String token = JwtTokenUtils.getToken(request);
+        String token = getToken(request);
         if(token != null) {
             // 请求令牌不能为空
             if(SecurityUtils.getAuthentication() == null) {
@@ -129,7 +143,7 @@ public class JwtTokenUtils {
      * @param token 令牌
      * @return 数据声明
      */
-    private static Claims getClaimsFromToken(String token) {
+    private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
@@ -145,7 +159,7 @@ public class JwtTokenUtils {
      * @param username
      * @return
      */
-    public static Boolean validateToken(String token, String username) {
+    public  Boolean validateToken(String token, String username) {
         String userName = getUsernameFromToken(token);
         return (userName.equals(username) && !isTokenExpired(token));
     }
@@ -155,7 +169,7 @@ public class JwtTokenUtils {
      * @param token
      * @return
      */
-    public static String refreshToken(String token) {
+    public String refreshToken(String token) {
         String refreshedToken;
         try {
             Claims claims = getClaimsFromToken(token);
@@ -173,7 +187,7 @@ public class JwtTokenUtils {
      * @param token 令牌
      * @return 是否过期
      */
-    public static Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         try {
             Claims claims = getClaimsFromToken(token);
             Date expiration = claims.getExpiration();
@@ -188,7 +202,7 @@ public class JwtTokenUtils {
      * @param request
      * @return
      */
-    public static String getToken(HttpServletRequest request) {
+    public String getToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         String tokenHead = "Bearer ";
         if(token == null) {
@@ -200,5 +214,11 @@ public class JwtTokenUtils {
             token = null;
         }
         return token;
+    }
+
+    public  Date getExpirationDateFromToken(String jwt) {
+        Claims claimsFromToken = getClaimsFromToken(jwt);
+        System.out.println(claimsFromToken);
+        return new Date();
     }
 }

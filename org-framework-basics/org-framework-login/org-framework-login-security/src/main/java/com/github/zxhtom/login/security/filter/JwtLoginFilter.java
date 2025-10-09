@@ -1,12 +1,10 @@
 package com.github.zxhtom.login.security.filter;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.zxhtom.login.security.token.JwtAuthenticatioToken;
 import com.github.zxhtom.login.security.utils.JwtTokenUtils;
 import com.github.zxhtom.web.context.HttpUtils;
-import com.github.zxhtom.web.context.WebContextUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
@@ -14,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,7 +27,10 @@ import java.io.IOException;
  * @date 2021/9/27 11:16
  * @description 用于认证jwt登录
  */
+@Component
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
+    @Autowired
+    JwtTokenUtils jwtTokenUtils;
 
     public JwtLoginFilter(AuthenticationManager authManager) {
         setAuthenticationManager(authManager);
@@ -64,7 +66,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
         }
         // 生成并返回token给客户端，后续访问携带此token
-        JwtAuthenticatioToken token = new JwtAuthenticatioToken(null, null, JwtTokenUtils.generateToken(authResult));
+        JwtAuthenticatioToken token = new JwtAuthenticatioToken(null, null, jwtTokenUtils.generateToken(authResult));
         HttpUtils.write(response, token);
     }
 

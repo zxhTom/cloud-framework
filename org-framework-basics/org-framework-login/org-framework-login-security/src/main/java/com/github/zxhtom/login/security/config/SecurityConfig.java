@@ -1,25 +1,26 @@
 package com.github.zxhtom.login.security.config;
 
-import com.github.zxhtom.login.security.filter.JwtLoginFilter;
+import com.github.zxhtom.login.security.filter.JwtCloudAuthenticationFilter;
+import com.github.zxhtom.login.security.model.InteractionEnum;
+import com.github.zxhtom.login.security.model.SecurityInfo;
 import com.github.zxhtom.login.security.provider.MaltcloudProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 /**
  * @author 张新华
@@ -31,6 +32,10 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    JwtCloudAuthenticationFilter jwtCloudAuthenticationFilter;
+    @Autowired
+    SecurityInfo securityInfo;
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -55,25 +60,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
+                .authorizeRequests()
+                .antMatchers("/api/auth/login").permitAll()
+                .antMatchers("/api/auth/register").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/jwtLogin/**").permitAll()
                 .antMatchers("/user/insert").permitAll()
                 .antMatchers("/**/*.css").permitAll()
                 .antMatchers("/**/*.woff2").permitAll()
                 .antMatchers("/**/*.jpg").permitAll()
-                .antMatchers("/login.html","/login2.html", "/error.html").permitAll()
+                .antMatchers("/login.html", "/login2.html", "/error.html").permitAll()
                 .antMatchers("/test/hello2").hasRole("admin2")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
+                .anyRequest().authenticated();
+        if (securityInfo.getInteraction() == InteractionEnum.JSON) {
+                registry.and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            // 关键配置：禁用表单登录，使用自定义认证入口点
+                .and().formLogin().disable()
+                .httpBasic().disable();
+            registry.and().addFilterAt(jwtCloudAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        }else if (securityInfo.getInteraction() == InteractionEnum.VIEW) {
+                registry.and().formLogin()
                 .loginProcessingUrl("/login")
                 .loginPage("/login.html")
                 .usernameParameter("userName")
                 .failureForwardUrl("/error.html")
-                .defaultSuccessUrl("/system.html", false)
-                //.successForwardUrl("/success.html")
-                .and()
+                .defaultSuccessUrl("/system.html", false);
+//                .successForwardUrl("/success.html");
+        }
+                registry.and()
                 .addFilterAfter(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 //.addFilterAt(loginFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler())

@@ -1,7 +1,12 @@
 package com.github.zxhtom.login.core.service.impl;
 
+import com.github.zxhtom.login.core.mapper.RoleMapper;
+import com.github.zxhtom.login.core.model.Role;
 import com.github.zxhtom.login.core.repository.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author 张新华
@@ -11,4 +16,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
+    @Autowired
+    RoleMapper roleMapper;
+    @Override
+    public List<Role> selectRolesByUserId(Long userId) {
+        return roleMapper.selectRoleBaseUser(userId);
+    }
 }
