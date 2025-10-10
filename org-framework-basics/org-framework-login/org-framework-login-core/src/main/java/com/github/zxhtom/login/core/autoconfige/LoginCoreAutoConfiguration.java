@@ -59,7 +59,11 @@ public class LoginCoreAutoConfiguration {
         return new ModuleServiceImpl();
     }
 
-
+    @Bean
+    @ConditionalOnMissingBean(MiniUserService.class)
+    public MiniUserService miniUserServiceImpl() {
+        return new MiniUserServiceImpl();
+    }
     /********************************repository********************************/
     @Bean
     @ConditionalOnMissingBean(ButtonRepository.class)
@@ -91,4 +95,11 @@ public class LoginCoreAutoConfiguration {
     public RoleRepository defaultRoleRepository() {
         return new RoleRepositoryImpl();
     }
+
+    @Bean
+    @ConditionalOnMissingBean(MiniUserRepository.class)
+    public MiniUserRepository defaultMiniUserRepository() {
+        return new MiniUserRepositoryImpl();
+    }
 }
+

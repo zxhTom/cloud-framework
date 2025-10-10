@@ -1,5 +1,9 @@
 package com.github.zxhtom.mini.controller;
 
+import com.github.zxhtom.login.core.dto.CombineUser;
+import com.github.zxhtom.login.core.model.MiniUser;
+import com.github.zxhtom.login.core.request.LoginRequest;
+import com.github.zxhtom.login.core.service.MiniUserService;
 import com.github.zxhtom.mini.dto.ApiResponse;
 import com.github.zxhtom.mini.dto.Code2SessionResponse;
 import com.github.zxhtom.mini.model.User;
@@ -24,12 +28,14 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/login")
 @Slf4j
-public class LoginController {
+public class WechatLoginController {
     @Autowired
     private WechatService wechatService;
+    @Autowired
+    MiniUserService miniUserService;
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody LoginRequest request) {
+    public ApiResponse login(@RequestBody WechatLoginRequest request) {
 
         // 1. 通过 code 获取 openid
         Code2SessionResponse sessionResponse = wechatService.code2Session(request.getCode());
@@ -39,7 +45,7 @@ public class LoginController {
         }
 
         String openid = sessionResponse.getOpenid();
-
+        CombineUser combineUser = miniUserService.selectMiniUserOrInitUserWithPrefix(request.getAppId(), openid, "wechat_");
         // 2. 业务逻辑：根据 openid 查找或创建用户
         User user = findOrCreateUser(openid, request.getUserInfo());
 
@@ -73,7 +79,8 @@ public class LoginController {
 
     // 内部类：接收前端请求
     @Data
-    public static class LoginRequest {
+    public static class WechatLoginRequest {
+        private String appId;
         private String code;
         private Object userInfo; // 可以是一个Map或自定义DTO
     }

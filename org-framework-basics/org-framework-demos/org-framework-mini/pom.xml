@@ -25,5 +25,10 @@
             <artifactId>org.components.knife4j</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.login.security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
