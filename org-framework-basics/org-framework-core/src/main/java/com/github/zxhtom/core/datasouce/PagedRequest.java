@@ -12,10 +12,10 @@ public class PagedRequest<T> {
     /**
      * 页码
      */
-    private Integer pageNumber;
+    private Integer pageNumber=1;
     /**
      * 每页笔数
      */
-    private Integer pageSize;
+    private Integer pageSize=10;
 
 }

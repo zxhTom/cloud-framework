@@ -12,6 +12,7 @@ import lombok.Data;
  */
 @Data
 public class CombineUser {
+    private boolean registed;
     private User maltcloud;
     private MiniUser outUser;
 }

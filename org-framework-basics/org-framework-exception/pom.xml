@@ -48,7 +48,7 @@
                     <skipPoms>false</skipPoms>
                 </configuration>
             </plugin>
-            <plugin>
+           <!-- <plugin>
                 <groupId>com.deon.maven</groupId>
                 <artifactId>git-branch-version-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
@@ -65,7 +65,7 @@
                     <installVersion>${git.branch}-SNAPSHOT</installVersion>
                     <packageVersion>${git.branch}-SNAPSHOT</packageVersion>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

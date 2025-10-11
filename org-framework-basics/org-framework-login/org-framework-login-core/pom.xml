@@ -24,5 +24,19 @@
             <artifactId>org.components.datasource</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.components.knife4j</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--common-->
+        <dependency>
+            <groupId>com.anji-plus</groupId>
+            <artifactId>captcha</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.anji-plus</groupId>
+            <artifactId>spring-boot-starter-captcha</artifactId>
+        </dependency>
     </dependencies>
 </project>

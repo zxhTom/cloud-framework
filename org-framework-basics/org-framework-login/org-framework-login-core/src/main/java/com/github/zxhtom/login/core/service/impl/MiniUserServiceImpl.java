@@ -35,7 +35,7 @@ public class MiniUserServiceImpl implements MiniUserService {
         if (null == miniUser) {
             User user = new User();
             user.setId(System.currentTimeMillis());
-            user.setUserName(String.format("%s_%s_%s",prefix,appId,openId));
+            user.setUserName(String.format("%s_%s_%s", prefix, appId, openId));
             user.setUserCode(openId.hashCode());
             userService.insertUser(user);
             log.debug("mini user init successful");
@@ -46,6 +46,9 @@ public class MiniUserServiceImpl implements MiniUserService {
             miniUser.setOpenId(openId);
             miniUser.setUserId(user.getId());
             miniUserRepository.insert(miniUser);
+            combineUser.setRegisted(false);
+        } else {
+            combineUser.setRegisted(true);
         }
         combineUser.setOutUser(miniUser);
         return combineUser;

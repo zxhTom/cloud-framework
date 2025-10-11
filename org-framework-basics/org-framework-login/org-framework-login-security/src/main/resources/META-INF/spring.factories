@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.zxhtom.login.security.config.SecurityConfig,\
+  com.github.zxhtom.login.security.config.SecurityMethodConfig,\
   com.github.zxhtom.login.security.service.impl.UserDetailsServiceImpl,\
   com.github.zxhtom.login.security.service.impl.SecurityOnlineSecurityImpl,\
   com.github.zxhtom.login.security.auto.SecurityAutoConfiguration,\

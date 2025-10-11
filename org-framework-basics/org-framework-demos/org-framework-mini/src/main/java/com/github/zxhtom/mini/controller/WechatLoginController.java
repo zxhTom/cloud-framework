@@ -1,8 +1,6 @@
 package com.github.zxhtom.mini.controller;
 
 import com.github.zxhtom.login.core.dto.CombineUser;
-import com.github.zxhtom.login.core.model.MiniUser;
-import com.github.zxhtom.login.core.request.LoginRequest;
 import com.github.zxhtom.login.core.service.MiniUserService;
 import com.github.zxhtom.mini.dto.ApiResponse;
 import com.github.zxhtom.mini.dto.Code2SessionResponse;
@@ -56,7 +54,7 @@ public class WechatLoginController {
         // redisTemplate.opsForValue().set("token:" + token, openid, Duration.ofDays(7));
 
         // 5. 返回 token 和用户信息给前端
-        LoginResponse loginResponse = new LoginResponse(token, user,false);
+        LoginResponse loginResponse = new LoginResponse(token, user,combineUser.isRegisted());
         return ApiResponse.success(loginResponse);
     }
 

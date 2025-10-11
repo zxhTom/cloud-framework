@@ -1,6 +1,7 @@
 package com.github.zxhtom.login.core.autoconfige;
 
 import com.github.zxhtom.login.core.controller.LoginController;
+import com.github.zxhtom.login.core.controller.captcha.CaptchaController;
 import com.github.zxhtom.login.core.repository.*;
 import com.github.zxhtom.login.core.repository.impl.*;
 import com.github.zxhtom.login.core.service.*;
@@ -101,5 +102,12 @@ public class LoginCoreAutoConfiguration {
     public MiniUserRepository defaultMiniUserRepository() {
         return new MiniUserRepositoryImpl();
     }
+
+    @Bean
+    @ConditionalOnMissingBean(CaptchaController.class)
+    public CaptchaController defaultCaptchaController() {
+        return new CaptchaController();
+    }
+
 }
 

@@ -32,7 +32,7 @@ public class ContractController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public PagedResult<Contract> queryList(ContractPageRequest pageRequest) {
         PagegationUtils.getInstance().pageStart(pageRequest.getPageNumber(), pageRequest.getPageSize());
-        return null;
+        return new PagedResult<>(1, 11);
     }
     @RequestMapping(value = "/list1",method = RequestMethod.GET)
     public Integer queryList1(ContractPageRequest pageRequest) {

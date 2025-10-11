@@ -16,6 +16,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.method.MethodSecurityMetadataSource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 /**
@@ -35,7 +37,7 @@ public class SecurityAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(FilterInvocationSecurityMetadataSource.class)
-    public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource(){
+    public MyInvocationSecurityMetadataSourceService filterInvocationSecurityMetadataSource(){
         MyInvocationSecurityMetadataSourceService metadataSouceService = new MyInvocationSecurityMetadataSourceService();
         metadataSouceService.registerHandler(new NullAttributeHandler());
         metadataSouceService.registerHandler(new ValidRoleAttributeHandler());
@@ -89,4 +91,16 @@ public class SecurityAutoConfiguration {
         registration.setEnabled(false);
         return registration;
     }
+/*
+    @Bean
+    public MethodFirstSecurityMetadataSource methodFirstSecurityMetadataSource(
+            MethodSecurityMetadataSource methodSecurityMetadataSource,
+            HttpSecurity httpSecurity) {
+        try {
+            return new MethodFirstSecurityMetadataSource(methodSecurityMetadataSource,httpSecurity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+*/
 }

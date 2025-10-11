@@ -4,9 +4,17 @@ import com.github.zxhtom.login.security.filter.JwtCloudAuthenticationFilter;
 import com.github.zxhtom.login.security.model.InteractionEnum;
 import com.github.zxhtom.login.security.model.SecurityInfo;
 import com.github.zxhtom.login.security.provider.MaltcloudProvider;
+import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
+import org.springframework.security.access.method.MethodSecurityMetadataSource;
+import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +30,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 /**
  * @author 张新华
  * @version V1.0
@@ -30,7 +41,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true
+)
+@Lazy
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtCloudAuthenticationFilter jwtCloudAuthenticationFilter;
@@ -41,7 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
-
+     @Autowired
+     private MethodSecurityMetadataSource methodSecurityMetadataSource;
+    @Autowired
+    MethodSecurityInterceptor methodSecurityInterceptor;
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -60,6 +79,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.securityContext().and()
+                .authorizeRequests().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+                        // 创建自定义的元数据源
+                    MethodFirstSecurityMetadataSource methodFirstMetadataSource = new MethodFirstSecurityMetadataSource(
+                            methodSecurityMetadataSource,
+                            fsi.getSecurityMetadataSource()
+                    );
+                        AccessDecisionManager accessDecisionManager = methodSecurityInterceptor.getAccessDecisionManager();
+/*
+                        AccessDecisionManager accessDecisionManager1 = fsi.getAccessDecisionManager();
+                        if (accessDecisionManager1 instanceof AffirmativeBased) {
+                            AffirmativeBased oldAccessDecisionManager = (AffirmativeBased) accessDecisionManager1;
+                            List<AccessDecisionVoter<?>> decisionVoters = oldAccessDecisionManager.getDecisionVoters();
+                            try {
+                                Field declaredField = accessDecisionManager.getClass().getDeclaredField("decisionVoters");
+                                declaredField.setAccessible(true);
+                                List<AccessDecisionVoter<?>> customDecisionVoters = (List<AccessDecisionVoter<?>>) declaredField.get(accessDecisionManager);
+                                customDecisionVoters.addAll(decisionVoters);
+                                declaredField.set(accessDecisionManager, customDecisionVoters);
+                            } catch (NoSuchFieldException e) {
+                                throw new RuntimeException(e);
+                            } catch (IllegalAccessException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+*/
+//                        fsi.setAccessDecisionManager(accessDecisionManager);
+                        fsi.setSecurityMetadataSource(methodFirstMetadataSource);
+                        return fsi;
+                    }
+                });
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests()
                 .antMatchers("/api/auth/login").permitAll()
