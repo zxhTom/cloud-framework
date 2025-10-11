@@ -89,25 +89,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             fsi.getSecurityMetadataSource()
                     );
                         AccessDecisionManager accessDecisionManager = methodSecurityInterceptor.getAccessDecisionManager();
-/*
                         AccessDecisionManager accessDecisionManager1 = fsi.getAccessDecisionManager();
                         if (accessDecisionManager1 instanceof AffirmativeBased) {
                             AffirmativeBased oldAccessDecisionManager = (AffirmativeBased) accessDecisionManager1;
+                            AffirmativeBased newAccessDecisionManager = (AffirmativeBased) accessDecisionManager;
                             List<AccessDecisionVoter<?>> decisionVoters = oldAccessDecisionManager.getDecisionVoters();
-                            try {
-                                Field declaredField = accessDecisionManager.getClass().getDeclaredField("decisionVoters");
-                                declaredField.setAccessible(true);
-                                List<AccessDecisionVoter<?>> customDecisionVoters = (List<AccessDecisionVoter<?>>) declaredField.get(accessDecisionManager);
-                                customDecisionVoters.addAll(decisionVoters);
-                                declaredField.set(accessDecisionManager, customDecisionVoters);
-                            } catch (NoSuchFieldException e) {
-                                throw new RuntimeException(e);
-                            } catch (IllegalAccessException e) {
-                                throw new RuntimeException(e);
-                            }
+                            List<AccessDecisionVoter<?>> customDecisionVoters = newAccessDecisionManager.getDecisionVoters();
+                            customDecisionVoters.addAll(decisionVoters);
+//                                newAccessDecisionManager.se(accessDecisionManager, customDecisionVoters);
                         }
-*/
-//                        fsi.setAccessDecisionManager(accessDecisionManager);
+                        fsi.setAccessDecisionManager(accessDecisionManager);
                         fsi.setSecurityMetadataSource(methodFirstMetadataSource);
                         return fsi;
                     }
