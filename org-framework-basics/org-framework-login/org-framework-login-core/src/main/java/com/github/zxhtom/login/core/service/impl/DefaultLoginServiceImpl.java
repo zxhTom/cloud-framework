@@ -1,6 +1,11 @@
 package com.github.zxhtom.login.core.service.impl;
 
+import com.github.zxhtom.login.core.request.LoginRequest;
+import com.github.zxhtom.login.core.response.LoginResponse;
 import com.github.zxhtom.login.core.service.LoginService;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 /**
  * @author 张新华
@@ -12,5 +17,20 @@ public class DefaultLoginServiceImpl implements LoginService {
     @Override
     public Integer refreshRoles(String userName) {
         return 0;
+    }
+
+    @Override
+    public LoginResponse authenticateUser(LoginRequest loginRequest) {
+        return null;
+    }
+
+    @Override
+    public Integer registerUser(LoginRequest signUpRequest) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getCurrentUser() {
+        return null;
     }
 }

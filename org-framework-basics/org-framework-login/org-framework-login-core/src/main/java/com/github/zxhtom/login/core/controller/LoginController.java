@@ -1,11 +1,21 @@
 package com.github.zxhtom.login.core.controller;
 
+import com.github.zxhtom.core.annotaion.login.NotLogin;
+import com.github.zxhtom.core.exception.BusinessException;
+import com.github.zxhtom.login.core.model.Role;
+import com.github.zxhtom.login.core.model.User;
+import com.github.zxhtom.login.core.request.LoginRequest;
+import com.github.zxhtom.login.core.response.LoginResponse;
 import com.github.zxhtom.login.core.service.LoginService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author 张新华
@@ -22,5 +32,39 @@ public class LoginController {
     @RequestMapping(value = "/refresh",method = RequestMethod.GET)
     public Integer refreshRoles(@RequestParam String userName) {
         return loginService.refreshRoles(userName);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        LoginResponse loginResponse = null;
+        try {
+            loginResponse = loginService.authenticateUser(loginRequest);
+        } catch (BusinessException businessException) {
+            if (businessException.getCode() == HttpStatus.UNAUTHORIZED.value()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("code", 401, "message", "用户名或密码错误"));
+            } else if (businessException.getCode() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Map.of("code", 500, "message", "登录失败: " + businessException.getMessage()));
+            }
+        }finally {
+            return ResponseEntity.ok(loginResponse);
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody LoginRequest signUpRequest) {
+        Integer code = loginService.registerUser(signUpRequest);
+        if (code == 400) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("code", 400, "message", "用户名已存在"));
+        }
+
+        return ResponseEntity.ok(Map.of("code", 200, "message", "用户注册成功"));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        return ResponseEntity.ok(loginService.getCurrentUser());
     }
 }

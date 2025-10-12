@@ -8,7 +8,9 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
@@ -47,6 +49,7 @@ import java.util.List;
         jsr250Enabled = true
 )
 @Lazy
+@Order(9999)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtCloudAuthenticationFilter jwtCloudAuthenticationFilter;

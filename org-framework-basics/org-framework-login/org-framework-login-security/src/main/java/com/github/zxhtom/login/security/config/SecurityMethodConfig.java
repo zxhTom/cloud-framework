@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
@@ -32,12 +34,14 @@ import java.util.List;
         securedEnabled = true,
         jsr250Enabled = true
 )
+@Order(3)
 public class SecurityMethodConfig extends GlobalMethodSecurityConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityMethodConfig.class);
 
     @Bean
     @Override
+    @Primary
     public MethodInterceptor methodSecurityInterceptor(MethodSecurityMetadataSource methodSecurityMetadataSource) {
         logger.info(">>> 自定义 methodSecurityInterceptor 创建开始");
 

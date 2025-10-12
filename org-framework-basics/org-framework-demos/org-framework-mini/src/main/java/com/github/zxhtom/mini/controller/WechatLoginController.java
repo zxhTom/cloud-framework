@@ -1,16 +1,20 @@
 package com.github.zxhtom.mini.controller;
 
 import com.github.zxhtom.login.core.dto.CombineUser;
+import com.github.zxhtom.login.core.model.User;
+import com.github.zxhtom.login.core.request.LoginRequest;
+import com.github.zxhtom.login.core.response.LoginResponse;
+import com.github.zxhtom.login.core.service.LoginService;
 import com.github.zxhtom.login.core.service.MiniUserService;
 import com.github.zxhtom.mini.dto.ApiResponse;
 import com.github.zxhtom.mini.dto.Code2SessionResponse;
-import com.github.zxhtom.mini.model.User;
 import com.github.zxhtom.mini.service.WechatService;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +28,15 @@ import java.util.UUID;
  */
 @Api(value = "mini app login authorization interfaces")
 @RestController
-@RequestMapping(value = "/login")
+@RequestMapping(value = "/wechat")
 @Slf4j
 public class WechatLoginController {
     @Autowired
     private WechatService wechatService;
     @Autowired
     MiniUserService miniUserService;
+    @Autowired
+    LoginService loginService;
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody WechatLoginRequest request) {
@@ -45,30 +51,24 @@ public class WechatLoginController {
         String openid = sessionResponse.getOpenid();
         CombineUser combineUser = miniUserService.selectMiniUserOrInitUserWithPrefix(request.getAppId(), openid, "wechat_");
         // 2. 业务逻辑：根据 openid 查找或创建用户
-        User user = findOrCreateUser(openid, request.getUserInfo());
+        User user = combineUser.getMaltcloud();
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUserName(user.getUserName());
+        loginRequest.setPassword(user.getPassword());
+        user.setPassword("");
+        LoginResponse loginResponse = loginService.authenticateUser(loginRequest);
 
         // 3. 生成自定义登录态 (Token)
-        String token = generateToken(user);
+        String token = String.format("%s %s", loginResponse.getType(), loginResponse.getToken());
 
         // 4. (可选) 将 token 和 user 的关联关系存储到 Redis 或数据库
         // redisTemplate.opsForValue().set("token:" + token, openid, Duration.ofDays(7));
 
         // 5. 返回 token 和用户信息给前端
-        LoginResponse loginResponse = new LoginResponse(token, user,combineUser.isRegisted());
-        return ApiResponse.success(loginResponse);
+        WechatLoginResponse wechatLoginResponse = new WechatLoginResponse(token, user,combineUser.isRegisted());
+        return ApiResponse.success(wechatLoginResponse);
     }
 
-    private User findOrCreateUser(String openid, Object userInfo) {
-        // 这里实现你的业务逻辑：
-        // - 根据 openid 查询数据库，看用户是否存在
-        // - 如果不存在，创建一个新用户（并保存昵称、头像等）
-        // - 如果存在，更新最后登录时间等
-        // 此处为示例，直接返回一个用户对象
-        User user = new User();
-        user.setOpenId(openid);
-        user.setNickname("微信用户"); // 应从userInfo中获取
-        return user;
-    }
 
     private String generateToken(User user) {
         // 生成一个随机的、安全的 Token
@@ -86,7 +86,7 @@ public class WechatLoginController {
     // 内部类：返回给前端的响应
     @Data
     @AllArgsConstructor
-    public static class LoginResponse {
+    public static class WechatLoginResponse {
         private String token;
         private User user;
         private boolean registed;

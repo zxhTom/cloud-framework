@@ -37,6 +37,7 @@ public class MiniUserServiceImpl implements MiniUserService {
             user.setId(System.currentTimeMillis());
             user.setUserName(String.format("%s_%s_%s", prefix, appId, openId));
             user.setUserCode(openId.hashCode());
+            user.setPassword("123456");
             userService.insertUser(user);
             log.debug("mini user init successful");
             combineUser.setMaltcloud(user);
