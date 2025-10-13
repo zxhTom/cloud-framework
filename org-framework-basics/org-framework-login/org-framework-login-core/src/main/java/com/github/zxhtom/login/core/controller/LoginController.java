@@ -1,21 +1,16 @@
 package com.github.zxhtom.login.core.controller;
 
-import com.github.zxhtom.core.annotaion.login.NotLogin;
 import com.github.zxhtom.core.exception.BusinessException;
-import com.github.zxhtom.login.core.model.Role;
-import com.github.zxhtom.login.core.model.User;
 import com.github.zxhtom.login.core.request.LoginRequest;
 import com.github.zxhtom.login.core.response.LoginResponse;
 import com.github.zxhtom.login.core.service.LoginService;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 /**
  * @author 张新华
@@ -46,6 +41,8 @@ public class LoginController {
             } else if (businessException.getCode() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Map.of("code", 500, "message", "登录失败: " + businessException.getMessage()));
+            } else {
+                return ResponseEntity.status(500).body(Map.of("code",500));
             }
         }finally {
             return ResponseEntity.ok(loginResponse);

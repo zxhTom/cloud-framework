@@ -30,6 +30,6 @@ public class ContractServiceImpl implements ContractService {
         miniUser.setAppId(user.getAppId());
         miniUser.setFinished(true);
         miniUserService.finishMiniUser(miniUser);
-        return null;
+        return 1;
     }
 }

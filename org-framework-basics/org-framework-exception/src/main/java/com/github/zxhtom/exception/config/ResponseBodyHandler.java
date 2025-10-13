@@ -3,7 +3,6 @@ package com.github.zxhtom.exception.config;
 import com.alibaba.fastjson.JSON;
 import com.github.zxhtom.core.IdGenerator;
 import com.github.zxhtom.exception.constant.ExceptionConstant;
-import com.github.zxhtom.exception.event.BaseEvent;
 import com.github.zxhtom.exception.event.SuccessEvent;
 import com.github.zxhtom.result.annotation.ProtoResult;
 import com.github.zxhtom.result.unity.ActionResult;
@@ -12,7 +11,6 @@ import com.github.zxhtom.web.context.ApplicationContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -22,11 +20,8 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 /**
  * @author 张新华
@@ -60,6 +55,9 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object>{
             return result;
         }
         ProtoResult annotation = methodParameter.getContainingClass().getAnnotation(ProtoResult.class);
+        if (annotation == null) {
+            annotation = methodParameter.getMethodAnnotation(ProtoResult.class);
+        }
         if (annotation!=null) {
             /**用于对外提供原生数据；快速响应*/
             beforeWriteLast(body, instanceId,serverHttpRequest);

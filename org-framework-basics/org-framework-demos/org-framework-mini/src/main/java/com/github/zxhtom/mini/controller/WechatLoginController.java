@@ -9,13 +9,13 @@ import com.github.zxhtom.login.core.service.MiniUserService;
 import com.github.zxhtom.mini.dto.ApiResponse;
 import com.github.zxhtom.mini.dto.Code2SessionResponse;
 import com.github.zxhtom.mini.service.WechatService;
+import com.github.zxhtom.result.annotation.ProtoResult;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +46,7 @@ public class WechatLoginController {
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
+    @ProtoResult
     public ApiResponse login(@RequestBody WechatLoginRequest request) {
 
         // 1. 通过 code 获取 openid

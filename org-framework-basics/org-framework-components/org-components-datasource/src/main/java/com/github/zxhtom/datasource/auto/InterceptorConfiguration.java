@@ -4,6 +4,9 @@ import com.github.zxhtom.datasource.intercepter.InterceptorFillParameterRegister
 import com.github.zxhtom.datasource.intercepter.RpcInterceptor;
 import com.github.zxhtom.datasource.intercepter.impl.BaseModelFIllHandler;
 import com.github.zxhtom.datasource.intercepter.impl.MultiParamFillHandler;
+import com.github.zxhtom.datasource.typeHandler.EnumScanner;
+import com.github.zxhtom.datasource.typeHandler.EnumTypeHandlerAutoRegistrar;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,5 +29,14 @@ public class InterceptorConfiguration {
     @Bean
     public RpcInterceptor rpcInterceptor() {
         return new RpcInterceptor();
+    }
+    @Bean
+    @ConditionalOnMissingBean
+    public EnumScanner enumScanner() {
+        return new EnumScanner();
+    }
+    @Bean
+    public EnumTypeHandlerAutoRegistrar enumTypeHandlerAutoRegistrar() {
+        return new EnumTypeHandlerAutoRegistrar();
     }
 }

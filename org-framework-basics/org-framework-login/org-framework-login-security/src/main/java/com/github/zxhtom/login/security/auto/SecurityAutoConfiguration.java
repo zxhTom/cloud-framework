@@ -99,10 +99,6 @@ public class SecurityAutoConfiguration {
     public CloudPassWordEncoder securityCloudPassWordEncoder() {
         return new SecurityCloudPassWordEncoderImpl();
     }
-    @Bean
-    public UsernameOnlyAuthenticationProvider usernameOnlyAuthenticationProvider() {
-        return new UsernameOnlyAuthenticationProvider();
-    }
 /*
     @Bean
     public MethodFirstSecurityMetadataSource methodFirstSecurityMetadataSource(

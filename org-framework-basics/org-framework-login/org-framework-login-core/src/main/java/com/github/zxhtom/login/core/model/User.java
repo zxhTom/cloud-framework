@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.zxhtom.datasource.model.BaseModel;
 import com.github.zxhtom.login.core.enums.SexEnum;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class User extends BaseModel {
     private String password;
     private String phone;
     private String email;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     private SexEnum sex;
     private String headImg;
