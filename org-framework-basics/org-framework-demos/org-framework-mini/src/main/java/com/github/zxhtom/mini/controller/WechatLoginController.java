@@ -14,12 +14,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.PermitAll;
 import java.util.UUID;
 
 /**
@@ -30,6 +33,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/wechat")
 @Slf4j
+@PermitAll
 public class WechatLoginController {
     @Autowired
     private WechatService wechatService;
@@ -37,6 +41,9 @@ public class WechatLoginController {
     MiniUserService miniUserService;
     @Autowired
     LoginService loginService;
+    @Autowired
+    @Lazy
+    PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody WechatLoginRequest request) {
@@ -54,12 +61,11 @@ public class WechatLoginController {
         User user = combineUser.getMaltcloud();
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUserName(user.getUserName());
-        loginRequest.setPassword(user.getPassword());
         user.setPassword("");
-        LoginResponse loginResponse = loginService.authenticateUser(loginRequest);
+        LoginResponse loginResponse = loginService.authenticateUserNameOnly(loginRequest);
 
         // 3. 生成自定义登录态 (Token)
-        String token = String.format("%s %s", loginResponse.getType(), loginResponse.getToken());
+        String token = String.format("%s", loginResponse.getToken());
 
         // 4. (可选) 将 token 和 user 的关联关系存储到 Redis 或数据库
         // redisTemplate.opsForValue().set("token:" + token, openid, Duration.ofDays(7));

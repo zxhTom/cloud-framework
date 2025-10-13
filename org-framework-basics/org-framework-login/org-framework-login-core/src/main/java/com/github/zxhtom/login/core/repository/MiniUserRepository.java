@@ -15,4 +15,6 @@ public interface MiniUserRepository {
     public CombineUser initMini2Maltcloud(String prefix);
 
     Integer insert(MiniUser miniUser);
+
+    Integer finishMiniUser(MiniUser miniUser);
 }

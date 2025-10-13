@@ -9,11 +9,14 @@ import com.github.zxhtom.login.core.repository.UserRepository;
 import com.github.zxhtom.login.core.request.LoginRequest;
 import com.github.zxhtom.login.core.response.LoginResponse;
 import com.github.zxhtom.login.core.service.LoginService;
+import com.github.zxhtom.login.security.token.UsernameOnlyAuthenticationToken;
 import com.github.zxhtom.login.security.utils.JwtTokenUtils;
 import com.github.zxhtom.login.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -47,6 +50,7 @@ public class LoginSecurityService implements LoginService {
     private UserRepository userRepository;
 
     @Autowired
+    @Lazy
     private PasswordEncoder passwordEncoder;
     @Override
     public Integer refreshRoles(String userName) {
@@ -54,39 +58,18 @@ public class LoginSecurityService implements LoginService {
         return 1;
     }
     @Override
-    public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationConfiguration.getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUserName(),
-                            loginRequest.getPassword()
-                    )
-            );
+    public LoginResponse authenticateUser(LoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                loginRequest.getUserName(),
+                loginRequest.getPassword()
+        );
+        return authenticateUser(usernamePasswordAuthenticationToken);
+    }
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtTokenUtils.generateToken(authentication);
-
-            // 获取用户信息
-            User user = Optional.of(userRepository.findByUsername(authentication.getName()))
-                    .orElseThrow(() -> new RuntimeException("用户不存在"));
-
-            Date expiration = jwtTokenUtils.getExpirationDateFromToken(jwt);
-            List<Role> roleList = roleRepository.selectRolesByUserId(user.getId());
-            List<String> roles = roleList.stream().map(Role::getName).collect(Collectors.toList());
-            LoginResponse response = new LoginResponse(
-                    jwt,
-                    user.getUserName(),
-                    roles,
-                    expiration
-            );
-
-            return response;
-
-        } catch (BadCredentialsException e) {
-            throw new BusinessException(HttpStatus.UNAUTHORIZED.value(), "用户名或密码错误");
-        } catch (Exception e) {
-            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR.value(), String.format("登录失败:%s", e.getMessage()));
-        }
+    @Override
+    public LoginResponse authenticateUserNameOnly(LoginRequest loginRequest) {
+        UsernameOnlyAuthenticationToken usernameOnlyAuthenticationToken = new UsernameOnlyAuthenticationToken(loginRequest.getUserName());
+        return authenticateUser(usernameOnlyAuthenticationToken);
     }
 
     @Override
@@ -123,4 +106,37 @@ public class LoginSecurityService implements LoginService {
         userInfo.put("roles", roles);
         return userInfo;
     }
+
+    private LoginResponse authenticateUser(AbstractAuthenticationToken authenticationToken) {
+        try {
+            Authentication authentication = authenticationConfiguration.getAuthenticationManager().authenticate(
+                    authenticationToken
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtTokenUtils.generateToken(authentication);
+
+            // 获取用户信息
+            User user = Optional.of(userRepository.findByUsername(authentication.getName()))
+                    .orElseThrow(() -> new RuntimeException("用户不存在"));
+
+            Date expiration = jwtTokenUtils.getExpirationDateFromToken(jwt);
+            List<Role> roleList = roleRepository.selectRolesByUserId(user.getId());
+            List<String> roles = roleList.stream().map(Role::getName).collect(Collectors.toList());
+            LoginResponse response = new LoginResponse(
+                    jwt,
+                    user.getUserName(),
+                    roles,
+                    expiration
+            );
+
+            return response;
+
+        } catch (BadCredentialsException e) {
+            throw new BusinessException(HttpStatus.UNAUTHORIZED.value(), "用户名或密码错误");
+        } catch (Exception e) {
+            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR.value(), String.format("登录失败:%s", e.getMessage()));
+        }
+    }
+
 }

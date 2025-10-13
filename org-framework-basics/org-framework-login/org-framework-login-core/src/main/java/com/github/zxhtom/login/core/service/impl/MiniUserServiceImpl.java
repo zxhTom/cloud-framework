@@ -4,10 +4,13 @@ import com.github.zxhtom.login.core.dto.CombineUser;
 import com.github.zxhtom.login.core.model.MiniUser;
 import com.github.zxhtom.login.core.model.User;
 import com.github.zxhtom.login.core.repository.MiniUserRepository;
+import com.github.zxhtom.login.core.service.CloudPassWordEncoder;
 import com.github.zxhtom.login.core.service.MiniUserService;
 import com.github.zxhtom.login.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,10 +22,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class MiniUserServiceImpl implements MiniUserService {
+    @Value("zxhtom.security.user.password:123456")
+    String password;
     @Autowired
     MiniUserRepository miniUserRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    CloudPassWordEncoder cloudPassWordEncoder;
     @Override
     public MiniUser selectMiniUser(String appId, String openId) {
         return miniUserRepository.selectMiniUser(appId,openId);
@@ -37,7 +44,7 @@ public class MiniUserServiceImpl implements MiniUserService {
             user.setId(System.currentTimeMillis());
             user.setUserName(String.format("%s_%s_%s", prefix, appId, openId));
             user.setUserCode(openId.hashCode());
-            user.setPassword("123456");
+            user.setPassword(cloudPassWordEncoder.encode(password));
             userService.insertUser(user);
             log.debug("mini user init successful");
             combineUser.setMaltcloud(user);
@@ -50,6 +57,8 @@ public class MiniUserServiceImpl implements MiniUserService {
             combineUser.setRegisted(false);
         } else {
             combineUser.setRegisted(true);
+            User user = userService.selectUserBaseOnUserId(miniUser.getUserId());
+            combineUser.setMaltcloud(user);
         }
         combineUser.setOutUser(miniUser);
         return combineUser;
@@ -58,5 +67,10 @@ public class MiniUserServiceImpl implements MiniUserService {
     @Override
     public CombineUser initMini2Maltcloud(String prefix) {
         return null;
+    }
+
+    @Override
+    public Integer finishMiniUser(MiniUser miniUser) {
+        return miniUserRepository.finishMiniUser(miniUser);
     }
 }

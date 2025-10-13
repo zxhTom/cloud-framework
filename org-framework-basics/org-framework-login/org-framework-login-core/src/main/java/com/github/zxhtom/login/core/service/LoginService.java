@@ -28,6 +28,8 @@ public interface LoginService {
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) ;
 
+    public LoginResponse authenticateUserNameOnly(LoginRequest loginRequest) ;
+
     public Integer registerUser(LoginRequest signUpRequest);
 
     public Map<String, Object> getCurrentUser() ;

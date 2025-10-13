@@ -15,4 +15,5 @@ public class MiniUser extends BaseModel {
     private String appId;
     private String openId;
     private Long userId;
+    private boolean isFinished;
 }

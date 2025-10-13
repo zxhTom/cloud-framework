@@ -21,4 +21,8 @@ public interface UserService {
     public Integer insertUser(User user);
 
     Set<String> selectPermissionsBaseOnUserName(String userName);
+
+    User selectUserBaseOnUserId(Long userId);
+
+    Integer updateActive(User sourceUser);
 }

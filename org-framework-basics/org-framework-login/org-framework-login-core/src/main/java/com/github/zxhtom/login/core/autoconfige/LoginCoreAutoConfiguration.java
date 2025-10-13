@@ -29,6 +29,11 @@ public class LoginCoreAutoConfiguration {
     public LoginService loginService() {
         return new DefaultLoginServiceImpl();
     }
+    @Bean
+    @ConditionalOnMissingBean(CloudPassWordEncoder.class)
+    public CloudPassWordEncoder cloudPassWordEncoder() {
+        return new DefaultCloudPassWordEncoderImpl();
+    }
 
     @Bean
     @ConditionalOnMissingBean(UserService.class)

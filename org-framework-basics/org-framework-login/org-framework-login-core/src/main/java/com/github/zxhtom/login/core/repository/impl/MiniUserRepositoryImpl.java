@@ -41,4 +41,9 @@ public class MiniUserRepositoryImpl implements MiniUserRepository {
     public Integer insert(MiniUser miniUser) {
         return miniUserMapper.insert(miniUser);
     }
+
+    @Override
+    public Integer finishMiniUser(MiniUser miniUser) {
+        return miniUserMapper.finishMiniUser(miniUser);
+    }
 }

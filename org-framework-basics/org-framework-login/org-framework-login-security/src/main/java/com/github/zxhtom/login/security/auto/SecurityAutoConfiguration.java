@@ -1,6 +1,7 @@
 package com.github.zxhtom.login.security.auto;
 
 import com.github.zxhtom.login.core.autoconfige.LoginCoreAutoConfiguration;
+import com.github.zxhtom.login.core.service.CloudPassWordEncoder;
 import com.github.zxhtom.login.core.service.LoginService;
 import com.github.zxhtom.login.security.config.*;
 import com.github.zxhtom.login.security.filter.JwtCloudAuthenticationFilter;
@@ -10,7 +11,9 @@ import com.github.zxhtom.login.security.handler.chain.MenuRoleHandler;
 import com.github.zxhtom.login.security.handler.chain.ModuleRoleHandler;
 import com.github.zxhtom.login.security.handler.impl.NullAttributeHandler;
 import com.github.zxhtom.login.security.handler.impl.ValidRoleAttributeHandler;
+import com.github.zxhtom.login.security.provider.UsernameOnlyAuthenticationProvider;
 import com.github.zxhtom.login.security.service.impl.LoginSecurityService;
+import com.github.zxhtom.login.security.service.impl.SecurityCloudPassWordEncoderImpl;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -90,6 +93,15 @@ public class SecurityAutoConfiguration {
         registration.setFilter(filter);
         registration.setEnabled(false);
         return registration;
+    }
+
+    @Bean
+    public CloudPassWordEncoder securityCloudPassWordEncoder() {
+        return new SecurityCloudPassWordEncoderImpl();
+    }
+    @Bean
+    public UsernameOnlyAuthenticationProvider usernameOnlyAuthenticationProvider() {
+        return new UsernameOnlyAuthenticationProvider();
     }
 /*
     @Bean

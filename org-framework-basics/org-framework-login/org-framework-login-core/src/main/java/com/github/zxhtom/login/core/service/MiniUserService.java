@@ -15,4 +15,6 @@ public interface MiniUserService {
     public CombineUser selectMiniUserOrInitUserWithPrefix(String appId, String openId,String prefix);
 
     public CombineUser initMini2Maltcloud(String prefix);
+
+    Integer finishMiniUser(MiniUser miniUser);
 }

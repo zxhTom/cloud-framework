@@ -25,6 +25,11 @@ public class DefaultLoginServiceImpl implements LoginService {
     }
 
     @Override
+    public LoginResponse authenticateUserNameOnly(LoginRequest loginRequest) {
+        return null;
+    }
+
+    @Override
     public Integer registerUser(LoginRequest signUpRequest) {
         return null;
     }

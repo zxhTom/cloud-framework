@@ -4,6 +4,7 @@ import com.github.zxhtom.login.security.filter.JwtCloudAuthenticationFilter;
 import com.github.zxhtom.login.security.model.InteractionEnum;
 import com.github.zxhtom.login.security.model.SecurityInfo;
 import com.github.zxhtom.login.security.provider.MaltcloudProvider;
+import com.github.zxhtom.login.security.provider.UsernameOnlyAuthenticationProvider;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -72,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用自定义登录身份认证组件
         auth.authenticationProvider(new MaltcloudProvider(userDetailsService));
+        auth.authenticationProvider(new UsernameOnlyAuthenticationProvider());
         //auth.inMemoryAuthentication().withUser("zxhtom").password(new BCryptPasswordEncoder().encode("123456")).roles("admin");
     }
 

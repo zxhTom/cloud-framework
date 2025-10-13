@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Api(value = "contract list interface")
 @RestController
-@RequestMapping(value = "/contract")
+@RequestMapping(value = "/contract/contracta")
 @Slf4j
 public class ContractController {
     @Autowired

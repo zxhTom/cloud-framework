@@ -44,4 +44,14 @@ public class UserServiceImpl implements UserService {
     public Set<String> selectPermissionsBaseOnUserName(String userName) {
         return roleMapper.selectPermissionsBaseOnUserName(userName);
     }
+
+    @Override
+    public User selectUserBaseOnUserId(Long userId) {
+        return userMapper.selectUserBaseOnUserId(userId);
+    }
+
+    @Override
+    public Integer updateActive(User sourceUser) {
+        return userMapper.updateById(sourceUser);
+    }
 }

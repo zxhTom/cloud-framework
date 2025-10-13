@@ -13,4 +13,7 @@
     <select id="selectUserBaseOnUserName" resultType="com.github.zxhtom.login.core.model.User">
         select * from USERS where user_name=#{userName}
     </select>
+    <select id="selectUserBaseOnUserId" resultType="com.github.zxhtom.login.core.model.User">
+        select * from USERS where id=#{userId}
+    </select>
 </mapper>
