@@ -25,6 +25,7 @@
         <module>org-framework-demos</module>
         <module>org-framework-login</module>
         <module>org-framework-views</module>
+        <module>org-framework-oss</module>
     </modules>
     <properties>
     </properties>

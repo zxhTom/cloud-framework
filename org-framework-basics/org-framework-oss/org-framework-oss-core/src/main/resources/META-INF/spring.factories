@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.zxhtom.oss.autoconfigure.OssAutoConfiguration
+# ????????
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.github.zxhtom.oss.beanpostprocess.CoreConfigEnvironmentPostProcessor
