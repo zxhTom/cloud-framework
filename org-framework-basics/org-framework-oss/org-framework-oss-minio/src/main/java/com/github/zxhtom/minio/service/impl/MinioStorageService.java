@@ -11,7 +11,7 @@ import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +29,9 @@ import java.util.UUID;
 // MinioStorageService.java
 @Service
 @Slf4j
-@ConditionalOnProperty(name = "app.file.storage.mode", havingValue = "minio")
+@ConditionalOnExpression(
+        "'${app.file.upload.storage.mode:}'.equals('minio')"
+)
 public class MinioStorageService implements StorageService {
 
     @Value("${app.file.storage.minio.bucket-name:uploads}")

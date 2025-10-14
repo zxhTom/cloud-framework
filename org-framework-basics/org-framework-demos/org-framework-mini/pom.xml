@@ -40,5 +40,10 @@
             <artifactId>org.framework.oss.local</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.oss.minio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
