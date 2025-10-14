@@ -45,6 +45,19 @@ public class WechatLoginController {
     @Lazy
     PasswordEncoder passwordEncoder;
 
+    @PostMapping("/auto")
+    @ProtoResult
+    public ApiResponse auto(@RequestBody WechatLoginRequest request) {
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUserName(request.getUserInfo().getUserName());
+        LoginResponse loginResponse = loginService.authenticateUserNameOnly(loginRequest);
+
+        // 3. 生成自定义登录态 (Token)
+        String token = String.format("%s", loginResponse.getToken());
+
+        return ApiResponse.success(token);
+    }
     @PostMapping("/login")
     @ProtoResult
     public ApiResponse login(@RequestBody WechatLoginRequest request) {
@@ -87,7 +100,7 @@ public class WechatLoginController {
     public static class WechatLoginRequest {
         private String appId;
         private String code;
-        private Object userInfo; // 可以是一个Map或自定义DTO
+        private User userInfo; // 可以是一个Map或自定义DTO
     }
 
     // 内部类：返回给前端的响应

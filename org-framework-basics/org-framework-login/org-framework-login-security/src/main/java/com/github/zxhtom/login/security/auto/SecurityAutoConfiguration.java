@@ -11,6 +11,7 @@ import com.github.zxhtom.login.security.handler.chain.MenuRoleHandler;
 import com.github.zxhtom.login.security.handler.chain.ModuleRoleHandler;
 import com.github.zxhtom.login.security.handler.impl.NullAttributeHandler;
 import com.github.zxhtom.login.security.handler.impl.ValidRoleAttributeHandler;
+import com.github.zxhtom.login.security.provider.MaltcloudProvider;
 import com.github.zxhtom.login.security.provider.UsernameOnlyAuthenticationProvider;
 import com.github.zxhtom.login.security.service.impl.LoginSecurityService;
 import com.github.zxhtom.login.security.service.impl.SecurityCloudPassWordEncoderImpl;
@@ -21,6 +22,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 /**
@@ -99,16 +102,13 @@ public class SecurityAutoConfiguration {
     public CloudPassWordEncoder securityCloudPassWordEncoder() {
         return new SecurityCloudPassWordEncoderImpl();
     }
-/*
+
     @Bean
-    public MethodFirstSecurityMetadataSource methodFirstSecurityMetadataSource(
-            MethodSecurityMetadataSource methodSecurityMetadataSource,
-            HttpSecurity httpSecurity) {
-        try {
-            return new MethodFirstSecurityMetadataSource(methodSecurityMetadataSource,httpSecurity);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public MaltcloudProvider maltcloudProvider(UserDetailsService userDetailsService) {
+        return new MaltcloudProvider(userDetailsService);
     }
-*/
+    @Bean
+    public UsernameOnlyAuthenticationProvider usernameOnlyAuthenticationProvider() {
+        return new UsernameOnlyAuthenticationProvider();
+    }
 }

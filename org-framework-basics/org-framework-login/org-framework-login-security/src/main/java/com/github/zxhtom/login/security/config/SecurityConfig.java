@@ -5,18 +5,18 @@ import com.github.zxhtom.login.security.model.InteractionEnum;
 import com.github.zxhtom.login.security.model.SecurityInfo;
 import com.github.zxhtom.login.security.provider.MaltcloudProvider;
 import com.github.zxhtom.login.security.provider.UsernameOnlyAuthenticationProvider;
-import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,7 +33,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -65,18 +64,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      private MethodSecurityMetadataSource methodSecurityMetadataSource;
     @Autowired
     MethodSecurityInterceptor methodSecurityInterceptor;
+    @Autowired
+    private MaltcloudProvider maltcloudProvider;
+
+    @Autowired
+    private UsernameOnlyAuthenticationProvider usernameOnlyAuthenticationProvider;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("配置 AuthenticationProviders...");
+        auth.authenticationProvider(maltcloudProvider)
+            .authenticationProvider(usernameOnlyAuthenticationProvider);
+    }
+
+    // 暴露为 Bean，供整个应用使用
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 使用自定义登录身份认证组件
-        auth.authenticationProvider(new MaltcloudProvider(userDetailsService));
-        auth.authenticationProvider(new UsernameOnlyAuthenticationProvider());
-        //auth.inMemoryAuthentication().withUser("zxhtom").password(new BCryptPasswordEncoder().encode("123456")).roles("admin");
-    }
-
+    // 标记为主要的 AuthenticationManager
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);

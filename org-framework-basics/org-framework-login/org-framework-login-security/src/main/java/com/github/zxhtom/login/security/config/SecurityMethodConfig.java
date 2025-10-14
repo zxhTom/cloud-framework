@@ -3,8 +3,10 @@ package com.github.zxhtom.login.security.config;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
@@ -18,6 +20,7 @@ import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.core.Authentication;
@@ -36,7 +39,14 @@ import java.util.List;
 )
 @Order(3)
 public class SecurityMethodConfig extends GlobalMethodSecurityConfiguration {
+    @Autowired
+    @Lazy
+    private AuthenticationManager authenticationManager;
 
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return authenticationManager;
+    }
     private static final Logger logger = LoggerFactory.getLogger(SecurityMethodConfig.class);
 
     @Bean

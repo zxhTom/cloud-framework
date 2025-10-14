@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -34,11 +35,12 @@ import java.util.stream.Collectors;
  * @date 2021/10/9 10:00
  */
 public class LoginSecurityService implements LoginService {
+    @Autowired
+    @Lazy
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    private AuthenticationConfiguration authenticationConfiguration ;
 
     @Autowired
     JwtTokenUtils jwtTokenUtils;
@@ -105,7 +107,7 @@ public class LoginSecurityService implements LoginService {
 
     private LoginResponse authenticateUser(AbstractAuthenticationToken authenticationToken) {
         try {
-            Authentication authentication = authenticationConfiguration.getAuthenticationManager().authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     authenticationToken
             );
 
