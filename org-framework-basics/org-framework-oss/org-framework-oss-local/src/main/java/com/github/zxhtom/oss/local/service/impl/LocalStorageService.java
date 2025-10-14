@@ -27,8 +27,8 @@ import java.util.UUID;
 @Slf4j
 //@ConditionalOnProperty(name = "app.file.storage.mode", havingValue = "local")
 @ConditionalOnExpression(
-        "'${app.file.storage.mode:}'.equals('local') or " +
-                "'${app.file.storage.mode:}'.isEmpty()"  // 支持默认值
+        "'${app.file.upload.storage.mode:}'.equals('local') or " +
+                "'${app.file.upload.storage.mode:}'.isEmpty()"  // 支持默认值
 )
 public class LocalStorageService implements StorageService {
 

@@ -3,6 +3,7 @@ package com.github.zxhtom.oss.factory;
 import com.github.zxhtom.oss.exception.OssException;
 import com.github.zxhtom.oss.model.FileStorageType;
 import com.github.zxhtom.oss.service.StorageService;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +23,11 @@ public class StorageServiceFactory {
      */
     public StorageService getCurrentStorageService() {
         // 根据配置的存储模式返回对应的服务
-        for (StorageService service : storageServiceMap.values()) {
-            // 实际项目中可以根据配置文件动态选择
-            return service;
+        if (MapUtils.isNotEmpty(storageServiceMap)) {
+            for (StorageService service : storageServiceMap.values()) {
+                // 实际项目中可以根据配置文件动态选择
+                return service;
+            }
         }
         throw new OssException("未找到可用的存储服务");
     }
