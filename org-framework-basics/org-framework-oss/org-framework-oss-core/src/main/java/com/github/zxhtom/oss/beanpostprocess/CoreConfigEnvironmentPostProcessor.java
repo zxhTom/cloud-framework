@@ -20,7 +20,7 @@ public class CoreConfigEnvironmentPostProcessor implements EnvironmentPostProces
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return Ordered.LOWEST_PRECEDENCE;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CoreConfigEnvironmentPostProcessor implements EnvironmentPostProces
 
         if (!propertySources.isEmpty()) {
             // 添加到最前面，作为默认配置
-            environment.getPropertySources().addFirst(propertySources.get(0));
+            environment.getPropertySources().addLast(propertySources.get(0));
             System.out.println("✓ 核心模块配置加载成功");
         }
     }

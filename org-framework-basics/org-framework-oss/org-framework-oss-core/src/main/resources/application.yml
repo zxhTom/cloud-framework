@@ -11,7 +11,7 @@ app:
         - image/webp
         - application/pdf
       storage:
-        mode: local # local, oss, minio
+        mode: minio # local, oss, minio
         local:
           base-path: /data/uploads
           base-url: http://localhost:8080/nginx
@@ -23,11 +23,11 @@ app:
           access-key-secret: your-secret
           domain: https://your-bucket.oss-cn-hangzhou.aliyuncs.com
         minio:
-          endpoint: http://localhost:9000
-          bucket-name: uploads
-          access-key: minioadmin
-          secret-key: minioadmin
-          domain: http://localhost:9000
+          endpoint: http://localhost:9001
+          bucket-name: my-bucket
+          access-key: adminhello
+          secret-key: 1231231239
+          domain: http://localhost:9001
 
 spring:
   servlet:

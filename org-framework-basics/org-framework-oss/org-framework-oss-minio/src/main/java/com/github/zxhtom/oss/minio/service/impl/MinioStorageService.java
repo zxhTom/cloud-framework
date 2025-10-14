@@ -1,4 +1,4 @@
-package com.github.zxhtom.minio.service.impl;
+package com.github.zxhtom.oss.minio.service.impl;
 
 import com.github.zxhtom.oss.exception.OssException;
 import com.github.zxhtom.oss.model.FileInfo;
