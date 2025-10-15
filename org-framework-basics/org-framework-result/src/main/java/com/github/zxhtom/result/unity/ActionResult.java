@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
+import java.util.UUID;
+
 
 /**
  * 后端服务返回统一格式对象, 序列化成json字符串返回
@@ -111,7 +113,7 @@ public class ActionResult<T> {
 		}
 
 		public ActionResult build() {
-			return new ActionResult(this.httpStatus, this.message, this.stack, this.data);
+			return new ActionResult(this.httpStatus, UUID.randomUUID().toString(),this.message, this.data);
 		}
 
 

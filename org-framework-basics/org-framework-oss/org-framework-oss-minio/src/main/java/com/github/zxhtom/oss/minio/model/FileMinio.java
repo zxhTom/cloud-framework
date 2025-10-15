@@ -1,7 +1,6 @@
 package com.github.zxhtom.oss.minio.model;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -15,4 +14,8 @@ public class FileMinio {
     private String accessKey="adminhello";
 
     private String secretKey="1231231239";
+
+    private String bucketName="maltcloud";
+
+    private String domain="http://localhost:9000";
 }

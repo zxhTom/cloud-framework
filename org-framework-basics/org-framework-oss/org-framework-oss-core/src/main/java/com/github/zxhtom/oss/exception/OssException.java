@@ -15,4 +15,9 @@ public class OssException extends RuntimeException{
         this.code = code;
         this.msg = msg;
     }
+
+    @Override
+    public String getMessage() {
+        return this.msg;
+    }
 }

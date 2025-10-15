@@ -39,10 +39,10 @@ public class FileUploadController {
             return ActionResult.success(fileInfo);
 
         } catch (OssException e) {
-            return ActionResult.error(e.getMsg());
+            throw  e;
         } catch (Exception e) {
             log.error("文件上传失败", e);
-            return ActionResult.error("文件上传失败");
+            throw new OssException("文件上传失败:" + e.getMessage());
         }
     }
 

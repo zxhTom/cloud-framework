@@ -1,6 +1,7 @@
 package com.github.zxhtom.oss.minio.service.impl;
 
 import com.github.zxhtom.oss.exception.OssException;
+import com.github.zxhtom.oss.minio.model.FileMinio;
 import com.github.zxhtom.oss.model.FileInfo;
 import com.github.zxhtom.oss.model.FileStorageType;
 import com.github.zxhtom.oss.service.FileValidateService;
@@ -9,8 +10,8 @@ import com.github.zxhtom.oss.service.StorageService;
 import io.minio.*;
 import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,11 +35,8 @@ import java.util.UUID;
 )
 public class MinioStorageService implements StorageService {
 
-    @Value("${app.file.storage.minio.bucket-name:uploads}")
-    private String bucketName;
-
-    @Value("${app.file.storage.minio.domain:http://localhost:9000}")
-    private String domain;
+    @Autowired
+    FileMinio fileMinio;
 
     @Autowired
     private MinioClient minioClient;
@@ -51,6 +49,7 @@ public class MinioStorageService implements StorageService {
 
     @PostConstruct
     public void init() {
+        String bucketName = fileMinio.getBucketName();
         // 检查Bucket是否存在，不存在则创建
         try {
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
@@ -76,7 +75,7 @@ public class MinioStorageService implements StorageService {
         String fileExtension = getFileExtension(originalFilename);
         String storageFilename = generateStorageFilename(fileExtension);
         String objectName = directory + "/" + storageFilename;
-
+        String bucketName = fileMinio.getBucketName();
         // 上传到MinIO
         try {
             minioClient.putObject(
@@ -88,7 +87,7 @@ public class MinioStorageService implements StorageService {
                             .build()
             );
         } catch (Exception e) {
-            throw new OssException(e.getMessage());
+            throw new OssException(ExceptionUtils.getMessage(e));
         }
 
         return buildFileInfo(file, objectName, storageFilename);
@@ -97,7 +96,8 @@ public class MinioStorageService implements StorageService {
     @Override
     public FileInfo uploadImage(MultipartFile file, String directory) throws IOException {
         FileInfo fileInfo = uploadFile(file, directory);
-
+        String bucketName = fileMinio.getBucketName();
+        String domain = fileMinio.getDomain();
         try {
             // 生成缩略图并上传
             if (fileInfo.getContentType().startsWith("image/")) {
@@ -125,6 +125,7 @@ public class MinioStorageService implements StorageService {
 
     @Override
     public boolean deleteFile(String filePath) {
+        String bucketName = fileMinio.getBucketName();
         try {
             minioClient.removeObject(
                     RemoveObjectArgs.builder()
@@ -153,12 +154,15 @@ public class MinioStorageService implements StorageService {
 
     @Override
     public String getFileUrl(String filePath) {
+        String domain = fileMinio.getDomain();
+        String bucketName = fileMinio.getBucketName();
         return domain + "/" + bucketName + "/" + filePath;
     }
 
     @Override
     public boolean fileExists(String filePath) {
         try {
+            String bucketName = fileMinio.getBucketName();
             minioClient.statObject(
                     StatObjectArgs.builder()
                             .bucket(bucketName)
@@ -178,6 +182,7 @@ public class MinioStorageService implements StorageService {
         byte[] imageBytes = os.toByteArray();
         ByteArrayInputStream is = new ByteArrayInputStream(imageBytes);
 
+        String bucketName = fileMinio.getBucketName();
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
@@ -189,6 +194,8 @@ public class MinioStorageService implements StorageService {
     }
 
     private FileInfo buildFileInfo(MultipartFile file, String objectName, String storageFilename) {
+        String domain = fileMinio.getDomain();
+        String bucketName = fileMinio.getBucketName();
         FileInfo fileInfo = new FileInfo();
         fileInfo.setOriginalFilename(file.getOriginalFilename());
         fileInfo.setStorageFilename(storageFilename);

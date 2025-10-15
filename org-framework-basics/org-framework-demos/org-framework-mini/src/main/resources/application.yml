@@ -52,3 +52,14 @@ zxhtom:
       water-mark: "tomsly"
       # 资源路径
       resources-path: classpath:images/jigsaw
+app:
+  file:
+    upload:
+      storage:
+        mode: minio
+        minio:
+          endpoint: http://192.168.80.129:9000
+          bucket-name: my-bucket
+          access-key: adminhello
+          secret-key: 1231231239
+          domain: http://192.168.80.129:9001
