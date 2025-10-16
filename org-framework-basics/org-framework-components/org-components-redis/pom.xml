@@ -14,4 +14,29 @@
     <properties>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Spring Boot Redis (可选，如果要用RedisTemplate) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-data-27</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId> <!-- 实现对 Caches 的自动化配置 -->
+        </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.framework.web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

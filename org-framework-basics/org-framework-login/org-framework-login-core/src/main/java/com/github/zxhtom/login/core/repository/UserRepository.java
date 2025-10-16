@@ -14,4 +14,6 @@ public interface UserRepository {
     boolean existsByUserName(String userName);
 
     Integer insert(User user);
+
+    User selectByUserId(Long userId);
 }

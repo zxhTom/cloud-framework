@@ -33,4 +33,9 @@ public class UserRepositoryImpl implements UserRepository {
     public Integer insert(User user) {
         return userMapper.insertUser(user);
     }
+
+    @Override
+    public User selectByUserId(Long userId) {
+        return userMapper.selectById(userId);
+    }
 }

@@ -1,9 +1,9 @@
 package com.github.zxhtom.login.core.service.impl;
 
+import com.github.zxhtom.login.core.model.User;
 import com.github.zxhtom.login.core.request.LoginRequest;
 import com.github.zxhtom.login.core.response.LoginResponse;
 import com.github.zxhtom.login.core.service.LoginService;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
@@ -36,6 +36,11 @@ public class DefaultLoginServiceImpl implements LoginService {
 
     @Override
     public Map<String, Object> getCurrentUser() {
+        return null;
+    }
+
+    @Override
+    public User selectUser(Long userId) {
         return null;
     }
 }

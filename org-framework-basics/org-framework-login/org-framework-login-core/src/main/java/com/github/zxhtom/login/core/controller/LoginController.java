@@ -35,18 +35,19 @@ public class LoginController {
         try {
             loginResponse = loginService.authenticateUser(loginRequest);
         } catch (BusinessException businessException) {
+            businessException.printStackTrace();
             if (businessException.getCode() == HttpStatus.UNAUTHORIZED.value()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(Map.of("code", 401, "message", "用户名或密码错误"));
             } else if (businessException.getCode() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(Map.of("code", 500, "message", "登录失败: " + businessException.getMessage()));
+                        .body(Map.of("code", 500, "message", "登录失败: " + businessException.getMsg()));
             } else {
                 return ResponseEntity.status(500).body(Map.of("code",500));
             }
-        }finally {
-            return ResponseEntity.ok(loginResponse);
         }
+
+        return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/register")

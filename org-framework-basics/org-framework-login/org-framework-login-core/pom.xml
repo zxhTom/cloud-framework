@@ -38,5 +38,14 @@
             <groupId>com.anji-plus</groupId>
             <artifactId>spring-boot-starter-captcha</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.zxhtom</groupId>
+            <artifactId>org.components.redis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
     </dependencies>
 </project>

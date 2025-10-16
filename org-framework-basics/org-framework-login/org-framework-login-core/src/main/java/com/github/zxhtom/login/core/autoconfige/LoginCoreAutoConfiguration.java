@@ -1,6 +1,7 @@
 package com.github.zxhtom.login.core.autoconfige;
 
 import com.github.zxhtom.login.core.controller.LoginController;
+import com.github.zxhtom.login.core.controller.TenantController;
 import com.github.zxhtom.login.core.controller.captcha.CaptchaController;
 import com.github.zxhtom.login.core.repository.*;
 import com.github.zxhtom.login.core.repository.impl.*;
@@ -8,6 +9,7 @@ import com.github.zxhtom.login.core.service.*;
 import com.github.zxhtom.login.core.service.impl.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,7 +19,14 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/10/9 9:52
  */
 @Configuration
+@ComponentScan(basePackages = {"com.github.zxhtom.login"})
 public class LoginCoreAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TenantController.class)
+    public TenantController tenantController() {
+        return new TenantController();
+    }
+
     @Bean
     @ConditionalOnMissingBean(LoginController.class)
     public LoginController loginController() {
@@ -29,6 +38,7 @@ public class LoginCoreAutoConfiguration {
     public LoginService loginService() {
         return new DefaultLoginServiceImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(CloudPassWordEncoder.class)
     public CloudPassWordEncoder cloudPassWordEncoder() {
@@ -70,32 +80,38 @@ public class LoginCoreAutoConfiguration {
     public MiniUserService miniUserServiceImpl() {
         return new MiniUserServiceImpl();
     }
+
     /********************************repository********************************/
     @Bean
     @ConditionalOnMissingBean(ButtonRepository.class)
     public ButtonRepository defaultButtonRepository() {
         return new ButtonRepositoryImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(MenuRepository.class)
     public MenuRepository defaultMenuRepository() {
         return new MenuRepositoryImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(ModuleRepository.class)
     public ModuleRepository defaultModuleRepository() {
         return new ModuleRepositoryImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(PermissionUrlRepository.class)
     public PermissionUrlRepository defaultPermissionUrlRepository() {
         return new PermissionUrlRepositoryImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(UserRepository.class)
     public UserRepository defaultUserRepository() {
         return new UserRepositoryImpl();
     }
+
     @Bean
     @ConditionalOnMissingBean(RoleRepository.class)
     public RoleRepository defaultRoleRepository() {

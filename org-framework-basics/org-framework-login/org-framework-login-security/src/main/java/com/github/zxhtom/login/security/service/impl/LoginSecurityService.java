@@ -105,6 +105,11 @@ public class LoginSecurityService implements LoginService {
         return userInfo;
     }
 
+    @Override
+    public User selectUser(Long userId) {
+        return userRepository.selectByUserId(userId);
+    }
+
     private LoginResponse authenticateUser(AbstractAuthenticationToken authenticationToken) {
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -122,6 +127,7 @@ public class LoginSecurityService implements LoginService {
             List<Role> roleList = roleRepository.selectRolesByUserId(user.getId());
             List<String> roles = roleList.stream().map(Role::getName).collect(Collectors.toList());
             LoginResponse response = new LoginResponse(
+                    user.getId(),
                     jwt,
                     user.getUserName(),
                     roles,

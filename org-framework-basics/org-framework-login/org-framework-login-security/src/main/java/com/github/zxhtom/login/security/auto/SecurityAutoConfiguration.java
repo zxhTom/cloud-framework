@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,6 +35,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
  */
 @Configuration
 @AutoConfigureBefore(LoginCoreAutoConfiguration.class)
+@ComponentScan({"com.github.zxhtom.login.security"})
 public class SecurityAutoConfiguration {
 
     @Bean
