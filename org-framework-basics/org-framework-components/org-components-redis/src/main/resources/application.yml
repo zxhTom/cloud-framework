@@ -4,7 +4,7 @@ spring:
     port: 6379
 
 redisson:
-  config: |
+  config:
     singleServerConfig:
       address: "redis://127.0.0.1:6379"
       connectionPoolSize: 32

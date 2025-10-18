@@ -27,11 +27,17 @@ import java.io.IOException;
  * @date 2021/9/27 11:16
  * @description 用于认证jwt登录
  */
+/*
 @Component
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
-    @Autowired
+    @Autowired(required = false)
     JwtTokenUtils jwtTokenUtils;
-
+    @Override
+    protected void initFilterBean() throws ServletException {
+        if (jwtTokenUtils == null) {
+            throw new ServletException("JwtTokenUtil must not be null");
+        }
+    }
     public JwtLoginFilter(AuthenticationManager authManager) {
         setAuthenticationManager(authManager);
         super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/jwtLogin", "POST"));
@@ -71,3 +77,4 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
 }
+*/

@@ -11,6 +11,7 @@ import com.github.zxhtom.login.security.handler.chain.MenuRoleHandler;
 import com.github.zxhtom.login.security.handler.chain.ModuleRoleHandler;
 import com.github.zxhtom.login.security.handler.impl.NullAttributeHandler;
 import com.github.zxhtom.login.security.handler.impl.ValidRoleAttributeHandler;
+import com.github.zxhtom.login.security.model.SecurityProperties;
 import com.github.zxhtom.login.security.provider.MaltcloudProvider;
 import com.github.zxhtom.login.security.provider.UsernameOnlyAuthenticationProvider;
 import com.github.zxhtom.login.security.service.impl.LoginSecurityService;
@@ -35,7 +36,6 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
  */
 @Configuration
 @AutoConfigureBefore(LoginCoreAutoConfiguration.class)
-@ComponentScan({"com.github.zxhtom.login.security"})
 public class SecurityAutoConfiguration {
 
     @Bean
@@ -112,5 +112,9 @@ public class SecurityAutoConfiguration {
     @Bean
     public UsernameOnlyAuthenticationProvider usernameOnlyAuthenticationProvider() {
         return new UsernameOnlyAuthenticationProvider();
+    }
+    @Bean
+    public SecurityProperties securityProperties() {
+        return new SecurityProperties();
     }
 }

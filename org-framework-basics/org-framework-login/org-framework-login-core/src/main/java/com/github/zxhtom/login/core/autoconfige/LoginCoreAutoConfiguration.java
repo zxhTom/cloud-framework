@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/10/9 9:52
  */
 @Configuration
-@ComponentScan(basePackages = {"com.github.zxhtom.login"})
+@ComponentScan(basePackages = {"com.github.zxhtom.login.core.oauth2"})
 public class LoginCoreAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(TenantController.class)

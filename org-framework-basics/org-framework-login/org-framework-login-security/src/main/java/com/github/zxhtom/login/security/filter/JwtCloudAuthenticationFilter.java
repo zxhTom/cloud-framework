@@ -32,8 +32,7 @@ public class JwtCloudAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     @Lazy
     private UserDetailsService userDetailsService;
-    @Autowired
-    @Lazy
+    @Autowired(required = false)
     SecurityProperties securityProperties;
     @Autowired
     OAuth2TokenCommonApi oauth2TokenApi;
